@@ -7,18 +7,28 @@ The RPG elements of the game are as listed:
 
 Tile maps are used to serve as the background of the game as well as the battlefield when the main character is to engaged an enemy is fight.
 
-The Strategy (the S in the word SRPG) is incorporated when the gameplay utilities the tile maps as a reference for the character's allowable movement. The tile maps will also be referenced since this will determine if the enemy is in the location that is within the attack range of the character.
+The Strategy (the S in the word SRPG) is incorporated when the gameplay utilities the tile maps as a reference for the character's allowable movement. 
+The tile maps will also be referenced since this will determine if the enemy is in the location that is within the attack range of the character.
 
-An analogy of this gameplay would be to think in terms of placements of blocks and the distance between those blocks. If the main character is at a certain block and an enemy with a sword is 5 blocks away from the main character, then the enemy could not attack the main character since the sword of the enemy only gives a range of 1 block space.
+An analogy of this gameplay would be to think in terms of placements of blocks and the distance between those blocks. 
+If the main character is at a certain block and an enemy with a sword is 5 blocks away from the main character, then the enemy could not attack the main character since the sword of the enemy only gives a range of 1 block space.
 
 [Brief Explanation of the movement]
-The character moves in a cardinal direction: North, East, South, West and could be in the other divisions in a compass rose (NNW, NNE, ENE, etc...). This movement will be calculated based on the character's current position. If is says move 5 blocks, this means that the movement will be from the current block of the player where the player is positioned and can now move 5 blocks in all the cardinal directions from this starting point. Continuing on with the analogy...
+The character moves in a cardinal direction: North, East, South, West and could be in the other divisions in a compass rose (NNW, NNE, ENE, etc...). 
+This movement will be calculated based on the character's current position. 
+If is says move 5 blocks, this means that the movement will be from the current block of the player where the player is positioned and can now move 5 blocks in all the cardinal directions from this starting point. 
+Continuing on with the analogy...
 
-So if it is the character's turn and the character moves in 5 blocks towards the enemy and the character is also has a sword. Then the character could now attack the enemy since the enemy is within the character's attack range. This is because the chracter now has movement within the enemies.
+So if it is the character's turn and the character moves in 5 blocks towards the enemy and the character is also has a sword. 
+Then the character could now attack the enemy since the enemy is within the character's attack range. 
+This is because the chracter now has movement within the enemies.
 
-There are additional elements to that will change the movement of the characters in the tile maps. There might be objects or obstacle that actually hinder the path, making it untraversable and will force the player or enemy to figure out a different route to engage in battle.
+There are additional elements to that will change the movement of the characters in the tile maps. 
+There might be objects or obstacle that actually hinder the path, making it untraversable and will force the player or enemy to figure out a different route to engage in battle.
 
-This is a simple description of the gameplay that will be used in this game. However, keep in mind that not every tiled map shown, will feature a scene for the player to engage on battle. Sometimes the tiled maps that is being used will serve as an exploration map for the player. This area could usually just be a town's hall to filled with non-playable characters or just a mysterious area showcasing some background effects.
+This is a simple description of the gameplay that will be used in this game. However, keep in mind that not every tiled map shown, will feature a scene for the player to engage on battle.
+Sometimes the tiled maps that is being used will serve as an exploration map for the player. 
+This area could usually just be a town's hall to filled with non-playable characters or just a mysterious area showcasing some background effects.
 
 Overall, Tile Maps and Character movement will mostly likely be the essential elements that will define this SRPG game.
 
