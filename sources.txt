@@ -1,0 +1,5 @@
+This document will serve as a collection of sites or references that is currently in used and will be used as an aid to help develop the game.
+
+Tiled Map Editor
+      - website link: http://www.mapeditor.org/
+
