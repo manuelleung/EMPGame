@@ -90,6 +90,8 @@ More items (speed potion, stat potion, revive, etc)
 Special powers (healing, stat buff, fireball, etc)
 Leveling system which increases stats (enemy kills grant experience points)
 
+Paper Prototype: https://www.flickr.com/photos/128449799@N06/sets/72157648748164838
+
 
 
 
