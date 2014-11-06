@@ -33,4 +33,65 @@ This area could usually just be a town's hall to filled with non-playable charac
 Overall, Tile Maps and Character movement will mostly likely be the essential elements that will define this SRPG game.
 
 
+Contents of the Demo -
+
+1 Main menu? -
+	Start game
+	Instructions (Tutorial text, controls, etc)
+	Credits
+	Quit game
+1 In-game pause menu - 	Stop game state?
+	Restart game
+	Quit game
+1 Tile Map with -
+	Uneven terrain, water, etc (may slow movement?)
+	Trees, rocks, and other objects to block paths
+	Background music
+1 Hero Character -
+	sprites (still, move, attack, death)
+	movement (choose block on tile map to move to by clicking?)
+	stats (combat stats and game stats like current health)
+	sounds (when attack, getting hit, etc)
+	items "Potions" (not put this in the demo?)
+1 Enemy type -
+	sprites (still, move, attack, death)
+	AI movement (must choose a path facing player)
+	stats (combat stats and game stats like current health)
+	sounds (when attack, getting hit, etc)
+
+Each character will be placed at certain spots on the tile map
+Must be turn based, Hero > Enemy 1 > Hero > Enemy 2 > Hero > Enemy 3 > ... 
+First, Hero will get to choose its action (Move, attack, wait, "defend?", items)
+Then, Enemy AI will choose its action (Always chasing after Hero)
+
+Game ends when either the Hero or all enemies die. Go back to Main menu
+
+
+Movement distance is based on the character's "Movespeed" stat, the more the longer the distance. But it should have a cap
+Example, Hero has 5 movespeed (can move 5 squares on tile map)
+Movement distance must be color coded (blue?)
+
+Attack makes a character swing at an enemy. Attack range and Damage is dependent on the weapon + (stats?)
+Example, Hero with Sword can attack only enemies 1 tile away from him/her
+Attack distance must be color coded (red?)
+
+When attacking, animate the characters. After Attack, reduce target's hp. If HP has reached 0 then animate death and remove character
+
+Tile map should have a grid which signifies the movement spots on the map (must be visible)
+
+
+Extra stuff we can add after finishing our Demo -
+
+More Tile Maps
+More Hero characters (mage, archer, cleric), and being able to spawn more than 1 hero character
+More Enemy types (longer range enemies, magical enemies, etc)
+More weapons (bow, spear, gun, wands/staff)
+More items (speed potion, stat potion, revive, etc)
+Special powers (healing, stat buff, fireball, etc)
+Leveling system which increases stats (enemy kills grant experience points)
+
+
+
+
+
 
