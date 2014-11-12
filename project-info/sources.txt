@@ -1,5 +1,38 @@
 This document will serve as a collection of sites or references that is currently in used and will be used as an aid to help develop the game.
 
+
 Tiled Map Editor
       - website link: http://www.mapeditor.org/
+
+
+List of Tileset 
+***** ***** ***** ***** *****
+1. Tiled Terrains
+   - http://opengameart.org/content/tiled-terrains
+
+2. Castle Tiles for RPG's
+   - http://opengameart.org/content/castle-tiles-for-rpgs
+
+3. [LPC] Plant Repack
+   - http://opengameart.org/content/lpc-plant-repack
+
+4. Tiny 16: Basic
+   - http://opengameart.org/content/tiny-16-basic
+
+5. Basalt tiles
+   - http://opengameart.org/content/basalt-tiles
+
+6. The Field of the Floating Islands
+   - http://opengameart.org/content/the-field-of-the-floating-islands
+
+7. Tuxemon tileset
+   - http://opengameart.org/content/tuxemon-tileset
+
+8. Ground Tileset // Grass & Sand //
+   - http://opengameart.org/content/ground-tileset-grass-sand
+
+***** ***** ***** ***** *****
+
+
+
 
