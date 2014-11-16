@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-// This is the game source
+// This is the game source 
 public class EmpGame extends ApplicationAdapter {
 	// Variables for the map, camera, renderer
 	TiledMap tileMap;
