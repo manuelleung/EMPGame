@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32">
+  <image source="terrain.png" trans="ff00ff" width="1024" height="1024"/>
+ </tileset>
+ <layer name="Walk" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAO2EkCpsQOaundiYXG5U5cepH5pOglNhwI2UupXlxuobVeXIAUvaTYS8gNxMQnsf4lBwAACywsFg==
+  </data>
+ </layer>
+ <layer name="Main" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxLZmRgSB7Fo3gUDxgGADpIV+U=
+  </data>
+ </layer>
+ <layer name="Object" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAOcGAiHlNiB7X0wvjINC534tKLzCdFL7HhQMheSvXicgut9eICpOglxV5CbiAmPon1LzkAAJAeD7s=
+  </data>
+ </layer>
+</map>
