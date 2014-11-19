@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+
 // This is the game source 
 public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	// Variables for the map, camera, renderer
@@ -31,16 +33,25 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	OrthographicCamera camera;
 	TiledMapRenderer tiledMapRenderer;
 	
-	//character
-	Texture texture;
+	// movement box texture
+	Texture movementBoxTexture;
+	Sprite movementBoxSprite;
 	
-	//sprites
+	// spritebatch
 	SpriteBatch batch;
+	
+	// empty sprite and texture 
 	Sprite sprite;
+	Texture texture;
 	
 	Vector2 position;
 	
-	Vector2 oldPosition;
+	// Animation for the character
+	Animation heroAnimation;
+	TextureRegion [] heroFrames;
+	TextureRegion heroCurrentFrame;
+	Texture heroTexture;
+	float heroStateTime;
 	
 	@Override
 	public void create () {
@@ -55,8 +66,9 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 		
 		batch = new SpriteBatch();
-		texture = new Texture(Gdx.files.internal("image.png"));
-		sprite = new Sprite(texture);
+		// Movement Box Sprite
+		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
+		movementBoxSprite = new Sprite(movementBoxTexture);
 		
 		position = new Vector2(0, 0);
 
@@ -72,14 +84,16 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		// Set the viewpoint from camera and render map
 		tiledMapRenderer.setView(camera);
 		// array tiles (can use this later to be able to have character behind tiles) 
-		tiledMapRenderer.render(new int[] {0, 1, 2, 3});
+		tiledMapRenderer.render(new int[] {1, 3, 4});
 		// 0 = Wall , 2 = object
 		batch.setProjectionMatrix(camera.combined);
 		
-		sprite.setPosition(position.x, position.y);
+		// Set the new position of the movement box
+		movementBoxSprite.setPosition(position.x, position.y);
 		
 		batch.begin();
-		sprite.draw(batch);
+		// draw the movement box
+		movementBoxSprite.draw(batch);
 		batch.end();
 		
 		getCollisionTiles();
@@ -137,26 +151,26 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// movement of sprite (for now)
+		// movement of box
 		
 		if(keycode == Keys.UP) {
 				position.y += 32;
-				if(sprite.getY()>=600) 
+				if(movementBoxSprite.getY()>=600) 
 					position.y-=32;
 		}
 		if(keycode == Keys.DOWN) {
 				position.y -= 32;
-				if(sprite.getY()<=0) 
+				if(movementBoxSprite.getY()<=0) 
 					position.y+=32;
 		}
 		if(keycode == Keys.LEFT) {
 				position.x -= 32;
-				if(sprite.getX()<=0) 
+				if(movementBoxSprite.getX()<=0) 
 					position.x+=32;
 		}
 		if(keycode == Keys.RIGHT) {
 				position.x += 32;
-				if(sprite.getX()>=600) 
+				if(movementBoxSprite.getX()>=600) 
 					position.x-=32;
 		}
 		return true;
@@ -197,6 +211,29 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public void characterRender() {
+		heroTexture = new Texture(Gdx.files.internal("Hero.png"));
+		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/8, heroTexture.getHeight()/3);
+		heroFrames = new TextureRegion[24];
+		int index = 0;
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; i < 8; i++) {
+				heroFrames[index++] = temp[i][j];
+			}
+		}
+		heroAnimation = new Animation(0.040f, heroFrames);
+		heroStateTime = 0f;
+		// heroFrames[0 to 3] move up
+		// heroFrames[4 to 7] move down
+		// heroFrames[8 to 11] move left
+		// heroFrames[12 to 15] move right
+		// heroFrames[16 to 17] attack left
+		// heroFrames[18 to 19] attack right
+		// heroFrames[20 to 21] attack up
+		// heroFrames[22 to 23] attack down
+		
 	}
 	
 	
