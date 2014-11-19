@@ -10,8 +10,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "EMP";
 		// We will change this later depending on our chose size for screen resolution
-		config.width = 480;
-		config.height = 480; 
+		config.width = 640;
+		config.height = 640; 
 		new LwjglApplication(new EmpGame(), config);
 	}
 }

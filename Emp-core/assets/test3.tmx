@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="hyptosis_tile-art-batch-1" tilewidth="32" tileheight="32">
+  <image source="hyptosis_tile-art-batch-1.png" trans="ff00ff" width="960" height="960"/>
+ </tileset>
+ <tileset firstgid="901" name="hyptosis_til-art-batch-2" tilewidth="32" tileheight="32">
+  <image source="hyptosis_til-art-batch-2.png" trans="ff00ff" width="960" height="960"/>
+ </tileset>
+ <tileset firstgid="1801" name="hyptosis_tile-art-batch-3" tilewidth="32" tileheight="32">
+  <image source="hyptosis_tile-art-batch-3.png" trans="ff00ff" width="960" height="960"/>
+ </tileset>
+ <layer name="Layer1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzN1EkKgDAMheFeoo7HcD6G8509lW/RQhBpmxDBxYdQXPiTRmuMsYoap4QKanImMTsDjDCRMwn/nTsccCr1auG0ZJBDEXjncuzL86mFDnql3gVW2Ji9KV2x+XK7OL0pXRrz9egupfTG0F3SuM90l2K9oRbJfEMtkvmGWr6aL/c+/+l/dQOeMFDY
+  </data>
+ </layer>
+ <objectgroup name="object" visible="0">
+  <object x="0" y="128" width="64" height="64"/>
+  <object x="96" y="128" width="256" height="64"/>
+  <object x="192" y="192" width="160" height="32"/>
+  <object x="224" y="224" width="96" height="32"/>
+  <object x="352" y="128" width="32" height="64"/>
+  <object x="384" y="128" width="32" height="32"/>
+  <object x="416" y="0" width="32" height="128"/>
+  <object x="448" y="0" width="192" height="64"/>
+  <object x="480" y="64" width="160" height="64"/>
+  <object x="512" y="128" width="64" height="32"/>
+  <object x="416" y="384" width="64" height="32"/>
+  <object x="224" y="448" width="64" height="32"/>
+  <object x="256" y="416" width="64" height="32"/>
+ </objectgroup>
+ <layer name="Layer2" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztkT9OAlEQh2cXll23RgsTtUFjp4GghZ0YOg1LQY1eQLiAegD/nMMgN/EIau8RDAV8k3kEE8Gw+Ep/yZeZnX3vy9u3IvnTDkX60INX6LheZ6vkLRB5dzzjGITWfwSr+b7Yt45jMzS3eob0I2oDziAtWP1OKRKJIYlmszWos7cGR6G51aP9sX5vLLIN+/jGJZGd2GatRKSCZxf2IHDrqomdMXN3VZ96XHTNp5hP65Z7VvcpnoaeDcrJzLVMmgWrJ7HVe/Z28VzCVZTPlRW53+LP+Q2eW7iLlndpWrhqc3x/SdWzz9f5yu7uNnL4DlKRw3T+u7wuzTmuiwW+7BfXNe960Pd0Fw94HuHJk2+A5wWGnv/9fxZnAh1kKHM=
+  </data>
+ </layer>
+</map>
