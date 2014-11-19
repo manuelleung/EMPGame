@@ -40,6 +40,8 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	
 	Vector2 position;
 	
+	Vector2 oldPosition;
+	
 	@Override
 	public void create () {
 		float w = Gdx.graphics.getWidth();
@@ -70,7 +72,8 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		// Set the viewpoint from camera and render map
 		tiledMapRenderer.setView(camera);
 		// array tiles (can use this later to be able to have character behind tiles) 
-		tiledMapRenderer.render(new int[] {0, 1, 2});
+		tiledMapRenderer.render(new int[] {0, 1, 2, 3});
+		// 0 = Wall , 2 = object
 		batch.setProjectionMatrix(camera.combined);
 		
 		sprite.setPosition(position.x, position.y);
@@ -79,32 +82,48 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		sprite.draw(batch);
 		batch.end();
 		
+		getCollisionTiles();
 		
 	}
 	
 	// use this?
 	// or use a blocked tile method ?
-	// if we use this... change to boolean and check before movements (so we dont get bouncing effect )
-	public float checkCollision(float x) {
+	// if we use this... check before movements (we might get bouncing effect)
+	public boolean checkCollision() {
 		MapObjects objects = tileMap.getLayers().get("object").getObjects();
 		for(MapObject object : objects) {
 			if(object instanceof RectangleMapObject) {
 				Rectangle r = ((RectangleMapObject) object).getRectangle();
 				// do collision here 
 				if(Intersector.overlaps(r, sprite.getBoundingRectangle())) {
-					
-					
-					// just testing 
-					if(x==-32)
-						return 64;
-					if(x==32)
-						return -64;
-					
+					return true;
 				}
 			}
 		}
-		
-		return 0;
+		return false;
+	}
+	
+	// Might use this for collision instead. it loops through a layer and gives us cells that are occupied
+	// One way to use this might be to place all non-null tiles into an array (not the best way)
+	// or use the custom properties ... in TEST3.TMX we have a wall layer (0) with custom tiles only on 
+	// the objects property = "Collision" 
+	public void getCollisionTiles() {
+		TiledMapTileLayer layer = (TiledMapTileLayer) tileMap.getLayers().get(0);
+			for (int x = 0; x < layer.getWidth(); x++) {
+				for (int y = 0; y < layer.getHeight(); y++) {
+					TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+						if(cell == null) {
+							continue; // There is no cell
+						}
+						if(cell.getTile() == null) {
+							continue; // No tile inside cell
+						}
+						// cell has a tile
+						Object property = cell.getTile().getProperties().get("Collision");
+						if(property != null)
+							System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
+				}
+	      }
 	}
 	
 	@Override
@@ -119,28 +138,26 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		// movement of sprite (for now)
-
 		
 		if(keycode == Keys.UP) {
-			position.y += 32;
-			if(sprite.getY()>=600) 
-				position.y-=32;
-			position.y += checkCollision(32);
+				position.y += 32;
+				if(sprite.getY()>=600) 
+					position.y-=32;
 		}
 		if(keycode == Keys.DOWN) {
-			position.y -= 32;
-			if(sprite.getY()<=0) 
-				position.y+=32;
+				position.y -= 32;
+				if(sprite.getY()<=0) 
+					position.y+=32;
 		}
 		if(keycode == Keys.LEFT) {
-			position.x -= 32;
-			if(sprite.getX()<=0) 
-				position.x+=32;
+				position.x -= 32;
+				if(sprite.getX()<=0) 
+					position.x+=32;
 		}
 		if(keycode == Keys.RIGHT) {
-			position.x += 32;
-			if(sprite.getX()>=600) 
-				position.x-=32;
+				position.x += 32;
+				if(sprite.getX()>=600) 
+					position.x-=32;
 		}
 		return true;
 	}

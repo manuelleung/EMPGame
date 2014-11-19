@@ -9,6 +9,19 @@
  <tileset firstgid="1801" name="hyptosis_tile-art-batch-3" tilewidth="32" tileheight="32">
   <image source="hyptosis_tile-art-batch-3.png" trans="ff00ff" width="960" height="960"/>
  </tileset>
+ <tileset firstgid="2701" name="meta_tiles" tilewidth="32" tileheight="32">
+  <image source="meta_tiles.png" trans="ff00ff" width="67" height="34"/>
+  <tile id="0">
+   <properties>
+    <property name="Collision" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Wall" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAd9HLhxuQAWpiHy1xi9RJrHrK5+ORxuQFdjFTzyAXUNAubmaNg8AJqpJ3B4I5RMPAAAN3PJlg=
+  </data>
+ </layer>
  <layer name="Layer1" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJzN1EkKgDAMheFeoo7HcD6G8509lW/RQhBpmxDBxYdQXPiTRmuMsYoap4QKanImMTsDjDCRMwn/nTsccCr1auG0ZJBDEXjncuzL86mFDnql3gVW2Ji9KV2x+XK7OL0pXRrz9egupfTG0F3SuM90l2K9oRbJfEMtkvmGWr6aL/c+/+l/dQOeMFDY
