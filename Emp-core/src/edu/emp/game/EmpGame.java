@@ -45,15 +45,14 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	Sprite sprite;
 	Texture texture;
 	
-	
-
-	
 	// Animation for the character
 	Animation heroAnimation;
 	TextureRegion [] heroFrames;
 	TextureRegion heroCurrentFrame;
 	Texture heroTexture;
 	float heroStateTime;
+	
+	Vector2 heroPosition;
 	
 	@Override
 	public void create () {
@@ -71,14 +70,11 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		// Movement Box Sprite
 		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
 		movementBoxSprite = new Sprite(movementBoxTexture);
-		
-<<<<<<< HEAD
 		movementBoxPosition = new Vector2(0, 0);
-
-=======
-		position = new Vector2(0, 0);
+		
+		heroPosition = new Vector2(0, 0);
+		
 		characterRender();
->>>>>>> 96e36616012c3ca7f90cb0fe8ce813fa86301489
 	}
 
 	@Override
@@ -100,11 +96,20 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 
 		
 		batch.begin();
+		
 		// draw the movement box
+		movementBoxSprite.draw(batch);
+		
+		
+		// heroAnimation is made with the whole array .. so when animation is running, it displays every animation
+		// instead of only the ones we want...
+		// -----> We might need to separate each animation into separate arrays before making the hero animation
+		// like we discussed in the LAB -
 		heroStateTime += Gdx.graphics.getDeltaTime();
 		heroCurrentFrame = heroAnimation.getKeyFrame(heroStateTime, true);
-		movementBoxSprite.draw(batch);
-		batch.draw(heroCurrentFrame, movementBoxSprite.getX(), movementBoxSprite.getY());
+		batch.draw(heroCurrentFrame, heroPosition.x, heroPosition.y);
+		
+		
 		batch.end();
 		
 		getCollisionTiles();
@@ -188,8 +193,9 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 					movementBoxPosition.x-=32;
 		}
 		
-		// print move-box position for debugging
-		System.out.println("x: " + movementBoxPosition.x + "y: " + movementBoxPosition.y);
+		// print move-box position for debugging and testing
+		System.out.println("box-x: " + movementBoxPosition.x + " box-y: " + movementBoxPosition.y);
+		
 		return true;
 	}
 
@@ -238,14 +244,14 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		
 		heroTexture = new Texture(Gdx.files.internal("Hero.png"));
 		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/frame_cols, heroTexture.getHeight()/frame_rows);
-		heroFrames = new TextureRegion[frame_cols * frame_rows];
+		heroFrames = new TextureRegion[frame_cols * frame_rows]; //24
 		int index = 0;
 		for (int i = 0; i < frame_rows; i++) {
-			for (int j = 0; i < frame_cols; i++) {
+			for (int j = 0; j < frame_cols; j++) {
 				heroFrames[index++] = temp[i][j];
 			}
 		}
-		heroAnimation = new Animation(0.025f, heroFrames);
+		heroAnimation = new Animation(0.15f, heroFrames);
 		heroStateTime = 0f;
 		// heroFrames[0 to 3] move up
 		// heroFrames[4 to 7] move down
