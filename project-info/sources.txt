@@ -5,8 +5,8 @@ Tiled Map Editor
       - website link: http://www.mapeditor.org/
 
 
-List of Tileset 
-***** ***** ***** ***** *****
+List of Tileset
+===============================================================================
 1. Tiled Terrains
    - http://opengameart.org/content/tiled-terrains
 
@@ -31,8 +31,22 @@ List of Tileset
 8. Ground Tileset // Grass & Sand //
    - http://opengameart.org/content/ground-tileset-grass-sand
 
-***** ***** ***** ***** *****
 
+===============================================================================
+
+
+RESOURCES
+===============================================================================
+
+2D Animation
+   - https://github.com/libgdx/libgdx/wiki/2D-Animation
+     - this link contains details about:
+       - sprite sheet
+       - frames
+       - state frame (frame time)
+       - REMEMBER: when using OpenGL 1.x, the size of the sprite sheet has to be in the power of two,
+       - Animation.java
+       	 - https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/Animation.java
 
 
 
