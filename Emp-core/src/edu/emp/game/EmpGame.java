@@ -72,8 +72,13 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
 		movementBoxSprite = new Sprite(movementBoxTexture);
 		
+<<<<<<< HEAD
 		movementBoxPosition = new Vector2(0, 0);
 
+=======
+		position = new Vector2(0, 0);
+		characterRender();
+>>>>>>> 96e36616012c3ca7f90cb0fe8ce813fa86301489
 	}
 
 	@Override
@@ -96,7 +101,10 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		
 		batch.begin();
 		// draw the movement box
+		heroStateTime += Gdx.graphics.getDeltaTime();
+		heroCurrentFrame = heroAnimation.getKeyFrame(heroStateTime, true);
 		movementBoxSprite.draw(batch);
+		batch.draw(heroCurrentFrame, movementBoxSprite.getX(), movementBoxSprite.getY());
 		batch.end();
 		
 		getCollisionTiles();
@@ -223,16 +231,21 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	}
 	
 	public void characterRender() {
+		// check 2D animation on resources.txt for reference as well the Renderer file in Lab 5
+		// frame_col and frame_row is based on a specific sprite, in this case: Hero.png
+		int frame_cols = 8;	
+		int frame_rows = 3;
+		
 		heroTexture = new Texture(Gdx.files.internal("Hero.png"));
-		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/8, heroTexture.getHeight()/3);
-		heroFrames = new TextureRegion[24];
+		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/frame_cols, heroTexture.getHeight()/frame_rows);
+		heroFrames = new TextureRegion[frame_cols * frame_rows];
 		int index = 0;
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; i < 8; i++) {
+		for (int i = 0; i < frame_rows; i++) {
+			for (int j = 0; i < frame_cols; i++) {
 				heroFrames[index++] = temp[i][j];
 			}
 		}
-		heroAnimation = new Animation(0.040f, heroFrames);
+		heroAnimation = new Animation(0.025f, heroFrames);
 		heroStateTime = 0f;
 		// heroFrames[0 to 3] move up
 		// heroFrames[4 to 7] move down
