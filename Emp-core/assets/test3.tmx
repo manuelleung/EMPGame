@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="hyptosis_tile-art-batch-1" tilewidth="32" tileheight="32">
   <image source="hyptosis_tile-art-batch-1.png" trans="ff00ff" width="960" height="960"/>
  </tileset>
@@ -25,12 +25,12 @@
    eJxjYCAd9HLhxuSAwWQeNjX4zEM2lxh16Oaji5FqHrmAmmZhM3MUUA9QO0ypkbcG2h2jYHAAAFjeKUs=
   </data>
  </layer>
- <layer name="Grass" width="20" height="20" visible="0">
+ <layer name="Grass" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJzN1EkKwCAMhWEvYcdjdD5G5/vfpG+hEISqCSl08VFw1Z8YrTHGKuqcGhpoyZnE6kwww0LOJPx/nnDBrdSrhdNSQAlVZnf4DfUwwKjUu8EOB7OX0/U2X24XpzenS2O+Ht2lnN4Uuksa95nuUqo31iKZb6xFMt9Yy1fz5d7nP71XD2k8TvQ=
   </data>
  </layer>
- <objectgroup name="object" width="0" height="0">
+ <objectgroup name="object" visible="0">
   <object x="0" y="128" width="64" height="64"/>
   <object x="96" y="128" width="256" height="64"/>
   <object x="192" y="192" width="160" height="32"/>
@@ -49,12 +49,12 @@
   <object x="416" y="352" width="32" height="32"/>
   <object x="448" y="352" width="32" height="32"/>
  </objectgroup>
- <layer name="Layer2" width="20" height="20" visible="0">
+ <layer name="Layer2" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJztkT1Ow0AQRsdOHBvXgQIp0ACiAyUKFHQEpSOKKagDFyC5AHAAfs6BQi6COALQcwREQd5oNgpSfhSHLfmkpxmPd5/Wa5H8OQtFetCFVzh3vc6WyVsg8u54wtEPrf8IlvN9sW8Vx3pobvUM6L+pDTiBtGD1N6VIJIYkGs9WoM7eGhyE5laP9of6vbHIBuzi+ymJbMY2ayciW3i2YQcCt66a2Bkzd1f1kcdF13yK+bRW3LO6j/E09GxQTsaueXlxNAtWj2Krd+zt4LmAy2gx1yhZkfstTs6v8dzAbbS4S9PGVZvi+0uqnn2+zld2d7eWw7eXiuyn09/ldWlOcbVm+LI5rivedaHn6S7u8TzAoydfH88zDDz/+//MzhDQvyub
   </data>
  </layer>
- <layer name="Grid" width="20" height="20" visible="0">
+ <layer name="Grid" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJzr52Jg6B/Fo3gUj+JRPIpJxAASo+8R
   </data>

@@ -36,6 +36,7 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	// movement box texture
 	Texture movementBoxTexture;
 	Sprite movementBoxSprite;
+	Vector2 movementBoxPosition;
 	
 	// spritebatch
 	SpriteBatch batch;
@@ -44,7 +45,8 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 	Sprite sprite;
 	Texture texture;
 	
-	Vector2 position;
+	
+
 	
 	// Animation for the character
 	Animation heroAnimation;
@@ -70,7 +72,7 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
 		movementBoxSprite = new Sprite(movementBoxTexture);
 		
-		position = new Vector2(0, 0);
+		movementBoxPosition = new Vector2(0, 0);
 
 	}
 
@@ -89,7 +91,8 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 		batch.setProjectionMatrix(camera.combined);
 		
 		// Set the new position of the movement box
-		movementBoxSprite.setPosition(position.x, position.y);
+		movementBoxSprite.setPosition(movementBoxPosition.x, movementBoxPosition.y);
+
 		
 		batch.begin();
 		// draw the movement box
@@ -134,8 +137,10 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 						}
 						// cell has a tile
 						Object property = cell.getTile().getProperties().get("Collision");
-						if(property != null)
-							System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
+						if(property != null) {
+							// add functionality~
+							//System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
+						}
 				}
 	      }
 	}
@@ -151,28 +156,32 @@ public class EmpGame extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// movement of box
 		
+		// movement of box ---- not the hero sprite
+		// boundaries to be changed with walls?
 		if(keycode == Keys.UP) {
-				position.y += 32;
-				if(movementBoxSprite.getY()>=600) 
-					position.y-=32;
+				movementBoxPosition.y += 32;
+				if(movementBoxSprite.getY()>=608) 
+					movementBoxPosition.y-=32;
 		}
 		if(keycode == Keys.DOWN) {
-				position.y -= 32;
+				movementBoxPosition.y -= 32;
 				if(movementBoxSprite.getY()<=0) 
-					position.y+=32;
+					movementBoxPosition.y+=32;
 		}
 		if(keycode == Keys.LEFT) {
-				position.x -= 32;
+				movementBoxPosition.x -= 32;
 				if(movementBoxSprite.getX()<=0) 
-					position.x+=32;
+					movementBoxPosition.x+=32;
 		}
 		if(keycode == Keys.RIGHT) {
-				position.x += 32;
-				if(movementBoxSprite.getX()>=600) 
-					position.x-=32;
+				movementBoxPosition.x += 32;
+				if(movementBoxSprite.getX()>=608) 
+					movementBoxPosition.x-=32;
 		}
+		
+		// print move-box position for debugging
+		System.out.println("x: " + movementBoxPosition.x + "y: " + movementBoxPosition.y);
 		return true;
 	}
 
