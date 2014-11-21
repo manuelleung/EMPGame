@@ -1,0 +1,24 @@
+This file contains the list of plans for the project
+==================================================================
+
+Manuel
+==================================================================
+
+
+
+
+
+Emily
+==================================================================
+
+
+
+
+Paul
+==================================================================
+1. Fix 2D animation
+   - must trigger specific animation during walk
+   - always how an animation even while the character is standing
+
+2. Move-box
+   - double check the move-box
