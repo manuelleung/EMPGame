@@ -1,16 +1,19 @@
 package edu.emp.game;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+
 import edu.emp.gameworld.Controller;
 import edu.emp.gameworld.Renderer;
 
 
 // This is the game source 
 public class EmpGame extends ApplicationAdapter {
+	private static final String TAG = EmpGame.class.getName();
 	
-	// a reference to renderer
+	// a reference to renderer and controller
 	private Renderer gameRenderer;
 	private Controller gameController;
 	
@@ -19,6 +22,10 @@ public class EmpGame extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		// Set Libgdx log level to DEBUG
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		// change this to LOG_NONE or LOG_INFO when we are ready to publish the game
+		
 		gameController = new Controller();
 		gameRenderer = new Renderer(gameController);		
 		

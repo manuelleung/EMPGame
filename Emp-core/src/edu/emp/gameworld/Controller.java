@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Controller extends InputAdapter {
-	// Control the sprites! that's why sprite is here but
+	private static final String TAG = Controller.class.getName();
+	
+	// Control the sprites! that's why the sprites are here but
 	// rendering the sprite (drawn by the SpriteBatch) is in Renderer :)
 	
 	// Movement-Box object
@@ -95,12 +97,12 @@ public class Controller extends InputAdapter {
 		updateHero();
 	}
 	
-	// update the controllable objects in the game
+	// update the Movement Box
 	public void updateMovementBox() {
 		movementBoxSprite.setPosition(movementBoxPosition.x, movementBoxPosition.y);
 	}
 	
-	// update hero animations
+	// update Hero animations
 	public void updateHero() {
 		// heroAnimation is made with the whole array .. so when animation is running, it displays every animation
 		// instead of only the ones we want...
@@ -145,7 +147,7 @@ public class Controller extends InputAdapter {
 		}
 		
 		// print move-box position for debugging and testing
-		System.out.println("box-x: " + movementBoxPosition.x + " box-y: " + movementBoxPosition.y);
+		Gdx.app.debug(TAG, "box-x: " + movementBoxPosition.x + " box-y: " + movementBoxPosition.y);
 		
 		return true;
 	}
@@ -166,5 +168,15 @@ public class Controller extends InputAdapter {
 	
 	public TextureRegion getHeroCurrentFrame() {
 		return heroCurrentFrame;
+	}
+	
+	@Override
+	public boolean keyUp (int keycode) {
+		// Reset game world
+		if (keycode == Keys.R) {
+			init();
+			Gdx.app.debug(TAG, "Game world resetted");
+		}
+		return false;
 	}
 }
