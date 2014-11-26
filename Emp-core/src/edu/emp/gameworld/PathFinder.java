@@ -36,13 +36,21 @@ public class PathFinder {
 				grid.get(y).get(x).reset();
 			}
 		}
-		/*If no Start or End nodes have been set, quit the findPath.*/
+
+		
+		
 		if (startX == -1 || startY == -1 || endX == -1 || endY == -1) {
+			/*If no Start or End nodes have been set, quit the findPath.*/
 			return noPath;
 		}
 		/*If Start = End, return found.*/
 		else if (startX == endX && startY == endY) {
-			return foundPath;
+			System.out.println("SAME LOCATION");
+			return noPath;
+		}
+		else if(grid.get(endY).get(endX).getType()==NodeType.END || grid.get(endY).get(endX).getType()==NodeType.BLOCKED) {
+			System.out.println("BLOCKED");
+			return noPath;
 		}
 		else {
 			openPath.add(grid.get(startY).get(startX)); //Add Start node to open
