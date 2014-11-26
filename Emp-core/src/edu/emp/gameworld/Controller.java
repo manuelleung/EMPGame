@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class Controller extends InputAdapter {
 	private static final String TAG = Controller.class.getName();
@@ -38,6 +39,12 @@ public class Controller extends InputAdapter {
 	// UNUSED FOR THE MOMENT
 	private Sprite[] spriteObjects; 
 	
+	
+	//PATH FINDER
+	PathFinder pathFinder;
+	boolean pathFound;
+	Array<Node> testPath = new Array<Node>();
+	
 	public Controller() {
 		init();
 	}
@@ -50,6 +57,31 @@ public class Controller extends InputAdapter {
 	
 	// Make all the game objects
 	private void initControllableObjects() {
+		
+		//init pathfinder
+		pathFinder = new PathFinder(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 32);
+		
+		//.................................................................//
+			//TESTING WITH VALUES PATHFINDER
+							//Pixel location of cell (x, y) + type
+			pathFinder.setNode(0, 0, NodeType.START);
+			pathFinder.setNode(32, 0, NodeType.BLOCKED);
+			//pathFinder.setNode(0, 32, NodeType.BLOCKED);
+			pathFinder.setNode(192, 256, NodeType.END);
+			pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
+			testPath = pathFinder.GetPath();
+			if(pathFound) {
+				System.out.println("Start cell "+"x: "+testPath.get(0).getX()+" y: "+testPath.get(0).getY());
+			for(int i=0; i<testPath.size; i++) {
+				System.out.println("x: "+testPath.get(i).getX()+" y: "+testPath.get(i).getY());
+			}
+			System.out.print("End cell ");
+			System.out.println("x: "+testPath.peek().getX()+" y: "+testPath.peek().getY());
+			System.out.println("steps: "+(testPath.size-1));
+			}
+			else { System.out.println("NO PATH"); }
+		//.................................................................//
+		
 		// details for the Movement Box Sprite
 		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
 		movementBoxSprite = new Sprite(movementBoxTexture);
@@ -97,6 +129,12 @@ public class Controller extends InputAdapter {
 		updateHero();
 	}
 	
+	public void testPathFinder() {
+		
+		//TEST
+		
+	}
+	
 	// update the Movement Box
 	public void updateMovementBox() {
 		movementBoxSprite.setPosition(movementBoxPosition.x, movementBoxPosition.y);
@@ -118,6 +156,7 @@ public class Controller extends InputAdapter {
 		//Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
 		//Vector3 position = camera.unproject(clickCoordinates);
 		//sprite.setPosition(position.x, position.y);
+		
 		return false;
 	}
 	
@@ -147,7 +186,7 @@ public class Controller extends InputAdapter {
 		}
 		
 		// print move-box position for debugging and testing
-		Gdx.app.debug(TAG, "box-x: " + movementBoxPosition.x + " box-y: " + movementBoxPosition.y);
+		//Gdx.app.debug(TAG, "box-x: " + movementBoxPosition.x + " box-y: " + movementBoxPosition.y);
 		
 		return true;
 	}
