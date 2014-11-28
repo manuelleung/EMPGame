@@ -22,20 +22,11 @@ Gameplay -
 		Move must always follow the player
 		Attack always if the player is next to enemy
 		(No need to add more AI for now)
-
 Animation -
 	Animate each corresponding action for player and enemy
 Player Max Movement -
 	Color in all tiles that a player can move to
-	Max movement must be like a rombus with the player in the middle
-Game World -
-	Make a new Tile Map to replace placeholder
-	Larger than the one used for testing
-	Must have Collision layer and Grid layer
-Camera -
-	Implement the camera that will start from the player's position
-	Camera must be free
-	Move camera by using keyboard input
+	Max movement must be like a rombus with the player in the middle	
 Pause -
 	Pause the game when a keyboard key has been pressed
 	Do not allow any actions to be done on the game	
@@ -50,7 +41,17 @@ Manuel
 
 Emily
 ==================================================================
-
+Main Menu -
+	Menu when opening the application with 3 buttons
+	Start, Intructions, Exit
+Camera -
+	Implement the camera that will start from the player's position
+	Camera must be free
+	Move camera by using keyboard input
+Game World -
+	Make a new Tile Map to replace placeholder
+	Larger than the one used for testing
+	Must have Collision layer and Grid layer
 
 
 Paul

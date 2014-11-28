@@ -4,7 +4,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import edu.emp.game.EMPGame;
-import edu.emp.game.EmpGame;
 
 // This is the launcher (Main)
 public class DesktopLauncher {
