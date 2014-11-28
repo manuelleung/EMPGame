@@ -41,18 +41,19 @@ Manuel
 
 Emily
 ==================================================================
-Main Menu -
+1. Main Menu -
 	Menu when opening the application with 3 buttons
 	Start, Intructions, Exit
-Camera -
+2. Camera -
 	Implement the camera that will start from the player's position
 	Camera must be free
 	Move camera by using keyboard input
-Game World -
+3. Game World -
 	Make a new Tile Map to replace placeholder
 	Larger than the one used for testing
 	Must have Collision layer and Grid layer
 
+[NOTE: Please check the Screens section in the progress-report file]
 
 Paul
 ==================================================================

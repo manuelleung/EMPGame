@@ -62,3 +62,10 @@ RESOURCES
        - Animation.java
        	 - https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/Animation.java
 
+2. Buttons and Stage 2D
+   - http://libdgxtutorials.blogspot.com/2013/09/libgdx-tutorial-10-button-and-stage-2d.html
+
+3. Screens
+   - https://code.google.com/p/libgdx-users/wiki/ScreenAndGameClasses
+   - http://www.toxsickproductions.com/libgdx/libgdx-basics-game-and-screens/
+
