@@ -65,18 +65,21 @@ public class Controller extends InputAdapter {
 			//TESTING WITH VALUES PATHFINDER
 							//Pixel location of cell (x, y) + type
 			pathFinder.setNode(0, 0, NodeType.START);
-			pathFinder.setNode(32, 0, NodeType.BLOCKED);
-			//pathFinder.setNode(0, 32, NodeType.BLOCKED);
-			pathFinder.setNode(192, 256, NodeType.END);
+			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
+			pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
+			pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
+			pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
+			pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
+			pathFinder.setNode(0, (32*14), NodeType.END);
 			pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
 			testPath = pathFinder.GetPath();
 			if(pathFound) {
-				System.out.println("Start cell "+"x: "+testPath.get(0).getX()+" y: "+testPath.get(0).getY());
+				System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
 			for(int i=0; i<testPath.size; i++) {
-				System.out.println("x: "+testPath.get(i).getX()+" y: "+testPath.get(i).getY());
+				System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
 			}
 			System.out.print("End cell ");
-			System.out.println("x: "+testPath.peek().getX()+" y: "+testPath.peek().getY());
+			System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
 			System.out.println("steps: "+(testPath.size-1));
 			}
 			else { System.out.println("NO PATH"); }
