@@ -22,8 +22,7 @@ Gameplay -
 		Move must always follow the player
 		Attack always if the player is next to enemy
 		(No need to add more AI for now)
-Pathfinding -
-	Character chosen will move to a selected destination
+
 Animation -
 	Animate each corresponding action for player and enemy
 Player Max Movement -
@@ -46,7 +45,8 @@ Hero -
 
 Manuel
 ==================================================================
-
+1. Pathfinding -
+	Character chosen will move to a selected destination
 
 Emily
 ==================================================================
@@ -55,12 +55,12 @@ Emily
 
 Paul
 ==================================================================
-1. Segregate the game objects into their own classes
-   *** DONE! ***
+1. [DONE] Segregate the game objects into their own classes
 
-2. Move-box
+
+2. [DONE] Move-box
    - double check the move-box
-   *** DONE! ***
+
    
 3. Fix 2D animation
    - must trigger specific animation during walk

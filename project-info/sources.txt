@@ -1,12 +1,17 @@
 This document will serve as a collection of sites or references that is currently in used and will be used as an aid to help develop the game.
 
-
+==============================================================================================================================================================
+List of Websites to use
+==============================================================================================================================================================
 Tiled Map Editor
-      - website link: http://www.mapeditor.org/
+      - http://www.mapeditor.org/
 
+OpenGameArt.org
+	- http://opengameart.org/
 
+==============================================================================================================================================================
 List of Tileset
-===============================================================================
+==============================================================================================================================================================
 1. Tiled Terrains
    - http://opengameart.org/content/tiled-terrains
 
@@ -31,14 +36,23 @@ List of Tileset
 8. Ground Tileset // Grass & Sand //
    - http://opengameart.org/content/ground-tileset-grass-sand
 
+9. Hero spritesheets (Ars Notoria)
+   - http://opengameart.org/content/hero-spritesheets-ars-notoria
 
-===============================================================================
+10. Various Walkcycle (8 characters)
+    - http://opengameart.org/content/various-walkcycle-8-characters
 
+11. Pixel Swords
+    - http://opengameart.org/content/pixel-swords
 
+12. RPG Hero (walking cycle)
+    - http://opengameart.org/content/rpg-hero-walking-cycle
+
+==============================================================================================================================================================
 RESOURCES
-===============================================================================
+==============================================================================================================================================================
 
-2D Animation
+1. 2D Animation
    - https://github.com/libgdx/libgdx/wiki/2D-Animation
      - this link contains details about:
        - sprite sheet
@@ -47,6 +61,4 @@ RESOURCES
        - REMEMBER: when using OpenGL 1.x, the size of the sprite sheet has to be in the power of two,
        - Animation.java
        	 - https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/Animation.java
-
-
 
