@@ -90,10 +90,6 @@ public class Controller extends InputAdapter {
 		
 		enemy = new Enemy(0, 32);
 		
-		
-		
-		
-		
 	}
 	
 

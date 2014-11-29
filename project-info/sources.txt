@@ -48,6 +48,9 @@ List of Tileset
 12. RPG Hero (walking cycle)
     - http://opengameart.org/content/rpg-hero-walking-cycle
 
+13. RPG sprites
+    - http://opengameart.org/content/antifareas-rpg-sprite-set-1-enlarged-w-transparent-background-fixed
+
 ==============================================================================================================================================================
 RESOURCES
 ==============================================================================================================================================================
