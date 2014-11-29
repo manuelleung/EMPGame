@@ -10,8 +10,21 @@ public class Hero {
 
 	
 	// Animation for the character
-	private Animation heroAnimation;
+	private Animation heroWalkUpAnim;
+	private Animation heroWalkRightAnim;
+	private Animation heroWalkDownAnim;
+	private Animation heroWalkLeftAnim;
 	private TextureRegion [] heroFrames;
+	
+	// contains the specific movement of the characters
+	private TextureRegion [][] heroFramesSeparated;
+	
+	// number of unique character actions
+	private int uniqueActions = 4;
+	// frame count for before the beginning of a new animation sprite
+	// or the frame count of each uniqueAction set
+	private int frameCount = 3;
+	
 	private TextureRegion heroCurrentFrame;
 	private Texture heroTexture;
 	private float heroStateTime;
@@ -25,38 +38,55 @@ public class Hero {
 	
 	public Hero(float x, float y) {
 		// details for the Hero Object		
-				heroTexture = new Texture(Gdx.files.internal("Hero.png"));
-				setHeroPosition(new Vector2(0, 0));
-				// Initialize the Hero!
-				initHero();
+		heroTexture = new Texture(Gdx.files.internal("hero/walkcyclevarious.png"));
+		setHeroPosition(new Vector2(0, 0));
+		// Initialize the Hero!
+		initHero();
 	}
 	
 	// Make the Hero of the game.
 	private void initHero() {
-		// check 2D animation on resources.txt for reference as well the Renderer file in Lab 5
-		// frame_col and frame_row is based on a specific sprite, in this case: Hero.png
-		int frame_cols = 8;	
-		int frame_rows = 3;
+		// frame_col and frame_row is based on a specific sprite, in this case: walkcyclevarious.png
+		int frame_cols = 12;	
+		int frame_rows = 8;
 		
 		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/frame_cols, heroTexture.getHeight()/frame_rows);
-		heroFrames = new TextureRegion[frame_cols * frame_rows]; //24
+		heroFrames = new TextureRegion[frame_cols * frame_rows]; // 96
 		
+		// Store all action hero frames
 		int index = 0;
 		for (int i = 0; i < frame_rows; i++) {
 			for (int j = 0; j < frame_cols; j++) {
 				heroFrames[index++] = temp[i][j];
 			}
 		}
-		heroAnimation = new Animation(0.15f, heroFrames);
+		
+		// initialize the two-dimensional arrays
+		heroFramesSeparated = new TextureRegion[uniqueActions][frameCount];
+		
+		index = 0;
+		// for every heroFrame action (there are 12 unique actions based on the sprite sheet)
+		for (int i = 0; i < uniqueActions; i++ ) {
+			// for each set of sprite movement
+			for (int j = 0; j < frameCount; j++) {
+				heroFramesSeparated[i][j] = heroFrames[index++];
+			}
+		}
+		
+		/*
+		 * This heroFramesSeparated double array ends with this:
+		 * heroFramesSeparated[0][...] = walk up
+		 * heroFramesSeparated[1][...] = walk right
+		 * heroFramesSeparated[2][...] = walk down
+		 * heroFramesSeparated[3][...] = walk left
+		 */
+		
+		heroWalkUpAnim = new Animation(0.20f, heroFramesSeparated[0]);
+		heroWalkRightAnim = new Animation(0.20f, heroFramesSeparated[1]);
+		heroWalkDownAnim = new Animation(0.20f, heroFramesSeparated[2]);
+		heroWalkLeftAnim = new Animation(0.20f, heroFramesSeparated[3]);
+		
 		heroStateTime = 0f;
-		// heroFrames[0 to 3] move up
-		// heroFrames[4 to 7] move down
-		// heroFrames[8 to 11] move left
-		// heroFrames[12 to 15] move right
-		// heroFrames[16 to 17] attack left
-		// heroFrames[18 to 19] attack right
-		// heroFrames[20 to 21] attack up
-		// heroFrames[22 to 23] attack down
 		
 		// STATS
 		heroHealth=100;
@@ -74,7 +104,26 @@ public class Hero {
 		// -----> We might need to separate each animation into separate arrays before making the hero animation
 		// like we discussed in the LAB -
 		heroStateTime += Gdx.graphics.getDeltaTime();
-		setHeroCurrentFrame(heroAnimation.getKeyFrame(heroStateTime, true));
+		
+		// Standard movement
+		heroWalkUp();
+	}
+	
+	// actions for the hero
+	public void heroWalkUp() {
+		setHeroCurrentFrame(heroWalkUpAnim.getKeyFrame(heroStateTime, true));
+	}
+	
+	public void heroWalkRight() {
+		setHeroCurrentFrame(heroWalkRightAnim.getKeyFrame(heroStateTime, true));
+	}
+	
+	public void heroWalkDown() {
+		setHeroCurrentFrame(heroWalkDownAnim.getKeyFrame(heroStateTime, true));
+	}
+	
+	public void heroWalkLeft() {
+		setHeroCurrentFrame(heroWalkLeftAnim.getKeyFrame(heroStateTime, true));
 	}
 
 	public TextureRegion getHeroCurrentFrame() {
