@@ -1,5 +1,7 @@
 package edu.emp.gameworld;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
@@ -44,23 +46,37 @@ public class Controller extends InputAdapter {
 	private TextureRegion heroCurrentFrame;
 	private Texture heroTexture;
 	private float heroStateTime;
-	
-	// Hero object
 	private Vector2 heroPosition;
 	
-	// The sprites placed in spriteObjects will be drawn
-	// in the Renderer file.
-	// UNUSED FOR THE MOMENT
-	private Sprite[] spriteObjects; 
+	private int heroHealth;
+	private int heroAttackDamage;
+	private int heroAccuracy;
+	private int heroEvasion;
+	private int heroDefense;
 	
+	//enemy
 	private Animation enemyAnimation;
 	private TextureRegion[] enemyFrames;
 	private TextureRegion enemyCurrentFrame;
 	private Texture enemyTexture;
 	private float enemyStateTime;
-	
 	private Vector2 enemyPosition;
 	
+	private int enemyHealth;
+	private int enemyAttackDamage;
+	private int enemyAccuracy;
+	private int enemyEvasion;
+	private int enemyDefense;
+	
+	
+	// TURN states must be switched with "WAIT" option 
+	private int turn = 1; //1 = hero, 2 = enemy
+	
+	
+	// The sprites placed in spriteObjects will be drawn
+	// in the Renderer file.
+	// UNUSED FOR THE MOMENT
+	private Sprite[] spriteObjects; 
 	
 	
 	//PATH FINDER
@@ -130,6 +146,13 @@ public class Controller extends InputAdapter {
 		// heroFrames[18 to 19] attack right
 		// heroFrames[20 to 21] attack up
 		// heroFrames[22 to 23] attack down
+		
+		// STATS
+		heroHealth = 100;
+		heroAttackDamage = 20;
+		heroAccuracy = 100;
+		heroEvasion = 20;
+		heroDefense = 5;
 	}
 	
 	// Make the Hero of the game.
@@ -148,6 +171,13 @@ public class Controller extends InputAdapter {
 		}
 		enemyAnimation = new Animation(0.15f, enemyFrames);
 		enemyStateTime = 0f;
+		
+		//STATS
+		enemyHealth = 100;
+		enemyAttackDamage = 20;
+		enemyAccuracy = 100;
+		enemyEvasion = 20;
+		enemyDefense = 5;
 	}
 	
 	// update the game objects
@@ -218,6 +248,50 @@ public class Controller extends InputAdapter {
 	
 	@Override
 	public boolean keyDown(int keycode) {
+		
+		// TESTING//////////////////////////////////////////////////////
+		// ALL FORMULAS TO BE CHANGED
+		int hitRate = heroAccuracy - enemyEvasion; // 80%
+		int damage = heroAttackDamage - enemyDefense; // 15
+		Random random = new Random();
+		if(keycode == Keys.SPACE) {
+			if(turn==1) {
+				if(enemyHealth>0) {
+					//enemy is alive
+					if( movementBoxPosition.x == enemyPosition.x && movementBoxPosition.y == enemyPosition.y){
+						//selected enemy to attack
+						if( (heroPosition.x+32==enemyPosition.x&&heroPosition.y==enemyPosition.y) ||
+							(heroPosition.x-32==enemyPosition.x&&heroPosition.y==enemyPosition.y) ||
+							(heroPosition.y+32==enemyPosition.y&&heroPosition.x==enemyPosition.x) ||
+							(heroPosition.y-32==enemyPosition.y&&heroPosition.x==enemyPosition.x) ) {
+							//enemy in range
+							if( random.nextInt((100-1)+1)+1 < hitRate) {
+								//hit
+								enemyHealth -= damage;
+								System.out.println("HIT! Enemy health: " +enemyHealth);
+							} else {
+								//miss
+								System.out.println("MISSED! Enemy health: "+enemyHealth);
+							}
+						} else {
+							//enemy not in range 
+							System.out.println("Enemy chosen is not in range");
+						}
+					} else {
+						//enemy not chosen
+						System.out.println("Please choose enemy to attack!");
+					}
+				} else {
+					//enemy has been eliminated
+					//assuming we delete the enemy we dont need this
+				}
+			} else {
+				// ENEMIES turn
+			}
+		}
+		///////////////////////////////////////////////////////////////
+		
+		
 		// movement of box ---- not the hero sprite
 		// boundaries to be changed with walls?
 		if(keycode == Keys.UP) {
