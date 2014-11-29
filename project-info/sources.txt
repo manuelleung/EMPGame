@@ -48,6 +48,12 @@ List of Tileset
 12. RPG Hero (walking cycle)
     - http://opengameart.org/content/rpg-hero-walking-cycle
 
+13. LPC Heroine
+    - http://opengameart.org/content/lpc-heroine
+
+14. 16x16 Mage
+    - http://opengameart.org/content/16x16-mage
+
 ==============================================================================================================================================================
 RESOURCES
 ==============================================================================================================================================================
@@ -69,3 +75,12 @@ RESOURCES
    - https://code.google.com/p/libgdx-users/wiki/ScreenAndGameClasses
    - http://www.toxsickproductions.com/libgdx/libgdx-basics-game-and-screens/
 
+
+4. Tile Maps
+   - https://github.com/libgdx/libgdx/wiki/Tile-maps
+
+5. Spritebatch, Textureregions, and Sprites
+   - https://github.com/libgdx/libgdx/wiki/Spritebatch,-Textureregions,-and-Sprites
+
+6. External tutorials
+   - https://github.com/libgdx/libgdx/wiki/External-tutorials
