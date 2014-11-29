@@ -1,6 +1,6 @@
 /*
- * EMPGame renders the first screen.
- */
+* EMPGame renders the first screen.
+*/
 
 package edu.emp.game;
 
