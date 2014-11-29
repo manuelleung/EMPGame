@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Castle_2" tilewidth="32" tileheight="32">
+  <image source="Castle_2.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="257" name="Castle2" tilewidth="32" tileheight="32">
+  <image source="Castle2.png" width="512" height="512"/>
+ </tileset>
+ <layer name="bg" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt06sOg0AQhWF4/wcpSFRBIkiD5BLQFCiaJgXbQ7In2SBwO4sY8Wcz6hsx+wiDIPJUjJ4o91R2M79CteOaCz8RqjfR5zygt+NGtJjoc17R17wu2030Ofu8vxYVQnUnX9K2d6A/oVnQPqyP5fPupPwf2iyf/1LKp6e++uqrr7766qsv3R38F0o9VaI/cgwOSQ==
+  </data>
+ </layer>
+ <layer name="underbox" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwzENADAIADDwLwKfuxYE8PLQJo0AWuXOycudAADATR/5MSm/
+  </data>
+ </layer>
+ <layer name="stairs" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENACAMBLBNOxKQgFGCgH2PT5u0CnhWZ052Z05OZwIAAH9cUCstGQ==
+  </data>
+ </layer>
+ <layer name="objects" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztzTEBAAAEADD6txFLCi1wbAUWAXCrc++qxQsAAD4ZUZgBnw==
+  </data>
+ </layer>
+ <layer name="gates" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztzTERACAMBLCvf2fgAMyACa4MiYEk/GJUMqvvX/fejT8AAADvHPPmA08=
+  </data>
+ </layer>
+</map>
