@@ -85,9 +85,9 @@ public class Renderer implements Disposable {
 		// draw the movement box
 		gameController.getMovementBoxSprite().draw(batch);
 		// draw the hero
-		batch.draw(gameController.getHeroCurrentFrame(), gameController.getHeroPosition().x, gameController.getHeroPosition().y);
+		batch.draw(gameController.getHero().getHeroCurrentFrame(), gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y);
 		// draw enemy
-		batch.draw(gameController.getEnemyCurrentFrame(), gameController.getEnemyPosition().x, gameController.getEnemyPosition().y);
+		batch.draw(gameController.getEnemy().getEnemyCurrentFrame(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
 		batch.end();
 		
 		getCollisionTiles();

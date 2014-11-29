@@ -40,33 +40,14 @@ public class Controller extends InputAdapter {
 	// indicate selected sprite?
 	public int selectedSprite;
 	
-	// Animation for the character
-	private Animation heroAnimation;
-	private TextureRegion [] heroFrames;
-	private TextureRegion heroCurrentFrame;
-	private Texture heroTexture;
-	private float heroStateTime;
-	private Vector2 heroPosition;
+
 	
-	private int heroHealth;
-	private int heroAttackDamage;
-	private int heroAccuracy;
-	private int heroEvasion;
-	private int heroDefense;
+	// For multiple enemies or heroes make into an array
+	private Enemy enemy;
 	
-	//enemy
-	private Animation enemyAnimation;
-	private TextureRegion[] enemyFrames;
-	private TextureRegion enemyCurrentFrame;
-	private Texture enemyTexture;
-	private float enemyStateTime;
-	private Vector2 enemyPosition;
+	private Hero hero;
 	
-	private int enemyHealth;
-	private int enemyAttackDamage;
-	private int enemyAccuracy;
-	private int enemyEvasion;
-	private int enemyDefense;
+	
 	
 	
 	// TURN states must be switched with "WAIT" option 
@@ -104,87 +85,24 @@ public class Controller extends InputAdapter {
 		movementBoxSprite = new Sprite(movementBoxTexture);
 		movementBoxPosition = new Vector2(0, 0);
 		
-		// details for the Hero Object		
-		heroTexture = new Texture(Gdx.files.internal("Hero.png"));
-		heroPosition = new Vector2(0, 0);
-		
-		// details for the Enemy Object		
-		enemyTexture = new Texture(Gdx.files.internal("Hero.png"));
-		enemyPosition = new Vector2(32, 0);
+		hero = new Hero(0, 0);
 		
 		
-		// Initialize the Hero!
-		initHero();
+		enemy = new Enemy(0, 32);
 		
-		// Initialize the enemy
-		initEnemy();
+		
+		
+		
+		
 	}
 	
-	// Make the Hero of the game.
-	private void initHero() {
-		// check 2D animation on resources.txt for reference as well the Renderer file in Lab 5
-		// frame_col and frame_row is based on a specific sprite, in this case: Hero.png
-		int frame_cols = 8;	
-		int frame_rows = 3;
-		
-		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/frame_cols, heroTexture.getHeight()/frame_rows);
-		heroFrames = new TextureRegion[frame_cols * frame_rows]; //24
-		
-		int index = 0;
-		for (int i = 0; i < frame_rows; i++) {
-			for (int j = 0; j < frame_cols; j++) {
-				heroFrames[index++] = temp[i][j];
-			}
-		}
-		heroAnimation = new Animation(0.15f, heroFrames);
-		heroStateTime = 0f;
-		// heroFrames[0 to 3] move up
-		// heroFrames[4 to 7] move down
-		// heroFrames[8 to 11] move left
-		// heroFrames[12 to 15] move right
-		// heroFrames[16 to 17] attack left
-		// heroFrames[18 to 19] attack right
-		// heroFrames[20 to 21] attack up
-		// heroFrames[22 to 23] attack down
-		
-		// STATS
-		heroHealth = 100;
-		heroAttackDamage = 20;
-		heroAccuracy = 100;
-		heroEvasion = 20;
-		heroDefense = 5;
-	}
-	
-	// Make the Hero of the game.
-	private void initEnemy() {
-		int frame_cols = 8;	
-		int frame_rows = 3;
-		
-		TextureRegion [][] temp = TextureRegion.split(enemyTexture, enemyTexture.getWidth()/frame_cols, enemyTexture.getHeight()/frame_rows);
-		enemyFrames = new TextureRegion[frame_cols * frame_rows]; //24
-		
-		int index = 0;
-		for (int i = 0; i < frame_rows; i++) {
-			for (int j = 0; j < frame_cols; j++) {
-				enemyFrames[index++] = temp[i][j];
-			}
-		}
-		enemyAnimation = new Animation(0.15f, enemyFrames);
-		enemyStateTime = 0f;
-		
-		//STATS
-		enemyHealth = 100;
-		enemyAttackDamage = 20;
-		enemyAccuracy = 100;
-		enemyEvasion = 20;
-		enemyDefense = 5;
-	}
+
 	
 	// update the game objects
 	public void update(float deltaTime) {
 		updateMovementBox();
-		updateHero();
-		updateEnemy();
+		hero.updateHero();
+		enemy.updateEnemy();
 	}
 	
 	public void testPathFinder() {
@@ -220,21 +138,8 @@ public class Controller extends InputAdapter {
 	public void updateMovementBox() {
 		movementBoxSprite.setPosition(movementBoxPosition.x, movementBoxPosition.y);
 	}
+
 	
-	// update Hero animations
-	public void updateHero() {
-		// heroAnimation is made with the whole array .. so when animation is running, it displays every animation
-		// instead of only the ones we want...
-		// -----> We might need to separate each animation into separate arrays before making the hero animation
-		// like we discussed in the LAB -
-		heroStateTime += Gdx.graphics.getDeltaTime();
-		heroCurrentFrame = heroAnimation.getKeyFrame(heroStateTime, true);
-	}
-	
-	public void updateEnemy() {
-		enemyStateTime += Gdx.graphics.getDeltaTime();
-		enemyCurrentFrame = enemyAnimation.getKeyFrame(enemyStateTime, true);
-	}
 	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -251,27 +156,27 @@ public class Controller extends InputAdapter {
 		
 		// TESTING//////////////////////////////////////////////////////
 		// ALL FORMULAS TO BE CHANGED
-		int hitRate = heroAccuracy - enemyEvasion; // 80%
-		int damage = heroAttackDamage - enemyDefense; // 15
+		int hitRate = hero.getHeroAccuracy() - enemy.getEnemyEvasion(); // 80%
+		int damage = hero.getHeroAttackDamage() - enemy.getEnemyDefense(); // 15
 		Random random = new Random();
 		if(keycode == Keys.SPACE) {
 			if(turn==1) {
-				if(enemyHealth>0) {
+				if(enemy.getEnemyHealth()>0) {
 					//enemy is alive
-					if( movementBoxPosition.x == enemyPosition.x && movementBoxPosition.y == enemyPosition.y){
+					if( movementBoxPosition.x == enemy.getEnemyPosition().x && movementBoxPosition.y == enemy.getEnemyPosition().y){
 						//selected enemy to attack
-						if( (heroPosition.x+32==enemyPosition.x&&heroPosition.y==enemyPosition.y) ||
-							(heroPosition.x-32==enemyPosition.x&&heroPosition.y==enemyPosition.y) ||
-							(heroPosition.y+32==enemyPosition.y&&heroPosition.x==enemyPosition.x) ||
-							(heroPosition.y-32==enemyPosition.y&&heroPosition.x==enemyPosition.x) ) {
+						if( (hero.getHeroPosition().x+32==enemy.getEnemyPosition().x&&hero.getHeroPosition().y==enemy.getEnemyPosition().y) ||
+							(hero.getHeroPosition().x-32==enemy.getEnemyPosition().x&&hero.getHeroPosition().y==enemy.getEnemyPosition().y) ||
+							(hero.getHeroPosition().y+32==enemy.getEnemyPosition().y&&hero.getHeroPosition().x==enemy.getEnemyPosition().x) ||
+							(hero.getHeroPosition().y-32==enemy.getEnemyPosition().y&&hero.getHeroPosition().x==enemy.getEnemyPosition().x) ) {
 							//enemy in range
 							if( random.nextInt((100-1)+1)+1 < hitRate) {
 								//hit
-								enemyHealth -= damage;
-								System.out.println("HIT! Enemy health: " +enemyHealth);
+								enemy.setEnemyHealth(damage);
+								System.out.println("HIT! Enemy health: " +enemy.getEnemyHealth());
 							} else {
 								//miss
-								System.out.println("MISSED! Enemy health: "+enemyHealth);
+								System.out.println("MISSED! Enemy health: "+enemy.getEnemyHealth());
 							}
 						} else {
 							//enemy not in range 
@@ -332,19 +237,15 @@ public class Controller extends InputAdapter {
 	
 	// access and getter to render the Hero
 	public Vector2 getHeroPosition() {
-		return heroPosition;
+		return hero.getHeroPosition();
 	}
 	
-	public TextureRegion getHeroCurrentFrame() {
-		return heroCurrentFrame;
+	public Hero getHero() {
+		return hero;
 	}
 	
-	public Vector2 getEnemyPosition() {
-		return enemyPosition;
-	}
-	
-	public TextureRegion getEnemyCurrentFrame() {
-		return enemyCurrentFrame;
+	public Enemy getEnemy() {
+		return enemy;
 	}
 	
 	@Override
