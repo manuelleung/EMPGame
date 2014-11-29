@@ -3,11 +3,23 @@ package edu.emp.gameworld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 
 public class Controller extends InputAdapter {
@@ -21,8 +33,7 @@ public class Controller extends InputAdapter {
 	private Sprite movementBoxSprite;
 	private Vector2 movementBoxPosition;
 	
-	// Hero object
-	private Vector2 heroPosition;
+	
 	
 	// indicate selected sprite?
 	public int selectedSprite;
@@ -34,10 +45,22 @@ public class Controller extends InputAdapter {
 	private Texture heroTexture;
 	private float heroStateTime;
 	
+	// Hero object
+	private Vector2 heroPosition;
+	
 	// The sprites placed in spriteObjects will be drawn
 	// in the Renderer file.
 	// UNUSED FOR THE MOMENT
 	private Sprite[] spriteObjects; 
+	
+	private Animation enemyAnimation;
+	private TextureRegion[] enemyFrames;
+	private TextureRegion enemyCurrentFrame;
+	private Texture enemyTexture;
+	private float enemyStateTime;
+	
+	private Vector2 enemyPosition;
+	
 	
 	
 	//PATH FINDER
@@ -57,33 +80,8 @@ public class Controller extends InputAdapter {
 	
 	// Make all the game objects
 	private void initControllableObjects() {
-		
 		//init pathfinder
 		pathFinder = new PathFinder(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 32);
-		
-		//.................................................................//
-			//TESTING WITH VALUES PATHFINDER
-							//Pixel location of cell (x, y) + type
-			pathFinder.setNode(0, 0, NodeType.START);
-			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
-			pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
-			pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
-			pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
-			pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
-			pathFinder.setNode(0, (32*14), NodeType.END);
-			pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
-			testPath = pathFinder.GetPath();
-			if(pathFound) {
-				System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
-			for(int i=0; i<testPath.size; i++) {
-				System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
-			}
-			System.out.print("End cell ");
-			System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
-			System.out.println("steps: "+(testPath.size-1));
-			}
-			else { System.out.println("NO PATH"); }
-		//.................................................................//
 		
 		// details for the Movement Box Sprite
 		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
@@ -94,8 +92,16 @@ public class Controller extends InputAdapter {
 		heroTexture = new Texture(Gdx.files.internal("Hero.png"));
 		heroPosition = new Vector2(0, 0);
 		
+		// details for the Enemy Object		
+		enemyTexture = new Texture(Gdx.files.internal("Hero.png"));
+		enemyPosition = new Vector2(32, 0);
+		
+		
 		// Initialize the Hero!
 		initHero();
+		
+		// Initialize the enemy
+		initEnemy();
 	}
 	
 	// Make the Hero of the game.
@@ -126,15 +132,57 @@ public class Controller extends InputAdapter {
 		// heroFrames[22 to 23] attack down
 	}
 	
+	// Make the Hero of the game.
+	private void initEnemy() {
+		int frame_cols = 8;	
+		int frame_rows = 3;
+		
+		TextureRegion [][] temp = TextureRegion.split(enemyTexture, enemyTexture.getWidth()/frame_cols, enemyTexture.getHeight()/frame_rows);
+		enemyFrames = new TextureRegion[frame_cols * frame_rows]; //24
+		
+		int index = 0;
+		for (int i = 0; i < frame_rows; i++) {
+			for (int j = 0; j < frame_cols; j++) {
+				enemyFrames[index++] = temp[i][j];
+			}
+		}
+		enemyAnimation = new Animation(0.15f, enemyFrames);
+		enemyStateTime = 0f;
+	}
+	
 	// update the game objects
 	public void update(float deltaTime) {
 		updateMovementBox();
 		updateHero();
+		updateEnemy();
 	}
 	
 	public void testPathFinder() {
 		
 		//TEST
+		//.................................................................//
+		//TESTING WITH VALUES PATHFINDER
+						//Pixel location of cell (x, y) + type
+		pathFinder.setNode(0, 0, NodeType.START);
+		//pathFinder.setNode(32, 0, NodeType.BLOCKED);
+		//pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
+		//pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
+		//pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
+		//pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
+		pathFinder.setNode(0, (32*14), NodeType.END);
+		pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
+		testPath = pathFinder.GetPath();
+		if(pathFound) {
+			System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
+		for(int i=0; i<testPath.size; i++) {
+			System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
+		}
+		System.out.print("End cell ");
+		System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
+		System.out.println("steps: "+(testPath.size-1));
+		}
+		else { System.out.println("NO PATH"); }
+	//.................................................................//
 		
 	}
 	
@@ -151,6 +199,11 @@ public class Controller extends InputAdapter {
 		// like we discussed in the LAB -
 		heroStateTime += Gdx.graphics.getDeltaTime();
 		heroCurrentFrame = heroAnimation.getKeyFrame(heroStateTime, true);
+	}
+	
+	public void updateEnemy() {
+		enemyStateTime += Gdx.graphics.getDeltaTime();
+		enemyCurrentFrame = enemyAnimation.getKeyFrame(enemyStateTime, true);
 	}
 	
 	@Override
@@ -210,6 +263,14 @@ public class Controller extends InputAdapter {
 	
 	public TextureRegion getHeroCurrentFrame() {
 		return heroCurrentFrame;
+	}
+	
+	public Vector2 getEnemyPosition() {
+		return enemyPosition;
+	}
+	
+	public TextureRegion getEnemyCurrentFrame() {
+		return enemyCurrentFrame;
 	}
 	
 	@Override

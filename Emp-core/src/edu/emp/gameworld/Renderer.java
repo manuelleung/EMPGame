@@ -1,7 +1,11 @@
 package edu.emp.gameworld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
@@ -14,6 +18,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Renderer implements Disposable {
@@ -27,6 +33,7 @@ public class Renderer implements Disposable {
 	
 	// ?
 	private Sprite sprite;
+	
 	
 	public Renderer(Controller gameController) {
 		// This is necessary since this allows the Renderer
@@ -79,6 +86,8 @@ public class Renderer implements Disposable {
 		gameController.getMovementBoxSprite().draw(batch);
 		// draw the hero
 		batch.draw(gameController.getHeroCurrentFrame(), gameController.getHeroPosition().x, gameController.getHeroPosition().y);
+		// draw enemy
+		batch.draw(gameController.getEnemyCurrentFrame(), gameController.getEnemyPosition().x, gameController.getEnemyPosition().y);
 		batch.end();
 		
 		getCollisionTiles();
