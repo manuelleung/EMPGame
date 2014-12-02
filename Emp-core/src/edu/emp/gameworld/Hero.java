@@ -23,7 +23,7 @@ public class Hero {
 	private int uniqueActions = 4;
 	// frame count for before the beginning of a new animation sprite
 	// or the frame count of each uniqueAction set
-	private int frameCount = 3;
+	private int frameCount = 4;
 	
 	private TextureRegion heroCurrentFrame;
 	private Texture heroTexture;
@@ -38,7 +38,7 @@ public class Hero {
 	
 	public Hero(float x, float y) {
 		// details for the Hero Object		
-		heroTexture = new Texture(Gdx.files.internal("hero/walkcyclevarious.png"));
+		heroTexture = new Texture(Gdx.files.internal("Hero.png"));
 		setHeroPosition(new Vector2(0, 0));
 		// Initialize the Hero!
 		initHero();
@@ -47,8 +47,8 @@ public class Hero {
 	// Make the Hero of the game.
 	private void initHero() {
 		// frame_col and frame_row is based on a specific sprite, in this case: walkcyclevarious.png
-		int frame_cols = 12;	
-		int frame_rows = 8;
+		int frame_cols = 8;	
+		int frame_rows = 3;
 		
 		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/frame_cols, heroTexture.getHeight()/frame_rows);
 		heroFrames = new TextureRegion[frame_cols * frame_rows]; // 96
