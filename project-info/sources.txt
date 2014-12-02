@@ -48,10 +48,13 @@ List of Tileset
 12. RPG Hero (walking cycle)
     - http://opengameart.org/content/rpg-hero-walking-cycle
 
-13. LPC Heroine
+13. RPG sprites
+    - http://opengameart.org/content/antifareas-rpg-sprite-set-1-enlarged-w-transparent-background-fixed
+
+14. LPC Heroine
     - http://opengameart.org/content/lpc-heroine
 
-14. 16x16 Mage
+15. 16x16 Mage
     - http://opengameart.org/content/16x16-mage
 
 ==============================================================================================================================================================
