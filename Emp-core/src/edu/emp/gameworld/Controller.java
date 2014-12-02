@@ -62,6 +62,8 @@ public class Controller extends InputAdapter {
 	boolean pathFound;
 	Array<Node> testPath = new Array<Node>();
 	
+	int SOMEINDEX = 0;
+	
 	
 	public Controller() {
 		init();
@@ -82,6 +84,8 @@ public class Controller extends InputAdapter {
 		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
 		movementBoxSprite = new Sprite(movementBoxTexture);
 		movementBoxPosition = new Vector2(0, 0);
+		
+		testPathFinder();
 		
 		hero = new Hero(0, 0);
 		
@@ -110,7 +114,7 @@ public class Controller extends InputAdapter {
 		//pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
 		//pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
 		//pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
-		pathFinder.setNode(0, (32*14), NodeType.END);
+		pathFinder.setNode((32*15), (32*15), NodeType.END);
 		pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
 		testPath = pathFinder.GetPath();
 		if(pathFound) {
@@ -173,9 +177,122 @@ public class Controller extends InputAdapter {
 			}
 		}*/
 		
+		this.move(Gdx.graphics.getDeltaTime());
 		// standard movement while standing
 		hero.setHeroWalk();
 	}	
+	
+	public Node getCurrentNode(int index) {
+		Node n = null;
+		if(index==0) {
+			//n = getFirstNode();
+			n = testPath.get(0);
+		}
+		if(index>0 && index<testPath.size) {
+			n = testPath.get(index);
+		}
+		else {
+			System.out.println("we are hitting end");
+		}
+		return n;
+	}
+	
+	public Node getFirstNode() {
+		pathFound = pathFinder.findPath();
+		testPath = pathFinder.GetPath();
+		return testPath.get(0);
+	}
+	public Node getNextNode(int index) {
+		Node n = null;
+		if(index < testPath.size) {
+			n = testPath.get(index+1);
+		}
+		else {
+			System.out.println("we are at the end");
+		}
+		return n;
+	}
+	public Node getPreviousNode(int index) {
+		Node n=null;
+		if(index > 0) {
+			n = testPath.get(index-1);
+		}
+		else {
+			System.out.println("we are at the end");
+		}
+		return n;
+	}
+	public void incrementCurrentNode() {
+		if(!(SOMEINDEX >= testPath.size)) {
+			SOMEINDEX++;
+		}
+		else {
+			System.out.println("Cant do that");
+			SOMEINDEX=-1;
+		}
+	}
+	
+	public void move(float f) {
+		Node currentNode = getCurrentNode(SOMEINDEX);
+		Node nextNode = getNextNode(SOMEINDEX);
+		
+		//MOVE RIGHT
+		if(currentNode.getX() < nextNode.getX()) {
+			hero.setWalkingStyle(WalkStyle.RIGHT);
+			hero.setX(16.0f);
+			if(hero.getX() > (hero.getX()+16.0f)) {
+				 hero.setX(16.0f);
+			}
+			if(hero.getX() >= 608.0f) {
+				hero.setX(608.0f);
+			}
+		}
+		//MOVE LEFT
+		else if(currentNode.getX() > nextNode.getX()) {
+			hero.setWalkingStyle(WalkStyle.LEFT);
+			hero.setX(-16.0f);
+			if(hero.getX() < (hero.getX()-16.0f)) {
+				hero.setX(-16.0f);
+			}
+			if(hero.getX() <= 0f) {
+				hero.setX(0f);
+			}
+		}
+		// MOVE UP
+		else if(currentNode.getY() > nextNode.getY()) {
+			hero.setWalkingStyle(WalkStyle.UP);
+			hero.setY(-16.0f);
+			if(hero.getY() < (hero.getY()-16.0f)) {
+				hero.setY(-16.0f);
+			}
+			if(hero.getY() <= 0f) {
+				hero.setY(0f);
+			}
+		}
+		// MOVE DOWN
+		else if(currentNode.getY() < nextNode.getY()) {
+			hero.setWalkingStyle(WalkStyle.DOWN);
+			hero.setY(16.0f);
+			if(hero.getY() > (hero.getY()+16.0f)) {
+				hero.setY(16.0f);
+			}
+			if(hero.getY() >= 608.0f) {
+				hero.setY(608.0f);
+			}
+		}
+		incrementCurrentNode();
+		if(SOMEINDEX == testPath.size) {
+			if(getCurrentNode(SOMEINDEX).getX() == 15 &&
+					getCurrentNode(SOMEINDEX).getY() == 15) {
+				System.out.println("reached destination");
+			}
+		}
+		if(SOMEINDEX == -1) {
+			System.out.println("no good");
+		}
+	}
+	
+	
 	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {

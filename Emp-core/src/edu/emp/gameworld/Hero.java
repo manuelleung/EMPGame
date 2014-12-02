@@ -49,11 +49,11 @@ public class Hero {
 	
 	// Make the Hero of the game.
 	private void initHero() {
-<<<<<<< HEAD
+
 		// frame_col and frame_row is based on a specific sprite, in this case: walkcyclevarious.png
-=======
+
 		// frame_col and frame_row is based on a specific sprite, in this case: Hero.png
->>>>>>> c6b24a986e9c98ef682e57278bdc246e5264d075
+
 		int frame_cols = 8;	
 		int frame_rows = 3;
 		
@@ -195,5 +195,18 @@ public class Hero {
 
 	public void setHeroDefense(int heroDefense) {
 		this.heroDefense = heroDefense;
+	}
+	
+	public void setX(float f) {
+		heroPosition.x += f;
+	}
+	public void setY(float f) {
+		heroPosition.y += f;
+	}
+	public float getX() {
+		return heroPosition.x;
+	}
+	public float getY() {
+		return heroPosition.y;
 	}
 }
