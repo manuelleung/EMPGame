@@ -35,35 +35,33 @@ public class Controller extends InputAdapter {
 	private Sprite movementBoxSprite;
 	private Vector2 movementBoxPosition;
 	
-	
-	
+	// Moving the sprites by this amount of pixel
+	// should this datatype be int or float??
+	private static final float MOVE_PIXEL_BY_32 = 32;
+
 	// indicate selected sprite?
 	public int selectedSprite;
-	
-
 	
 	// For multiple enemies or heroes make into an array
 	private Enemy enemy;
 	
+	// Hero object
 	private Hero hero;
-	
-	
-	
 	
 	// TURN states must be switched with "WAIT" option 
 	private int turn = 1; //1 = hero, 2 = enemy
 	
-	
 	// The sprites placed in spriteObjects will be drawn
 	// in the Renderer file.
 	// UNUSED FOR THE MOMENT
-	private Sprite[] spriteObjects; 
+	// private Sprite[] spriteObjects; 
 	
-	
+
 	//PATH FINDER
 	PathFinder pathFinder;
 	boolean pathFound;
 	Array<Node> testPath = new Array<Node>();
+	
 	
 	public Controller() {
 		init();
@@ -93,11 +91,10 @@ public class Controller extends InputAdapter {
 	}
 	
 
-	
 	// update the game objects
 	public void update(float deltaTime) {
 		updateMovementBox();
-		hero.updateHero();
+		updateHero(deltaTime);
 		enemy.updateEnemy();
 	}
 	
@@ -134,8 +131,51 @@ public class Controller extends InputAdapter {
 	public void updateMovementBox() {
 		movementBoxSprite.setPosition(movementBoxPosition.x, movementBoxPosition.y);
 	}
-
 	
+	// update Hero animations
+	public void updateHero(float deltaTime) {
+		hero.setHeroStateTime(hero.getHeroStateTime() + deltaTime);
+		
+		// Standard movement in sync with the Path finding Algorithm
+		// NEED TO FIX THE TEST: 
+		// - if (hero. ??? > testPath.get(i).getY())
+		// should the comparision be made to 
+		// to the sprite of the hero or to the vector of the hero such as the hero.getHeroPosition().y
+		/*
+		if (pathFound) {
+			
+			for (int i = 0; i < testPath.size; i++) {
+				// character in the same location
+				if (hero. == testPath.get(i).getX()/movePixel && hero. == testPath.get(i).getY())/movePixel) {
+					; // nop
+				}
+				// character moving up
+				if (hero. > testPath.get(i).getY()/MOVE_PIXEL_BY_32) {
+					hero.setWalkingStyle(WalkStyle.UP);
+				}
+				// character moving down
+				if (hero. > testPath.get(i).getX()/MOVE_PIXEL_BY_32) {
+					hero.setWalkingStyle(WalkStyle.DOWN);
+				}
+				// character moving left
+				if (hero. > testPath.get(i).getX()/MOVE_PIXEL_BY_32) {
+					hero.setWalkingStyle(WalkStyle.LEFT);
+				}
+				// character moving right
+				if (hero. > testPath.get(i).getX()/MOVE_PIXEL_BY_32) {
+					hero.setWalkingStyle(WalkStyle.RIGHT);
+				}
+				
+				// show the action of the hero walking
+				hero.setHeroWalk();
+				// update the current position
+				hero.setHeroPosition(hero.getHeroPosition().y + Gdx.graphics.getDeltaTime());				
+			}
+		}*/
+		
+		// standard movement while standing
+		hero.setHeroWalk();
+	}	
 	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -191,7 +231,28 @@ public class Controller extends InputAdapter {
 			}
 		}
 		///////////////////////////////////////////////////////////////
-		
+		// TEST KEY
+		if(keycode==Keys.T) {
+			pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.START);
+			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
+			//pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
+			//pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
+			//pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
+			//pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
+			pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
+			pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
+			testPath = pathFinder.GetPath();
+			if(pathFound) {
+				System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
+			for(int i=0; i<testPath.size; i++) {
+				System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
+			}
+			System.out.print("End cell ");
+			System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
+			System.out.println("steps: "+(testPath.size-1));
+			}
+			else { System.out.println("NO PATH"); }
+		}
 		
 		// movement of box ---- not the hero sprite
 		// boundaries to be changed with walls?

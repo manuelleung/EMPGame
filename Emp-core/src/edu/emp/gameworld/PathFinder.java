@@ -48,10 +48,10 @@ public class PathFinder {
 			System.out.println("SAME LOCATION");
 			return noPath;
 		}
-		else if(grid.get(endY).get(endX).getType()==NodeType.END || grid.get(endY).get(endX).getType()==NodeType.BLOCKED) {
+		/*else if(grid.get(endY).get(endX).getType()==NodeType.END || grid.get(endY).get(endX).getType()==NodeType.BLOCKED) {
 			System.out.println("BLOCKED");
 			return noPath;
-		}
+		}*/
 		else {
 			openPath.add(grid.get(startY).get(startX)); //Add Start node to open
 			setOpenList(startX, startY); //Set neighbors for Start node.
