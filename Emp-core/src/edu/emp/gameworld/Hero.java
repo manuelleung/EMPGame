@@ -54,7 +54,7 @@ public class Hero {
 		int frame_rows = 3;
 		
 		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/frame_cols, heroTexture.getHeight()/frame_rows);
-		heroFrames = new TextureRegion[frame_cols * frame_rows]; // 16
+		heroFrames = new TextureRegion[frame_cols * frame_rows]; // 24
 		
 		// Store all action hero frames
 		int index = 0;
@@ -105,14 +105,17 @@ public class Hero {
 	}
 	
 	// actions for the hero
-	public void setHeroWalk(WalkStyle wStyle) {
+	public void setHeroWalk() {
 		// the character is moving up, set its animation moving up
 		if (wStyle == WalkStyle.UP)
 			setHeroCurrentFrame(heroWalkUpAnim.getKeyFrame(heroStateTime, true));
+		// the character is moving left, set its animation moving left
 		if (wStyle == WalkStyle.LEFT)
 			setHeroCurrentFrame(heroWalkLeftAnim.getKeyFrame(heroStateTime, true));
+		// the character is moving down, set its animation moving down
 		if (wStyle == WalkStyle.DOWN)
 			setHeroCurrentFrame(heroWalkDownAnim.getKeyFrame(heroStateTime, true));
+		// the character is moving right, set its animation moving right
 		if (wStyle == WalkStyle.RIGHT)
 			setHeroCurrentFrame(heroWalkRightAnim.getKeyFrame(heroStateTime, true));
 	}

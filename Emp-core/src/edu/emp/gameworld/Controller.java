@@ -37,7 +37,7 @@ public class Controller extends InputAdapter {
 	
 	// Moving the sprites by this amount of pixel
 	// should this datatype be int or float??
-	private static final float movePixel = 32;
+	private static final float MOVE_PIXEL_BY_32 = 32;
 
 	// indicate selected sprite?
 	public int selectedSprite;
@@ -150,38 +150,31 @@ public class Controller extends InputAdapter {
 					; // nop
 				}
 				// character moving up
-				if (hero. > testPath.get(i).getY()) {
-					// show the corresponding animation
-					hero.setHeroWalk(WalkStyle.UP);
-					// update the current position
-					hero.setHeroPosition(hero.getHeroPosition().y + Gdx.graphics.getDeltaTime());
+				if (hero. > testPath.get(i).getY()/MOVE_PIXEL_BY_32) {
+					hero.setWalkingStyle(WalkStyle.UP);
 				}
 				// character moving down
-				if (hero. > testPath.get(i).getX()/movePixel) {
-					// show the corresponding animation
-					hero.setHeroWalk(WalkStyle.RIGHT);
-					// update the current position
-					hero.setHeroPosition(hero.getHeroPosition().x + Gdx.graphics.getDeltaTime());
+				if (hero. > testPath.get(i).getX()/MOVE_PIXEL_BY_32) {
+					hero.setWalkingStyle(WalkStyle.DOWN);
 				}
 				// character moving left
-				if (hero. > testPath.get(i).getX()/movePixel) {
-					// show the corresponding animation
-					hero.setHeroWalk(WalkStyle.RIGHT);
-					// update the current position
-					hero.setHeroPosition(hero.getHeroPosition().x + Gdx.graphics.getDeltaTime());
+				if (hero. > testPath.get(i).getX()/MOVE_PIXEL_BY_32) {
+					hero.setWalkingStyle(WalkStyle.LEFT);
 				}
 				// character moving right
-				if (hero. > testPath.get(i).getX()/movePixel) {
-					// show the corresponding animation
-					hero.setHeroWalk(WalkStyle.RIGHT);
-					// update the current position
-					hero.setHeroPosition(hero.getHeroPosition().x + Gdx.graphics.getDeltaTime());
+				if (hero. > testPath.get(i).getX()/MOVE_PIXEL_BY_32) {
+					hero.setWalkingStyle(WalkStyle.RIGHT);
 				}
+				
+				// show the action of the hero walking
+				hero.setHeroWalk();
+				// update the current position
+				hero.setHeroPosition(hero.getHeroPosition().y + Gdx.graphics.getDeltaTime());				
 			}
 		}*/
 		
-		// sample movement; THIS SHOULD BE REMOVED after test fix
-		hero.setHeroWalk(WalkStyle.UP);
+		// standard movement while standing
+		hero.setHeroWalk();
 	}	
 	
 	@Override
