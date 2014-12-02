@@ -176,7 +176,7 @@ public class Controller extends InputAdapter {
 				hero.setHeroPosition(hero.getHeroPosition().y + Gdx.graphics.getDeltaTime());				
 			}
 		}*/
-		
+		System.out.println(hero.getHeroPosition().x + " " + hero.getHeroPosition().y);
 		this.move(Gdx.graphics.getDeltaTime());
 		// standard movement while standing
 		hero.setHeroWalk();
@@ -236,12 +236,13 @@ public class Controller extends InputAdapter {
 		Node currentNode = getCurrentNode(SOMEINDEX);
 		Node nextNode = getNextNode(SOMEINDEX);
 		
+		float speed = 32.0f;
 		//MOVE RIGHT
 		if(currentNode.getX() < nextNode.getX()) {
 			hero.setWalkingStyle(WalkStyle.RIGHT);
-			hero.setX(16.0f);
-			if(hero.getX() > (hero.getX()+16.0f)) {
-				 hero.setX(16.0f);
+			hero.setX(speed);
+			if(hero.getX() > (hero.getX()+speed)) {
+				 hero.setX(speed);
 			}
 			if(hero.getX() >= 608.0f) {
 				hero.setX(608.0f);
@@ -250,9 +251,9 @@ public class Controller extends InputAdapter {
 		//MOVE LEFT
 		else if(currentNode.getX() > nextNode.getX()) {
 			hero.setWalkingStyle(WalkStyle.LEFT);
-			hero.setX(-16.0f);
-			if(hero.getX() < (hero.getX()-16.0f)) {
-				hero.setX(-16.0f);
+			hero.setX(-speed);
+			if(hero.getX() < (hero.getX()-speed)) {
+				hero.setX(-speed);
 			}
 			if(hero.getX() <= 0f) {
 				hero.setX(0f);
@@ -260,10 +261,10 @@ public class Controller extends InputAdapter {
 		}
 		// MOVE UP
 		else if(currentNode.getY() > nextNode.getY()) {
-			hero.setWalkingStyle(WalkStyle.UP);
-			hero.setY(-16.0f);
-			if(hero.getY() < (hero.getY()-16.0f)) {
-				hero.setY(-16.0f);
+			hero.setWalkingStyle(WalkStyle.DOWN);
+			hero.setY(-speed);
+			if(hero.getY() < (hero.getY()-speed)) {
+				hero.setY(-speed);
 			}
 			if(hero.getY() <= 0f) {
 				hero.setY(0f);
@@ -271,10 +272,10 @@ public class Controller extends InputAdapter {
 		}
 		// MOVE DOWN
 		else if(currentNode.getY() < nextNode.getY()) {
-			hero.setWalkingStyle(WalkStyle.DOWN);
-			hero.setY(16.0f);
-			if(hero.getY() > (hero.getY()+16.0f)) {
-				hero.setY(16.0f);
+			hero.setWalkingStyle(WalkStyle.UP);
+			hero.setY(speed);
+			if(hero.getY() > (hero.getY()+speed)) {
+				hero.setY(speed);
 			}
 			if(hero.getY() >= 608.0f) {
 				hero.setY(608.0f);
