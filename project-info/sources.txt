@@ -51,6 +51,12 @@ List of Tileset
 13. RPG sprites
     - http://opengameart.org/content/antifareas-rpg-sprite-set-1-enlarged-w-transparent-background-fixed
 
+14. LPC Heroine
+    - http://opengameart.org/content/lpc-heroine
+
+15. 16x16 Mage
+    - http://opengameart.org/content/16x16-mage
+
 ==============================================================================================================================================================
 RESOURCES
 ==============================================================================================================================================================
@@ -72,3 +78,12 @@ RESOURCES
    - https://code.google.com/p/libgdx-users/wiki/ScreenAndGameClasses
    - http://www.toxsickproductions.com/libgdx/libgdx-basics-game-and-screens/
 
+
+4. Tile Maps
+   - https://github.com/libgdx/libgdx/wiki/Tile-maps
+
+5. Spritebatch, Textureregions, and Sprites
+   - https://github.com/libgdx/libgdx/wiki/Spritebatch,-Textureregions,-and-Sprites
+
+6. External tutorials
+   - https://github.com/libgdx/libgdx/wiki/External-tutorials
