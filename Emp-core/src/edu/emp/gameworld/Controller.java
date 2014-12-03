@@ -36,6 +36,7 @@ public class Controller extends InputAdapter {
 	private Vector2 movementBoxPosition;
 	
 	// Moving the sprites by this amount of pixel
+	// should this datatype be int or float??
 	private static final float MOVE_PIXEL_BY_32 = 32;
 
 	// indicate selected sprite?
@@ -87,8 +88,10 @@ public class Controller extends InputAdapter {
 		//testPathFinder();
 		
 		hero = new Hero(0, 0);
-
+		
+		
 		enemy = new Enemy(0, 32);
+
 	}
 	
 
@@ -96,7 +99,7 @@ public class Controller extends InputAdapter {
 	public void update(float deltaTime) {
 		updateMovementBox();
 		updateHero(deltaTime);
-		//updateEnemy(deltaTime);
+		updateEnemy(deltaTime);
 	}
 	
 	public void testPathFinder() {
@@ -181,7 +184,52 @@ public class Controller extends InputAdapter {
 	}
 	
 	public void updateEnemy(float deltaTime) {
+		enemy.setEnemyStateTime(enemy.getEnemyStateTime() + deltaTime);
+		/*
+		// start the pathfinder
+		getFirstNode();
 		
+		Node current_node = getCurrentNode(SOMEINDEX);
+		Node next_node = getNextNode(SOMEINDEX+1);
+		
+		if (pathFound) {
+			for (int i = 0; i < testPath.size; i++) {
+				// character in the same location
+				if ( (current_node.getX() / MOVE_PIXEL_BY_32) == (testPath.get(i).getX() / MOVE_PIXEL_BY_32)
+						&& (current_node.getX() / MOVE_PIXEL_BY_32) == (testPath.get(i).getY() / MOVE_PIXEL_BY_32)) {
+					; // nop
+				}
+				// character moving up
+				if ( (next_node.getY() / MOVE_PIXEL_BY_32) > current_node.getY() / MOVE_PIXEL_BY_32) {
+					enemy.setWalkingStyle(WalkStyle.UP);
+					// show the action of the enemy walking
+					enemy.setEnemyWalk();
+					// update the current position
+					enemy.setEnemyPositionY(MOVE_PIXEL_BY_32 * deltaTime);
+				}
+				// character moving down
+				else if ( (next_node.getY() / MOVE_PIXEL_BY_32) < current_node.getY() / MOVE_PIXEL_BY_32) {
+					enemy.setWalkingStyle(WalkStyle.DOWN);
+					enemy.setEnemyWalk();
+					enemy.setEnemyPositionX(-MOVE_PIXEL_BY_32 * deltaTime);
+				}
+				// character moving left
+				else if ( (next_node.getX() / MOVE_PIXEL_BY_32) < current_node.getY() / MOVE_PIXEL_BY_32) {
+					enemy.setWalkingStyle(WalkStyle.LEFT);
+					enemy.setEnemyWalk();
+					enemy.setEnemyPositionX(-MOVE_PIXEL_BY_32 * deltaTime);
+				}
+				// character moving right
+				else if ( (next_node.getX() / MOVE_PIXEL_BY_32) > current_node.getY() / MOVE_PIXEL_BY_32) {
+					enemy.setWalkingStyle(WalkStyle.RIGHT);
+					enemy.setEnemyWalk();
+					enemy.setEnemyPositionX(MOVE_PIXEL_BY_32 * deltaTime);
+				}
+			}
+		}*/
+		
+		// standard movement while standing
+		enemy.setEnemyWalk();
 	}
 	
 	public Node getCurrentNode(int index) {
@@ -372,6 +420,34 @@ public class Controller extends InputAdapter {
 			SOMEINDEX=0;
 			moveState=true; //THIS IS HERE FOR NOW (TO BE CHANGED)
 			pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.START);
+			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
+			//pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
+			//pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
+			//pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
+			//pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
+			pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
+			pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
+			testPath = pathFinder.GetPath();
+			if(pathFound) {
+				System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
+			for(int i=0; i<testPath.size; i++) {
+				System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
+			}
+			System.out.print("End cell ");
+			System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
+			System.out.println("steps: "+(testPath.size-1));
+			}
+			else {
+				moveState = false;
+				System.out.println("NO PATH"); 
+				}
+		}
+		
+		// TEST KEY FOR THE ENEMY
+		if(keycode==Keys.Y) {
+			SOMEINDEX=0;
+			moveState=true; //THIS IS HERE FOR NOW (TO BE CHANGED)
+			pathFinder.setNode((int)enemy.getEnemyPosition().x, (int)enemy.getEnemyPosition().y, NodeType.START);
 			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
 			//pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
 			//pathFinder.setNode(0, (32*14), NodeType.BLOCKED);

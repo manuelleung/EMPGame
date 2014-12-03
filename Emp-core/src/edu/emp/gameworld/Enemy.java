@@ -6,8 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+
+
 public class Enemy {
-	
 	
 	// Animation for the enemy
 	private Animation enemyWalkUpAnim;
@@ -16,15 +17,15 @@ public class Enemy {
 	private Animation enemyWalkLeftAnim;
 	private TextureRegion [] enemyFrames;
 	
-	// contains the specific movement of the enemy
+	// contains the specific movement of the characters
 	private TextureRegion [][] enemyFramesSeparated;
 	
-	// number of unique enemy actions
+	// number of unique character actions
 	private int uniqueActions = 4;
 	// frame count for before the beginning of a new animation sprite
 	// or the frame count of each uniqueAction set
 	private int frameCount = 4;
-
+	
 	private TextureRegion enemyCurrentFrame;
 	private Texture enemyTexture;
 	private float enemyStateTime;
@@ -36,47 +37,49 @@ public class Enemy {
 	private int enemyEvasion;
 	private int enemyDefense;
 	
-	// Walking style for the hero
+	// Walking style for the enemy
 	private WalkStyle wStyle = WalkStyle.UP; 
 	
 	public Enemy(float x, float y) {
 		// details for the Enemy Object
-		
+		// NEED TO CHANGE TEXTURE
 		enemyTexture = new Texture(Gdx.files.internal("Hero.png"));
 		setEnemyPosition(new Vector2(32, 0));
 		// Initialize the enemy
 		initEnemy();
 	}
 
-	// Make the Hero of the game.
+	// Make the Enemy of the game.
 	private void initEnemy() {
 		
 		// frame_col and frame_row is based on a specific sprite, in this case: Hero.png
+		// NEEDS TO BE CHANGED
 		int frame_cols = 8;	
 		int frame_rows = 3;
 		
 		TextureRegion [][] temp = TextureRegion.split(enemyTexture, enemyTexture.getWidth()/frame_cols, enemyTexture.getHeight()/frame_rows);
 		enemyFrames = new TextureRegion[frame_cols * frame_rows]; // 24
 		
+		// Store all action enemy frames
 		int index = 0;
 		for (int i = 0; i < frame_rows; i++) {
 			for (int j = 0; j < frame_cols; j++) {
 				enemyFrames[index++] = temp[i][j];
 			}
 		}
-
+		
 		// initialize the two-dimensional arrays
 		enemyFramesSeparated = new TextureRegion[uniqueActions][frameCount];
 		
 		index = 0;
-		// for every enemyFrame action (there are 4 unique actions based on the sprite sheet)
+		// for every heroFrame action (there are 4 unique actions based on the sprite sheet)
 		for (int i = 0; i < uniqueActions; i++ ) {
 			// for each set of sprite movement
 			for (int j = 0; j < frameCount; j++) {
 				enemyFramesSeparated[i][j] = enemyFrames[index++];
 			}
 		}
-
+		
 		enemyWalkUpAnim = new Animation(0.20f, enemyFramesSeparated[0]);
 		enemyWalkDownAnim = new Animation(0.20f, enemyFramesSeparated[1]);
 		enemyWalkLeftAnim = new Animation(0.20f, enemyFramesSeparated[2]);
@@ -93,21 +96,21 @@ public class Enemy {
 	}
 	
 	// actions for the hero
-	public void setHeroWalk() {
+	public void setEnemyWalk() {
 		// the character is moving up, set its animation moving up
 		if (wStyle == WalkStyle.UP)
-			setEnemyCurrentFrame(enemyWalkUpAnim.getKeyFrame(enemyStateTime, true));
+			enemyCurrentFrame = enemyWalkUpAnim.getKeyFrame(enemyStateTime, true);
 		// the character is moving left, set its animation moving left
 		if (wStyle == WalkStyle.LEFT)
-			setEnemyCurrentFrame(enemyWalkLeftAnim.getKeyFrame(enemyStateTime, true));
+			enemyCurrentFrame = enemyWalkLeftAnim.getKeyFrame(enemyStateTime, true);
 		// the character is moving down, set its animation moving down
 		if (wStyle == WalkStyle.DOWN)
-			setEnemyCurrentFrame(enemyWalkDownAnim.getKeyFrame(enemyStateTime, true));
+			enemyCurrentFrame = enemyWalkDownAnim.getKeyFrame(enemyStateTime, true);
 		// the character is moving right, set its animation moving right
 		if (wStyle == WalkStyle.RIGHT)
-			setEnemyCurrentFrame(enemyWalkRightAnim.getKeyFrame(enemyStateTime, true));
+			enemyCurrentFrame = enemyWalkRightAnim.getKeyFrame(enemyStateTime, true);
 	}
-	
+
 	// access and getter for the Walking Style for the Hero
 	public WalkStyle getWalkingStyle() {
 		return this.wStyle;		
@@ -115,6 +118,14 @@ public class Enemy {
 	
 	public void setWalkingStyle(WalkStyle wStyle) {
 		this.wStyle = wStyle;
+	}
+	
+	public void setEnemyStateTime(float enemyStateTime) {
+		this.enemyStateTime = enemyStateTime;
+	}
+	
+	public float getEnemyStateTime() {
+		return enemyStateTime;
 	}
 
 	public int getEnemyHealth() {
@@ -163,6 +174,14 @@ public class Enemy {
 
 	public void setEnemyPosition(Vector2 enemyPosition) {
 		this.enemyPosition = enemyPosition;
+	}
+	
+	public void setEnemyPositionX(float xValue) {
+		this.enemyPosition.x = xValue;
+	}
+	
+	public void setEnemyPositionY(float yValue) {
+		this.enemyPosition.y = yValue;
 	}
 
 	public TextureRegion getEnemyCurrentFrame() {
