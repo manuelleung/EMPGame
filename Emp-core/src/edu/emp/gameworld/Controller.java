@@ -48,8 +48,7 @@ public class Controller extends InputAdapter {
 	// Hero object
 	private Hero hero;
 	
-	// TURN states must be switched with "WAIT" option 
-	private int turn = 1; //1 = hero, 2 = enemy
+
 	
 	// The sprites placed in spriteObjects will be drawn
 	// in the Renderer file.
@@ -62,8 +61,20 @@ public class Controller extends InputAdapter {
 	boolean pathFound;
 	Array<Node> testPath = new Array<Node>();
 	
-	int SOMEINDEX = 0;
-	boolean moveState=false;
+	//for moving...
+	int movementIndex = 0;
+	
+	//game states when action is chosen
+	boolean attackState = false;
+	boolean moveState = false;
+	
+	//states performed
+	boolean moved = false;
+	boolean attacked =false;
+	
+	// TURN states must be switched with "WAIT" option 
+	boolean playerTurn = true;
+	boolean enemyTurn = false;
 	
 	public Controller() {
 		init();
@@ -277,20 +288,20 @@ public class Controller extends InputAdapter {
 		return n;
 	}
 	public void incrementCurrentNode() {
-		if(!(SOMEINDEX >= testPath.size)) {
-			SOMEINDEX++;
+		if(!(movementIndex >= testPath.size)) {
+			movementIndex++;
 		}
 		else {
 			moveState=false;
 			System.out.println("Cant do that");
-			SOMEINDEX=-1;
+			movementIndex=-1;
 		}
 	}
 	
 	public void move(float f) {
 		if(moveState) {
-			Node currentNode = getCurrentNode(SOMEINDEX);
-			Node nextNode = getNextNode(SOMEINDEX+1);
+			Node currentNode = getCurrentNode(movementIndex);
+			Node nextNode = getNextNode(movementIndex+1);
 			
 			
 		
@@ -340,23 +351,21 @@ public class Controller extends InputAdapter {
 				}
 			}
 			incrementCurrentNode();
-			if(SOMEINDEX == testPath.size-1) {
-				if(getCurrentNode(SOMEINDEX).getX() == 15 &&
-						getCurrentNode(SOMEINDEX).getY() == 15) {
+			if(movementIndex == testPath.size-1) {
+				if(getCurrentNode(movementIndex).getX() == 15 &&
+						getCurrentNode(movementIndex).getY() == 15) {
 					System.out.println("reached destination");
 					moveState=false;
 				}
 			}
-			if(SOMEINDEX == -1) {
+			if(movementIndex == -1) {
 				System.out.println("no good");
 			}
 			
-			if(getNextNode(SOMEINDEX+1)==null) {
+			if(getNextNode(movementIndex+1)==null) {
 				moveState=false;
 			}
-		
 		}
-		else {System.out.println("notMOVING");}
 	}
 	
 	
@@ -380,7 +389,7 @@ public class Controller extends InputAdapter {
 		int damage = hero.getHeroAttackDamage() - enemy.getEnemyDefense(); // 15
 		Random random = new Random();
 		if(keycode == Keys.SPACE) {
-			if(turn==1) {
+			if(playerTurn==true && attacked==false) {
 				if(enemy.getEnemyHealth()>0) {
 					//enemy is alive
 					if( movementBoxPosition.x == enemy.getEnemyPosition().x && movementBoxPosition.y == enemy.getEnemyPosition().y){
@@ -411,48 +420,49 @@ public class Controller extends InputAdapter {
 					//assuming we delete the enemy we dont need this
 				}
 			} else {
-				// ENEMIES turn
+				// ENEMIES turn dont let player attack
+				//dont need this since Enemy is controlled by AI
 			}
 		}
 		///////////////////////////////////////////////////////////////
 		// TEST KEY
 		if(keycode==Keys.T) {
-			SOMEINDEX=0;
-			moveState=true; //THIS IS HERE FOR NOW (TO BE CHANGED)
-			pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.START);
-			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
-			//pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
-			//pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
-			//pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
-			//pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
-			pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
-			pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
-			testPath = pathFinder.GetPath();
-			if(pathFound) {
-				System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
-			for(int i=0; i<testPath.size; i++) {
-				System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
-			}
-			System.out.print("End cell ");
-			System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
-			System.out.println("steps: "+(testPath.size-1));
-			}
-			else {
-				moveState = false;
-				System.out.println("NO PATH"); 
+			if(playerTurn && moved==false) {
+				movementIndex=0; // reset index
+				moveState=true; //action being performed (should be when "move" is selected)
+				moved=true;
+				pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.START);
+				//pathFinder.setNode(32, 0, NodeType.BLOCKED);
+				pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
+				pathFound = pathFinder.findPath();
+				testPath = pathFinder.GetPath();
+				if(pathFound) {
+					System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
+					for(int i=0; i<testPath.size; i++) {
+						System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
+					}
+					System.out.print("End cell ");
+					System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
+					System.out.println("steps: "+(testPath.size-1));
 				}
+				else {
+					moved = false;
+					moveState = false;
+					System.out.println("NO PATH"); 
+				}
+			//end of if
+			} else {
+				//enemy turn dont let player move
+				//dont need this enemy controller by AI
+			}
 		}
 		
-		// TEST KEY FOR THE ENEMY
+		// TEST KEY FOR THE 
 		if(keycode==Keys.Y) {
-			SOMEINDEX=0;
+			movementIndex=0;
 			moveState=true; //THIS IS HERE FOR NOW (TO BE CHANGED)
 			pathFinder.setNode((int)enemy.getEnemyPosition().x, (int)enemy.getEnemyPosition().y, NodeType.START);
 			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
-			//pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
-			//pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
-			//pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
-			//pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
 			pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
 			pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
 			testPath = pathFinder.GetPath();
@@ -468,9 +478,30 @@ public class Controller extends InputAdapter {
 			else {
 				moveState = false;
 				System.out.println("NO PATH"); 
-				}
+			}
 		}
 		
+		// TEST - SWITCH TO ENEMY TURN
+		// "WAIT" button 
+		if(keycode==Keys.W) {
+			movementIndex = 0;
+			attacked = false;
+			moved = false;
+			if(playerTurn==true) {
+				System.out.println("IT IS THE ENEMIES TURN -- PRES W TO PASS");
+				playerTurn = false;
+				enemyTurn = true;
+			}
+			else { 	// in the case of more enemies we can use an index to identify whether all enemies have made
+					// their actions before switching to player turn
+				// and this part should be done by the AI after all enemies are done with their actions
+				System.out.println("IT IS THE PLAYERS TURN -- PRES W TO PASS");
+				playerTurn = true;
+				enemyTurn=false;
+			}
+					
+		}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		// movement of box ---- not the hero sprite
 		// boundaries to be changed with walls?
 		if(keycode == Keys.UP) {
@@ -493,10 +524,6 @@ public class Controller extends InputAdapter {
 				if(movementBoxSprite.getX()>=608) 
 					movementBoxPosition.x-=32;
 		}
-		
-		// print move-box position for debugging and testing
-		//Gdx.app.debug(TAG, "box-x: " + movementBoxPosition.x + " box-y: " + movementBoxPosition.y);
-		
 		return true;
 	}
 	
