@@ -63,7 +63,7 @@ public class Controller extends InputAdapter {
 	Array<Node> testPath = new Array<Node>();
 	
 	int SOMEINDEX = 0;
-	
+	boolean moveState=false;
 	
 	public Controller() {
 		init();
@@ -85,7 +85,7 @@ public class Controller extends InputAdapter {
 		movementBoxSprite = new Sprite(movementBoxTexture);
 		movementBoxPosition = new Vector2(0, 0);
 		
-		testPathFinder();
+		//testPathFinder();
 		
 		hero = new Hero(0, 0);
 		
@@ -176,8 +176,9 @@ public class Controller extends InputAdapter {
 				hero.setHeroPosition(hero.getHeroPosition().y + Gdx.graphics.getDeltaTime());				
 			}
 		}*/
-		System.out.println(hero.getHeroPosition().x + " " + hero.getHeroPosition().y);
-		this.move(Gdx.graphics.getDeltaTime());
+		//System.out.println(hero.getHeroPosition().x + " " + hero.getHeroPosition().y);
+		if(moveState)
+			this.move(Gdx.graphics.getDeltaTime());
 		// standard movement while standing
 		hero.setHeroWalk();
 	}	
@@ -192,7 +193,7 @@ public class Controller extends InputAdapter {
 			n = testPath.get(index);
 		}
 		else {
-			System.out.println("we are hitting end");
+			System.out.println("1-we are hitting end");
 		}
 		return n;
 	}
@@ -205,10 +206,13 @@ public class Controller extends InputAdapter {
 	public Node getNextNode(int index) {
 		Node n = null;
 		if(index < testPath.size) {
-			n = testPath.get(index+1);
+			//System.out.println("index " +index+ " size "+testPath.size);
+				n = testPath.get(index);//+1);
+
 		}
 		else {
-			System.out.println("we are at the end");
+			moveState=false;
+			System.out.println("2-we are at the end");
 		}
 		return n;
 	}
@@ -218,7 +222,8 @@ public class Controller extends InputAdapter {
 			n = testPath.get(index-1);
 		}
 		else {
-			System.out.println("we are at the end");
+			moveState=false;
+			System.out.println("3-we are at the end");
 		}
 		return n;
 	}
@@ -227,70 +232,82 @@ public class Controller extends InputAdapter {
 			SOMEINDEX++;
 		}
 		else {
+			moveState=false;
 			System.out.println("Cant do that");
 			SOMEINDEX=-1;
 		}
 	}
 	
 	public void move(float f) {
-		Node currentNode = getCurrentNode(SOMEINDEX);
-		Node nextNode = getNextNode(SOMEINDEX);
+		if(moveState) {
+			Node currentNode = getCurrentNode(SOMEINDEX);
+			Node nextNode = getNextNode(SOMEINDEX+1);
+			
+			
 		
-		float speed = 32.0f;
-		//MOVE RIGHT
-		if(currentNode.getX() < nextNode.getX()) {
-			hero.setWalkingStyle(WalkStyle.RIGHT);
-			hero.setX(speed);
-			if(hero.getX() > (hero.getX()+speed)) {
-				 hero.setX(speed);
+			float speed = 32.0f;
+			//MOVE RIGHT
+			if(currentNode.getX() < nextNode.getX()) {
+				hero.setWalkingStyle(WalkStyle.RIGHT);
+				hero.setX(speed);
+				if(hero.getX() > (hero.getX()+speed)) {
+					 hero.setX(speed);
+				}
+				if(hero.getX() >= 608.0f) {
+					hero.setX(608.0f);
+				}
 			}
-			if(hero.getX() >= 608.0f) {
-				hero.setX(608.0f);
-			}
-		}
-		//MOVE LEFT
-		else if(currentNode.getX() > nextNode.getX()) {
-			hero.setWalkingStyle(WalkStyle.LEFT);
-			hero.setX(-speed);
-			if(hero.getX() < (hero.getX()-speed)) {
+			//MOVE LEFT
+			else if(currentNode.getX() > nextNode.getX()) {
+				hero.setWalkingStyle(WalkStyle.LEFT);
 				hero.setX(-speed);
+				if(hero.getX() < (hero.getX()-speed)) {
+					hero.setX(-speed);
+				}
+				if(hero.getX() <= 0f) {
+					hero.setX(0f);
+				}
 			}
-			if(hero.getX() <= 0f) {
-				hero.setX(0f);
-			}
-		}
-		// MOVE UP
-		else if(currentNode.getY() > nextNode.getY()) {
-			hero.setWalkingStyle(WalkStyle.DOWN);
-			hero.setY(-speed);
-			if(hero.getY() < (hero.getY()-speed)) {
+			// MOVE UP
+			else if(currentNode.getY() > nextNode.getY()) {
+				hero.setWalkingStyle(WalkStyle.DOWN);
 				hero.setY(-speed);
+				if(hero.getY() < (hero.getY()-speed)) {
+					hero.setY(-speed);
+				}
+				if(hero.getY() <= 0f) {
+					hero.setY(0f);
+				}
 			}
-			if(hero.getY() <= 0f) {
-				hero.setY(0f);
-			}
-		}
-		// MOVE DOWN
-		else if(currentNode.getY() < nextNode.getY()) {
-			hero.setWalkingStyle(WalkStyle.UP);
-			hero.setY(speed);
-			if(hero.getY() > (hero.getY()+speed)) {
+			// MOVE DOWN
+			else if(currentNode.getY() < nextNode.getY()) {
+				hero.setWalkingStyle(WalkStyle.UP);
 				hero.setY(speed);
+				if(hero.getY() > (hero.getY()+speed)) {
+					hero.setY(speed);
+				}
+				if(hero.getY() >= 608.0f) {
+					hero.setY(608.0f);
+				}
 			}
-			if(hero.getY() >= 608.0f) {
-				hero.setY(608.0f);
+			incrementCurrentNode();
+			if(SOMEINDEX == testPath.size-1) {
+				if(getCurrentNode(SOMEINDEX).getX() == 15 &&
+						getCurrentNode(SOMEINDEX).getY() == 15) {
+					System.out.println("reached destination");
+					moveState=false;
+				}
 			}
-		}
-		incrementCurrentNode();
-		if(SOMEINDEX == testPath.size) {
-			if(getCurrentNode(SOMEINDEX).getX() == 15 &&
-					getCurrentNode(SOMEINDEX).getY() == 15) {
-				System.out.println("reached destination");
+			if(SOMEINDEX == -1) {
+				System.out.println("no good");
 			}
+			
+			if(getNextNode(SOMEINDEX+1)==null) {
+				moveState=false;
+			}
+		
 		}
-		if(SOMEINDEX == -1) {
-			System.out.println("no good");
-		}
+		else {System.out.println("notMOVING");}
 	}
 	
 	
@@ -351,6 +368,8 @@ public class Controller extends InputAdapter {
 		///////////////////////////////////////////////////////////////
 		// TEST KEY
 		if(keycode==Keys.T) {
+			SOMEINDEX=0;
+			moveState=true; //THIS IS HERE FOR NOW (TO BE CHANGED)
 			pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.START);
 			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
 			//pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
@@ -369,7 +388,10 @@ public class Controller extends InputAdapter {
 			System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
 			System.out.println("steps: "+(testPath.size-1));
 			}
-			else { System.out.println("NO PATH"); }
+			else {
+				moveState = false;
+				System.out.println("NO PATH"); 
+				}
 		}
 		
 		// movement of box ---- not the hero sprite
