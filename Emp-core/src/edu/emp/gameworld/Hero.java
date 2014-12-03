@@ -49,11 +49,8 @@ public class Hero {
 	
 	// Make the Hero of the game.
 	private void initHero() {
-
-		// frame_col and frame_row is based on a specific sprite, in this case: walkcyclevarious.png
-
+		
 		// frame_col and frame_row is based on a specific sprite, in this case: Hero.png
-
 		int frame_cols = 8;	
 		int frame_rows = 3;
 		
@@ -101,11 +98,6 @@ public class Hero {
 		heroAccuracy=100;
 		heroEvasion=20;
 		heroDefense=5;
-	}
-	
-	
-	public void moveTheHero() {
-		heroPosition.y += 32.0f * Gdx.graphics.getDeltaTime();
 	}
 	
 	// actions for the hero

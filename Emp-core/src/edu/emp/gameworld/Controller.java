@@ -36,7 +36,6 @@ public class Controller extends InputAdapter {
 	private Vector2 movementBoxPosition;
 	
 	// Moving the sprites by this amount of pixel
-	// should this datatype be int or float??
 	private static final float MOVE_PIXEL_BY_32 = 32;
 
 	// indicate selected sprite?
@@ -88,10 +87,8 @@ public class Controller extends InputAdapter {
 		testPathFinder();
 		
 		hero = new Hero(0, 0);
-		
-		
-		enemy = new Enemy(0, 32);
 
+		enemy = new Enemy(0, 32);
 	}
 	
 
@@ -99,7 +96,7 @@ public class Controller extends InputAdapter {
 	public void update(float deltaTime) {
 		updateMovementBox();
 		updateHero(deltaTime);
-		enemy.updateEnemy();
+		//updateEnemy(deltaTime);
 	}
 	
 	public void testPathFinder() {
@@ -180,7 +177,11 @@ public class Controller extends InputAdapter {
 		this.move(Gdx.graphics.getDeltaTime());
 		// standard movement while standing
 		hero.setHeroWalk();
-	}	
+	}
+	
+	public void updateEnemy(float deltaTime) {
+		
+	}
 	
 	public Node getCurrentNode(int index) {
 		Node n = null;

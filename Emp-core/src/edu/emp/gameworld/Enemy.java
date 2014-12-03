@@ -6,13 +6,25 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-
-
 public class Enemy {
 	
-	//enemy
-	private Animation enemyAnimation;
-	private TextureRegion[] enemyFrames;
+	
+	// Animation for the enemy
+	private Animation enemyWalkUpAnim;
+	private Animation enemyWalkDownAnim;
+	private Animation enemyWalkRightAnim;
+	private Animation enemyWalkLeftAnim;
+	private TextureRegion [] enemyFrames;
+	
+	// contains the specific movement of the enemy
+	private TextureRegion [][] enemyFramesSeparated;
+	
+	// number of unique enemy actions
+	private int uniqueActions = 4;
+	// frame count for before the beginning of a new animation sprite
+	// or the frame count of each uniqueAction set
+	private int frameCount = 4;
+
 	private TextureRegion enemyCurrentFrame;
 	private Texture enemyTexture;
 	private float enemyStateTime;
@@ -23,6 +35,9 @@ public class Enemy {
 	private int enemyAccuracy;
 	private int enemyEvasion;
 	private int enemyDefense;
+	
+	// Walking style for the hero
+	private WalkStyle wStyle = WalkStyle.UP; 
 	
 	public Enemy(float x, float y) {
 		// details for the Enemy Object
@@ -35,11 +50,13 @@ public class Enemy {
 
 	// Make the Hero of the game.
 	private void initEnemy() {
+		
+		// frame_col and frame_row is based on a specific sprite, in this case: Hero.png
 		int frame_cols = 8;	
 		int frame_rows = 3;
 		
 		TextureRegion [][] temp = TextureRegion.split(enemyTexture, enemyTexture.getWidth()/frame_cols, enemyTexture.getHeight()/frame_rows);
-		enemyFrames = new TextureRegion[frame_cols * frame_rows]; //24
+		enemyFrames = new TextureRegion[frame_cols * frame_rows]; // 24
 		
 		int index = 0;
 		for (int i = 0; i < frame_rows; i++) {
@@ -47,7 +64,24 @@ public class Enemy {
 				enemyFrames[index++] = temp[i][j];
 			}
 		}
-		enemyAnimation = new Animation(0.15f, enemyFrames);
+
+		// initialize the two-dimensional arrays
+		enemyFramesSeparated = new TextureRegion[uniqueActions][frameCount];
+		
+		index = 0;
+		// for every enemyFrame action (there are 4 unique actions based on the sprite sheet)
+		for (int i = 0; i < uniqueActions; i++ ) {
+			// for each set of sprite movement
+			for (int j = 0; j < frameCount; j++) {
+				enemyFramesSeparated[i][j] = enemyFrames[index++];
+			}
+		}
+
+		enemyWalkUpAnim = new Animation(0.20f, enemyFramesSeparated[0]);
+		enemyWalkDownAnim = new Animation(0.20f, enemyFramesSeparated[1]);
+		enemyWalkLeftAnim = new Animation(0.20f, enemyFramesSeparated[2]);
+		enemyWalkRightAnim = new Animation(0.20f, enemyFramesSeparated[3]);
+		
 		enemyStateTime = 0f;
 		
 		//STATS
@@ -58,9 +92,29 @@ public class Enemy {
 		enemyDefense=5;
 	}
 	
-	public void updateEnemy() {
-		enemyStateTime += Gdx.graphics.getDeltaTime();
-		setEnemyCurrentFrame(enemyAnimation.getKeyFrame(enemyStateTime, true));
+	// actions for the hero
+	public void setHeroWalk() {
+		// the character is moving up, set its animation moving up
+		if (wStyle == WalkStyle.UP)
+			setEnemyCurrentFrame(enemyWalkUpAnim.getKeyFrame(enemyStateTime, true));
+		// the character is moving left, set its animation moving left
+		if (wStyle == WalkStyle.LEFT)
+			setEnemyCurrentFrame(enemyWalkLeftAnim.getKeyFrame(enemyStateTime, true));
+		// the character is moving down, set its animation moving down
+		if (wStyle == WalkStyle.DOWN)
+			setEnemyCurrentFrame(enemyWalkDownAnim.getKeyFrame(enemyStateTime, true));
+		// the character is moving right, set its animation moving right
+		if (wStyle == WalkStyle.RIGHT)
+			setEnemyCurrentFrame(enemyWalkRightAnim.getKeyFrame(enemyStateTime, true));
+	}
+	
+	// access and getter for the Walking Style for the Hero
+	public WalkStyle getWalkingStyle() {
+		return this.wStyle;		
+	}
+	
+	public void setWalkingStyle(WalkStyle wStyle) {
+		this.wStyle = wStyle;
 	}
 
 	public int getEnemyHealth() {
