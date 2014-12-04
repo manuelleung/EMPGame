@@ -407,6 +407,7 @@ public class Controller extends InputAdapter {
 								//miss
 								System.out.println("MISSED! Enemy health: "+enemy.getEnemyHealth());
 							}
+							attacked=true;
 						} else {
 							//enemy not in range 
 							System.out.println("Enemy chosen is not in range");
@@ -420,6 +421,7 @@ public class Controller extends InputAdapter {
 					//assuming we delete the enemy we dont need this
 				}
 			} else {
+				System.out.println("already attacked once");
 				// ENEMIES turn dont let player attack
 				//dont need this since Enemy is controlled by AI
 			}
@@ -452,6 +454,7 @@ public class Controller extends InputAdapter {
 				}
 			//end of if
 			} else {
+				System.out.println("already moved once");
 				//enemy turn dont let player move
 				//dont need this enemy controller by AI
 			}
