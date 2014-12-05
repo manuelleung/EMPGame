@@ -2,6 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -13,13 +14,29 @@
    height="32"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="box.svg"
-   inkscape:export-filename="/home/kirbylm/workspace/emp-fp/images/assets/box.png"
+   inkscape:export-filename="/home/kirbym/workspace/emp-project/images/assets/attack-box.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
-     id="defs4" />
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective5939" />
+    <linearGradient
+       id="linearGradient5867"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#c4000e;stop-opacity:1;"
+         offset="0"
+         id="stop5869" />
+    </linearGradient>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -27,17 +44,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.919596"
-     inkscape:cx="-14.643855"
-     inkscape:cy="14.764827"
+     inkscape:zoom="15.839192"
+     inkscape:cx="16.832135"
+     inkscape:cy="14.622377"
      inkscape:document-units="px"
-     inkscape:current-layer="g3018"
+     inkscape:current-layer="g5916"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:snap-page="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="721"
+     inkscape:window-width="1920"
+     inkscape:window-height="1026"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1">
@@ -64,6 +81,22 @@
        visible="true"
        enabled="true"
        snapvisiblegridlinesonly="true" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-6.7857142,22.008928"
+       id="guide4407" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-16.428571,9.9553571"
+       id="guide4409" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="12.008929,30.535714"
+       id="guide4411" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="20,28.169643"
+       id="guide4413" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -94,11 +127,12 @@
        transform="translate(0,1020.3622)" />
   </g>
   <g
-     style="display:inline"
+     style="display:none"
      transform="translate(0,-1020.3622)"
      id="g3018"
      inkscape:groupmode="layer"
-     inkscape:label="movement-box">
+     inkscape:label="movement-box"
+     sodipodi:insensitive="true">
     <rect
        transform="translate(0,1020.3622)"
        y="-0.0089290002"
@@ -106,9 +140,45 @@
        height="32.00893"
        width="32.053574"
        id="rect3020"
-       style="fill:#002255;stroke:#000000;stroke-width:0.20000000000000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:0.58823532000000001;opacity:0.7"
+       style="opacity:0.7;fill:#002255;fill-opacity:0.58823529;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        inkscape:export-filename="/home/kirbylm/workspace/emp-fp/images/assets/move-box.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
+  </g>
+  <g
+     inkscape:label="attack-box"
+     inkscape:groupmode="layer"
+     id="g4395"
+     transform="translate(0,-1020.3622)"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/kirbylm/workspace/emp-fp/images/assets/move-box.png"
+       style="opacity:0.7;fill:#c4000e;fill-opacity:0.58823529;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4397"
+       width="32.053574"
+       height="32.00893"
+       x="0"
+       y="-0.0089290002"
+       transform="translate(0,1020.3622)" />
+  </g>
+  <g
+     style="display:inline"
+     transform="translate(0,-1020.3622)"
+     id="g5916"
+     inkscape:groupmode="layer"
+     inkscape:label="grid-box copy"
+     sodipodi:insensitive="true">
+    <rect
+       transform="translate(0,1020.3622)"
+       y="-0.0089290002"
+       x="0"
+       height="32.00893"
+       width="32.053574"
+       id="rect5918"
+       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       ry="5.6696429" />
   </g>
 </svg>
