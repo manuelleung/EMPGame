@@ -24,6 +24,7 @@ public class GameScreen extends ApplicationAdapter implements Screen {
 	private boolean paused;
 	
 	public GameScreen(final EMPGame game) {
+		super();		
 		this.game = game;
 		
 		// Set Libgdx log level to DEBUG

@@ -9,17 +9,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class EMPGame extends Game {
-
-	public SpriteBatch batch;
-	public BitmapFont font;
 	
 	@Override
 	public void create() {
-		batch = new SpriteBatch();
-		// Uses LibGDX's default font: Arial
-		font = new BitmapFont();
-		
-		this.setScreen(new MainMenuScreen(this));		
+		setScreen(new MainMenuScreen(this));		
 	}
 	
 	public void render() {
@@ -28,8 +21,7 @@ public class EMPGame extends Game {
 	}
 	
 	public void dispose() {
-		batch.dispose();
-		font.dispose();
+		getScreen().dispose();
 	}
 
 }
