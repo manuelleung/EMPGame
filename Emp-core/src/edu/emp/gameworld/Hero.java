@@ -201,4 +201,8 @@ public class Hero {
 	public float getY() {
 		return heroPosition.y;
 	}
+
+	public void takeDamage(int damage) {
+		heroHealth -= damage;
+	}
 }
