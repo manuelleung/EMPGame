@@ -241,29 +241,51 @@ public class Controller extends InputAdapter {
 		
 		
 		if(enemyTurn == true) {
-			//if(attacked == false) {
-				//attackHero();
-			//}
-			//if(moved==false) {
+			if(attacked == false) {
+				attackHero();
+			}
+			if(moved==false) {
 					movementIndex=0; // reset index
-					moveState=true; //action being performed (should be when "move" is selected)
-					moved=true;
+					//action being performed (should be when "move" is selected)
+					//moved=true;
 					pathFinder.setNode((int)enemy.getEnemyPosition().x, (int)enemy.getEnemyPosition().y, NodeType.START);
 					//pathFinder.setNode(32, 0, NodeType.BLOCKED);
 					pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.END);
 					pathFound = pathFinder.findPath();
 					enemyPath = pathFinder.GetPath();
 					
+					moveState=true;
 					
+				if(pathFound) {	
+					if(enemy.getEnemyPosition().x + 32 < hero.getHeroPosition().x ||
+							enemy.getEnemyPosition().x - 32 > hero.getHeroPosition().x ||
+							enemy.getEnemyPosition().y + 32 < hero.getHeroPosition().y ||
+							enemy.getEnemyPosition().y - 32 > hero.getHeroPosition().y ) 
+					{
+						this.moveEnemy(Gdx.graphics.getDeltaTime());
+					}
+					else if (enemy.getEnemyPosition().x+32 == hero.getHeroPosition().x && enemy.getEnemyPosition().y != hero.getHeroPosition().y) {
+						this.moveEnemy(Gdx.graphics.getDeltaTime());
+					}
+					else if(enemy.getEnemyPosition().x-32 == hero.getHeroPosition().x && enemy.getEnemyPosition().y != hero.getHeroPosition().y) {
+						this.moveEnemy(Gdx.graphics.getDeltaTime());
+					}
 					/// STOP MOVEMENT WHEN REACHED MAX STEPS
-					this.moveEnemy(Gdx.graphics.getDeltaTime());
-					
+					else {
+						moved = true;
+
+					}
+				}
+				else moved=true;
 					
 				//end of if
-			//}
+			}
 			//if(attacked == false) {
 				//attackHero();
 			//}
+			if(moved==true) {
+				switchTurn();
+			}
 		}
 		
 		
