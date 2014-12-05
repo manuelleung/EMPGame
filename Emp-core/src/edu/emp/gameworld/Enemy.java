@@ -135,6 +135,10 @@ public class Enemy {
 	public void setEnemyHealth(int enemyHealth) {
 		this.enemyHealth = enemyHealth;
 	}
+	
+	public void takeDamage(int damage) {
+		enemyHealth -= damage;
+	}
 
 	public int getEnemyAttackDamage() {
 		return enemyAttackDamage;
@@ -190,6 +194,19 @@ public class Enemy {
 
 	public void setEnemyCurrentFrame(TextureRegion enemyCurrentFrame) {
 		this.enemyCurrentFrame = enemyCurrentFrame;
+	}
+
+	public void setX(float f) {
+		enemyPosition.x += f;
+	}
+	public void setY(float f) {
+		enemyPosition.y += f;
+	}
+	public float getX() {
+		return enemyPosition.x;
+	}
+	public float getY() {
+		return enemyPosition.y;
 	}
 	
 	

@@ -59,8 +59,8 @@ public class Controller extends InputAdapter {
 	//PATH FINDER
 	PathFinder pathFinder;
 	boolean pathFound;
-	Array<Node> testPath = new Array<Node>();
-	
+	Array<Node> heroPath = new Array<Node>();
+	Array<Node> enemyPath = new Array<Node>();
 	//for moving...
 	int movementIndex = 0;
 	
@@ -127,15 +127,15 @@ public class Controller extends InputAdapter {
 		//pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
 		pathFinder.setNode((32*15), (32*15), NodeType.END);
 		pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
-		testPath = pathFinder.GetPath();
+		heroPath = pathFinder.GetPath();
 		if(pathFound) {
-			System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
-		for(int i=0; i<testPath.size; i++) {
-			System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
+			System.out.println("Start cell "+"x: "+heroPath.get(0).getX()/32+" y: "+heroPath.get(0).getY()/32);
+		for(int i=0; i<heroPath.size; i++) {
+			System.out.println("x: "+heroPath.get(i).getX()/32+" y: "+heroPath.get(i).getY()/32);
 		}
 		System.out.print("End cell ");
-		System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
-		System.out.println("steps: "+(testPath.size-1));
+		System.out.println("x: "+heroPath.peek().getX()/32+" y: "+heroPath.peek().getY()/32);
+		System.out.println("steps: "+(heroPath.size-1));
 		}
 		else { System.out.println("NO PATH"); }
 	//.................................................................//
@@ -188,8 +188,8 @@ public class Controller extends InputAdapter {
 			}
 		}*/
 		//System.out.println(hero.getHeroPosition().x + " " + hero.getHeroPosition().y);
-		if(moveState)
-			this.move(Gdx.graphics.getDeltaTime());
+		if(moveState && playerTurn)
+			this.moveHero(Gdx.graphics.getDeltaTime());
 		// standard movement while standing
 		hero.setHeroWalk();
 	}
@@ -239,18 +239,69 @@ public class Controller extends InputAdapter {
 			}
 		}*/
 		
+		
+		if(enemyTurn == true) {
+			if(attacked == false) {
+				attackHero();
+			}
+			if(moved==false) {
+					movementIndex=0; // reset index
+					//action being performed (should be when "move" is selected)
+					//moved=true;
+					pathFinder.setNode((int)enemy.getEnemyPosition().x, (int)enemy.getEnemyPosition().y, NodeType.START);
+					//pathFinder.setNode(32, 0, NodeType.BLOCKED);
+					pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.END);
+					pathFound = pathFinder.findPath();
+					enemyPath = pathFinder.GetPath();
+					
+					moveState=true;
+					
+				if(pathFound) {	
+					if(enemy.getEnemyPosition().x + 32 < hero.getHeroPosition().x ||
+							enemy.getEnemyPosition().x - 32 > hero.getHeroPosition().x ||
+							enemy.getEnemyPosition().y + 32 < hero.getHeroPosition().y ||
+							enemy.getEnemyPosition().y - 32 > hero.getHeroPosition().y ) 
+					{
+						this.moveEnemy(Gdx.graphics.getDeltaTime());
+					}
+					else if (enemy.getEnemyPosition().x+32 == hero.getHeroPosition().x && enemy.getEnemyPosition().y != hero.getHeroPosition().y) {
+						this.moveEnemy(Gdx.graphics.getDeltaTime());
+					}
+					else if(enemy.getEnemyPosition().x-32 == hero.getHeroPosition().x && enemy.getEnemyPosition().y != hero.getHeroPosition().y) {
+						this.moveEnemy(Gdx.graphics.getDeltaTime());
+					}
+					/// STOP MOVEMENT WHEN REACHED MAX STEPS
+					else {
+						moved = true;
+
+					}
+				}
+				else moved=true;
+					
+				//end of if
+			}
+			//if(attacked == false) {
+				//attackHero();
+			//}
+			if(moved==true) {
+				switchTurn();
+			}
+		}
+		
+		
+		
 		// standard movement while standing
 		enemy.setEnemyWalk();
 	}
 	
-	public Node getCurrentNode(int index) {
+	public Node getCurrentNode(int index, Array<Node> path) {
 		Node n = null;
 		if(index==0) {
 			//n = getFirstNode();
-			n = testPath.get(0);
+			n = path.get(0);
 		}
-		if(index>0 && index<testPath.size) {
-			n = testPath.get(index);
+		if(index>0 && index<path.size) {
+			n = path.get(index);
 		}
 		else {
 			System.out.println("1-we are hitting end");
@@ -258,16 +309,16 @@ public class Controller extends InputAdapter {
 		return n;
 	}
 	
-	public Node getFirstNode() {
+	public Node getFirstNode(Array<Node> path) {
 		pathFound = pathFinder.findPath();
-		testPath = pathFinder.GetPath();
-		return testPath.get(0);
+		path = pathFinder.GetPath();
+		return path.get(0);
 	}
-	public Node getNextNode(int index) {
+	public Node getNextNode(int index, Array<Node> path) {
 		Node n = null;
-		if(index < testPath.size) {
+		if(index < path.size) {
 			//System.out.println("index " +index+ " size "+testPath.size);
-				n = testPath.get(index);//+1);
+				n = path.get(index);//+1);
 
 		}
 		else {
@@ -276,10 +327,10 @@ public class Controller extends InputAdapter {
 		}
 		return n;
 	}
-	public Node getPreviousNode(int index) {
+	public Node getPreviousNode(int index, Array<Node> path) {
 		Node n=null;
 		if(index > 0) {
-			n = testPath.get(index-1);
+			n = path.get(index-1);
 		}
 		else {
 			moveState=false;
@@ -287,8 +338,8 @@ public class Controller extends InputAdapter {
 		}
 		return n;
 	}
-	public void incrementCurrentNode() {
-		if(!(movementIndex >= testPath.size)) {
+	public void incrementCurrentNode(Array<Node> path) {
+		if(!(movementIndex >= path.size)) {
 			movementIndex++;
 		}
 		else {
@@ -298,13 +349,11 @@ public class Controller extends InputAdapter {
 		}
 	}
 	
-	public void move(float f) {
+	public void moveHero(float deltaTime) {
 		if(moveState) {
-			Node currentNode = getCurrentNode(movementIndex);
-			Node nextNode = getNextNode(movementIndex+1);
+			Node currentNode = getCurrentNode(movementIndex, heroPath);
+			Node nextNode = getNextNode(movementIndex+1, heroPath);
 			
-			
-		
 			float speed = 32.0f;
 			//MOVE RIGHT
 			if(currentNode.getX() < nextNode.getX()) {
@@ -350,10 +399,10 @@ public class Controller extends InputAdapter {
 					hero.setY(608.0f);
 				}
 			}
-			incrementCurrentNode();
-			if(movementIndex == testPath.size-1) {
-				if(getCurrentNode(movementIndex).getX() == 15 &&
-						getCurrentNode(movementIndex).getY() == 15) {
+			incrementCurrentNode(heroPath);
+			if(movementIndex == heroPath.size-1) {
+				if(getCurrentNode(movementIndex, heroPath).getX() == 15 &&
+						getCurrentNode(movementIndex, heroPath).getY() == 15) {
 					System.out.println("reached destination");
 					moveState=false;
 				}
@@ -362,13 +411,177 @@ public class Controller extends InputAdapter {
 				System.out.println("no good");
 			}
 			
-			if(getNextNode(movementIndex+1)==null) {
+			if(getNextNode(movementIndex+1, heroPath)==null) {
 				moveState=false;
 			}
 		}
 	}
 	
+	public void moveEnemy(float deltaTime) {
+		if(moveState && enemyTurn) {
+			Node currentNode = getCurrentNode(movementIndex, enemyPath);
+			Node nextNode = getNextNode(movementIndex+1, enemyPath);
+			
+			float speed = 32.0f;
+			//MOVE RIGHT
+			if(currentNode.getX() < nextNode.getX()) {
+				enemy.setWalkingStyle(WalkStyle.RIGHT);
+				enemy.setX(speed);
+				if(enemy.getX() > (enemy.getX()+speed)) {
+					 hero.setX(speed);
+				}
+				if(enemy.getX() >= 608.0f) {
+					enemy.setX(608.0f);
+				}
+			}
+			//MOVE LEFT
+			else if(currentNode.getX() > nextNode.getX()) {
+				enemy.setWalkingStyle(WalkStyle.LEFT);
+				enemy.setX(-speed);
+				if(enemy.getX() < (enemy.getX()-speed)) {
+					enemy.setX(-speed);
+				}
+				if(hero.getX() <= 0f) {
+					hero.setX(0f);
+				}
+			}
+			// MOVE UP
+			else if(currentNode.getY() > nextNode.getY()) {
+				enemy.setWalkingStyle(WalkStyle.DOWN);
+				enemy.setY(-speed);
+				if(enemy.getY() < (enemy.getY()-speed)) {
+					enemy.setY(-speed);
+				}
+				if(enemy.getY() <= 0f) {
+					enemy.setY(0f);
+				}
+			}
+			// MOVE DOWN
+			else if(currentNode.getY() < nextNode.getY()) {
+				enemy.setWalkingStyle(WalkStyle.UP);
+				enemy.setY(speed);
+				if(enemy.getY() > (enemy.getY()+speed)) {
+					enemy.setY(speed);
+				}
+				if(enemy.getY() >= 608.0f) {
+					enemy.setY(608.0f);
+				}
+			}
+			incrementCurrentNode(enemyPath);
+			if(movementIndex == enemyPath.size-1) {
+				if(getCurrentNode(movementIndex, enemyPath).getX() == 15 &&
+						getCurrentNode(movementIndex, enemyPath).getY() == 15) {
+					System.out.println("reached destination");
+					moveState=false;
+				}
+			}
+			if(movementIndex == -1) {
+				System.out.println("no good");
+			}
+			
+			if(getNextNode(movementIndex+1, enemyPath)==null) {
+				moveState=false;
+			}
+		}
+	}
 	
+	public void attackEnemy() {
+		if(playerTurn==true && attacked==false) {
+			int hitRate = hero.getHeroAccuracy() - enemy.getEnemyEvasion(); // 80%
+			int damage = hero.getHeroAttackDamage() - enemy.getEnemyDefense(); // 15
+			Random random = new Random();
+			if(enemy.getEnemyHealth()>0) {
+				//enemy is alive
+				if( movementBoxPosition.x == enemy.getEnemyPosition().x && movementBoxPosition.y == enemy.getEnemyPosition().y){
+					//selected enemy to attack
+					if( (hero.getHeroPosition().x+32==enemy.getEnemyPosition().x&&hero.getHeroPosition().y==enemy.getEnemyPosition().y) ||
+						(hero.getHeroPosition().x-32==enemy.getEnemyPosition().x&&hero.getHeroPosition().y==enemy.getEnemyPosition().y) ||
+						(hero.getHeroPosition().y+32==enemy.getEnemyPosition().y&&hero.getHeroPosition().x==enemy.getEnemyPosition().x) ||
+						(hero.getHeroPosition().y-32==enemy.getEnemyPosition().y&&hero.getHeroPosition().x==enemy.getEnemyPosition().x) ) {
+						//enemy in range
+						if( random.nextInt((100-1)+1)+1 < hitRate) {
+							//hit
+							enemy.takeDamage(damage);
+							System.out.println("HIT! Enemy health: " +enemy.getEnemyHealth());
+						} else {
+							//miss
+							System.out.println("MISSED! Enemy health: "+enemy.getEnemyHealth());
+						}
+						attacked=true;
+					} else {
+						//enemy not in range 
+						System.out.println("Enemy chosen is not in range");
+					}
+				} else {
+					//enemy not chosen
+					System.out.println("Please choose enemy to attack!");
+				}
+			} else {
+				//enemy has been eliminated
+				//assuming we delete the enemy we dont need this
+			}
+		} else {
+			System.out.println("already attacked once");
+			// ENEMIES turn dont let player attack
+			//dont need this since Enemy is controlled by AI
+		}
+	}
+	
+	public void attackHero() {
+		if(enemyTurn==true && attacked==false) {
+			int hitRate = enemy.getEnemyAccuracy() - hero.getHeroEvasion(); // 80%
+			int damage = enemy.getEnemyAttackDamage() - hero.getHeroDefense(); // 15
+			Random random = new Random();
+			if(hero.getHeroHealth()>0) {
+					//selected enemy to attack
+					if( (enemy.getEnemyPosition().x+32==hero.getHeroPosition().x&&enemy.getEnemyPosition().y==hero.getHeroPosition().y) ||
+						(enemy.getEnemyPosition().x-32==hero.getHeroPosition().x&&enemy.getEnemyPosition().y==hero.getHeroPosition().y) ||
+						(enemy.getEnemyPosition().y+32==hero.getHeroPosition().y&&enemy.getEnemyPosition().x==hero.getHeroPosition().x) ||
+						(enemy.getEnemyPosition().y-32==hero.getHeroPosition().y&&enemy.getEnemyPosition().x==hero.getHeroPosition().x) ) {
+						//enemy in range
+							if( random.nextInt((100-1)+1)+1 < hitRate) {
+								//hit
+								hero.takeDamage(damage);
+								System.out.println("HIT! Hero health: " +hero.getHeroHealth());
+							} else {
+								//miss
+								System.out.println("MISSED! Hero health: "+hero.getHeroHealth());
+							}
+							attacked=true;
+						} else {
+							//hero not in range 
+							System.out.println("Hero chosen is not in range");
+						}
+			} else {
+				//hero has been eliminated
+				//we dont need this
+			}
+		} else {
+			System.out.println("already attacked once");
+			// dont let it attack
+			//dont need this since Enemy is controlled by AI
+		}
+	}
+	
+	public void switchTurn() {
+		movementIndex = 0;
+		attacked = false;
+		moved = false;
+		moveState=false;
+		attackState=false;
+		if(playerTurn==true) {
+			System.out.println("IT IS THE ENEMIES TURN -- PRES W TO PASS");
+			playerTurn = false;
+			enemyTurn = true;
+		}
+		else { 	// in the case of more enemies we can use an index to identify whether all enemies have made
+				// their actions before switching to player turn
+			// and this part should be done by the AI after all enemies are done with their actions
+			System.out.println("IT IS THE PLAYERS TURN -- PRES W TO PASS");
+			playerTurn = true;
+			enemyTurn=false;
+		}
+	}
 	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -385,46 +598,9 @@ public class Controller extends InputAdapter {
 		
 		// TESTING//////////////////////////////////////////////////////
 		// ALL FORMULAS TO BE CHANGED
-		int hitRate = hero.getHeroAccuracy() - enemy.getEnemyEvasion(); // 80%
-		int damage = hero.getHeroAttackDamage() - enemy.getEnemyDefense(); // 15
-		Random random = new Random();
+
 		if(keycode == Keys.SPACE) {
-			if(playerTurn==true && attacked==false) {
-				if(enemy.getEnemyHealth()>0) {
-					//enemy is alive
-					if( movementBoxPosition.x == enemy.getEnemyPosition().x && movementBoxPosition.y == enemy.getEnemyPosition().y){
-						//selected enemy to attack
-						if( (hero.getHeroPosition().x+32==enemy.getEnemyPosition().x&&hero.getHeroPosition().y==enemy.getEnemyPosition().y) ||
-							(hero.getHeroPosition().x-32==enemy.getEnemyPosition().x&&hero.getHeroPosition().y==enemy.getEnemyPosition().y) ||
-							(hero.getHeroPosition().y+32==enemy.getEnemyPosition().y&&hero.getHeroPosition().x==enemy.getEnemyPosition().x) ||
-							(hero.getHeroPosition().y-32==enemy.getEnemyPosition().y&&hero.getHeroPosition().x==enemy.getEnemyPosition().x) ) {
-							//enemy in range
-							if( random.nextInt((100-1)+1)+1 < hitRate) {
-								//hit
-								enemy.setEnemyHealth(damage);
-								System.out.println("HIT! Enemy health: " +enemy.getEnemyHealth());
-							} else {
-								//miss
-								System.out.println("MISSED! Enemy health: "+enemy.getEnemyHealth());
-							}
-							attacked=true;
-						} else {
-							//enemy not in range 
-							System.out.println("Enemy chosen is not in range");
-						}
-					} else {
-						//enemy not chosen
-						System.out.println("Please choose enemy to attack!");
-					}
-				} else {
-					//enemy has been eliminated
-					//assuming we delete the enemy we dont need this
-				}
-			} else {
-				System.out.println("already attacked once");
-				// ENEMIES turn dont let player attack
-				//dont need this since Enemy is controlled by AI
-			}
+			attackEnemy();
 		}
 		///////////////////////////////////////////////////////////////
 		// TEST KEY
@@ -437,15 +613,15 @@ public class Controller extends InputAdapter {
 				//pathFinder.setNode(32, 0, NodeType.BLOCKED);
 				pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
 				pathFound = pathFinder.findPath();
-				testPath = pathFinder.GetPath();
+				heroPath = pathFinder.GetPath();
 				if(pathFound) {
-					System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
-					for(int i=0; i<testPath.size; i++) {
-						System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
+					System.out.println("Start cell "+"x: "+heroPath.get(0).getX()/32+" y: "+heroPath.get(0).getY()/32);
+					for(int i=0; i<heroPath.size; i++) {
+						System.out.println("x: "+heroPath.get(i).getX()/32+" y: "+heroPath.get(i).getY()/32);
 					}
 					System.out.print("End cell ");
-					System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
-					System.out.println("steps: "+(testPath.size-1));
+					System.out.println("x: "+heroPath.peek().getX()/32+" y: "+heroPath.peek().getY()/32);
+					System.out.println("steps: "+(heroPath.size-1));
 				}
 				else {
 					moved = false;
@@ -468,15 +644,15 @@ public class Controller extends InputAdapter {
 			//pathFinder.setNode(32, 0, NodeType.BLOCKED);
 			pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
 			pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
-			testPath = pathFinder.GetPath();
+			heroPath = pathFinder.GetPath();
 			if(pathFound) {
-				System.out.println("Start cell "+"x: "+testPath.get(0).getX()/32+" y: "+testPath.get(0).getY()/32);
-			for(int i=0; i<testPath.size; i++) {
-				System.out.println("x: "+testPath.get(i).getX()/32+" y: "+testPath.get(i).getY()/32);
+				System.out.println("Start cell "+"x: "+heroPath.get(0).getX()/32+" y: "+heroPath.get(0).getY()/32);
+			for(int i=0; i<heroPath.size; i++) {
+				System.out.println("x: "+heroPath.get(i).getX()/32+" y: "+heroPath.get(i).getY()/32);
 			}
 			System.out.print("End cell ");
-			System.out.println("x: "+testPath.peek().getX()/32+" y: "+testPath.peek().getY()/32);
-			System.out.println("steps: "+(testPath.size-1));
+			System.out.println("x: "+heroPath.peek().getX()/32+" y: "+heroPath.peek().getY()/32);
+			System.out.println("steps: "+(heroPath.size-1));
 			}
 			else {
 				moveState = false;
@@ -487,22 +663,7 @@ public class Controller extends InputAdapter {
 		// TEST - SWITCH TO ENEMY TURN
 		// "WAIT" button 
 		if(keycode==Keys.W) {
-			movementIndex = 0;
-			attacked = false;
-			moved = false;
-			if(playerTurn==true) {
-				System.out.println("IT IS THE ENEMIES TURN -- PRES W TO PASS");
-				playerTurn = false;
-				enemyTurn = true;
-			}
-			else { 	// in the case of more enemies we can use an index to identify whether all enemies have made
-					// their actions before switching to player turn
-				// and this part should be done by the AI after all enemies are done with their actions
-				System.out.println("IT IS THE PLAYERS TURN -- PRES W TO PASS");
-				playerTurn = true;
-				enemyTurn=false;
-			}
-					
+			switchTurn();
 		}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		// movement of box ---- not the hero sprite
