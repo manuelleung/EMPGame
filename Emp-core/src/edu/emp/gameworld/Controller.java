@@ -4,7 +4,9 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -24,7 +26,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 
-public class Controller extends InputAdapter {
+import edu.emp.game.EMPGame;
+import edu.emp.game.MiniMenu;
+
+public class Controller implements InputProcessor {
+	final EMPGame game;
+	
 	private static final String TAG = Controller.class.getName();
 	
 	// Control the sprites! that's why the sprites are here but
@@ -76,7 +83,8 @@ public class Controller extends InputAdapter {
 	boolean playerTurn = true;
 	boolean enemyTurn = false;
 	
-	public Controller() {
+	public Controller(final EMPGame game) {
+		this.game = game;
 		init();
 	}
 	
@@ -716,6 +724,13 @@ public class Controller extends InputAdapter {
 				if(movementBoxSprite.getX()>=608) 
 					movementBoxPosition.x-=32;
 		}
+		
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+		/* TEST TRANSITION TO MiniMenu */
+		if(keycode == Keys.P) {
+			game.setScreen(new MiniMenu(game, game.getScreen()));
+		}
 		return true;
 	}
 	
@@ -748,6 +763,36 @@ public class Controller extends InputAdapter {
 			init();
 			Gdx.app.debug(TAG, "Game world resetted");
 		}
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int arg0, int arg1) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }

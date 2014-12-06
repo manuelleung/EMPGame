@@ -44,11 +44,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="16.832135"
-     inkscape:cy="14.622377"
+     inkscape:zoom="11.2"
+     inkscape:cx="-2.3848313"
+     inkscape:cy="8.1803617"
      inkscape:document-units="px"
-     inkscape:current-layer="g5916"
+     inkscape:current-layer="g5997"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -165,20 +165,21 @@
        transform="translate(0,1020.3622)" />
   </g>
   <g
-     style="display:inline"
-     transform="translate(0,-1020.3622)"
-     id="g5916"
+     inkscape:label="selection-cursor"
      inkscape:groupmode="layer"
-     inkscape:label="grid-box copy"
-     sodipodi:insensitive="true">
+     id="g5997"
+     transform="translate(0,-1020.3622)"
+     style="display:inline">
     <rect
-       transform="translate(0,1020.3622)"
-       y="-0.0089290002"
-       x="0"
-       height="32.00893"
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/kirbym/workspace/emp-project/images/assets/selection-cursor.png"
+       style="opacity:0.69999999999999996;fill:#00d013;fill-opacity:0.58823532;stroke:#000000;stroke-width:0.20000000000000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect5999"
        width="32.053574"
-       id="rect5918"
-       style="fill:none;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       ry="5.6696429" />
+       height="32.00893"
+       x="0"
+       y="-0.0089290002"
+       transform="translate(0,1020.3622)" />
   </g>
 </svg>
