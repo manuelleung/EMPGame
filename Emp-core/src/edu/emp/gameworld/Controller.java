@@ -109,10 +109,10 @@ public class Controller implements InputProcessor {
 		
 		//testPathFinder();
 		
-		hero = new Hero(0, 0);
+		hero = new Hero((32*27), (32*6));
 		
 		
-		enemy = new Enemy((32*7), (32*17));
+		enemy = new Enemy((32*13), (32*31));
 
 	}
 	
@@ -296,7 +296,8 @@ public class Controller implements InputProcessor {
 				if(hero.getX() > (hero.getX()+speed)) {
 					 hero.incrementX(speed);
 				}
-				if(hero.getX() >= 608.0f) {
+				if(enemy.getX() >= (32*37)) {
+				//if(hero.getX() >= 608.0f) {
 					hero.incrementX(0f);
 				}
 			}
@@ -329,7 +330,8 @@ public class Controller implements InputProcessor {
 				if(hero.getY() > (hero.getY()+speed)) {
 					hero.incrementY(speed);
 				}
-				if(hero.getY() >= 608.0f) {
+				if(hero.getY() >= (32*39)) {
+				//if(hero.getY() >= 608.0f) {
 					hero.incrementY(0f);
 				}
 			}
@@ -364,7 +366,8 @@ public class Controller implements InputProcessor {
 				if(enemy.getX() > (enemy.getX()+speed)) {
 					 hero.incrementX(speed);
 				}
-				if(enemy.getX() >= 608.0f) {
+				if(enemy.getX() >= (32*37)) {
+				//if(enemy.getX() >= 608.0f) {
 					enemy.incrementX(0f);
 				}
 			}
@@ -397,7 +400,8 @@ public class Controller implements InputProcessor {
 				if(enemy.getY() > (enemy.getY()+speed)) {
 					enemy.incrementY(speed);
 				}
-				if(enemy.getY() >= 608.0f) {
+				if(enemy.getY() >= (32*39)) {
+				//if(enemy.getY() >= 608.0f) {
 					enemy.incrementY(0f);
 				}
 			}
@@ -547,7 +551,8 @@ public class Controller implements InputProcessor {
 		// boundaries to be changed with walls?
 		if(keycode == Keys.UP) {
 				movementBoxPosition.y += 32;
-				if(movementBoxSprite.getY()>=608) 
+				if(movementBoxSprite.getY() >= (32*39))
+				//if(movementBoxSprite.getY()>=608) 
 					movementBoxPosition.y-=32;
 		}
 		if(keycode == Keys.DOWN) {
@@ -562,7 +567,8 @@ public class Controller implements InputProcessor {
 		}
 		if(keycode == Keys.RIGHT) {
 				movementBoxPosition.x += 32;
-				if(movementBoxSprite.getX()>=608) 
+				if(movementBoxSprite.getX() >= (32*37))
+				//if(movementBoxSprite.getX()>=608) 
 					movementBoxPosition.x-=32;
 		}
 		

@@ -38,7 +38,7 @@ public class Enemy {
 	private int enemyDefense;
 	
 	// Walking style for the enemy
-	private WalkStyle wStyle = WalkStyle.UP; 
+	private WalkStyle wStyle = WalkStyle.DOWN; 
 	
 	public Enemy(float x, float y) {
 		// details for the Enemy Object

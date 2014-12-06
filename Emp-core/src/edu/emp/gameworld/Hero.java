@@ -43,7 +43,7 @@ public class Hero {
 	public Hero(float x, float y) {
 		// details for the Hero Object		
 		heroTexture = new Texture(Gdx.files.internal("Hero.png"));
-		setHeroPosition(new Vector2(0, 0));
+		setHeroPosition(new Vector2(x, y));
 		// Initialize the Hero!
 		initHero();
 	}

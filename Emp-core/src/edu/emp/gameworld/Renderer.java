@@ -59,9 +59,10 @@ public class Renderer implements Disposable {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		// Load our tile map into our renderer
-		tileMap = new TmxMapLoader().load("test3.tmx");
+		tileMap = new TmxMapLoader().load("demomap.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
 		getCollisionTiles();
+		System.out.println(Gdx.graphics.getWidth()+ " " + Gdx.graphics.getHeight());
 	}
 	
 	public void render() {
@@ -71,12 +72,13 @@ public class Renderer implements Disposable {
 	
 	public void renderMaps() {
 		// This update is in case we want to have a camera that can scroll with the arrow keys
-		// --> camera.update(); 
+		camera.update(); 
 		// Set the viewpoint from camera and render map
 		tiledMapRenderer.setView(camera);
 		// array tiles (can use this later to be able to have character behind tiles) 
-		tiledMapRenderer.render(new int[] {1, 3, 4});
+		//tiledMapRenderer.render(new int[] {1, 3, 4});
 		// 0 = Wall , 2 = object
+		tiledMapRenderer.render(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
 	}
 	
 	public void renderGameObjects() {

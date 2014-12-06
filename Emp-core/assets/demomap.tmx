@@ -13,7 +13,7 @@
   <image source="meta_tiles.png" trans="ff00ff" width="67" height="34"/>
   <tile id="0">
    <properties>
-    <property name="blocked" value="true"/>
+    <property name="Collision" value="true"/>
    </properties>
   </tile>
  </tileset>
@@ -25,57 +25,57 @@
    eJzt1EsOwCAIBFDXvXvv3G1DUD4ZdLQl6aqCj4i2Nj/uy/5WxA4uy7ra1bMxuDQbi8vzX65B9ZHdd+RhcVUE0oU0Vp5jJG9U73fNcck1o5xezYxLc0qXt5dKl2b0uNDnaLkiM/d1V1Vk5x7Vi2c+o6Z3jpaPnI/eGs1k7cnqOjFYe0ffLeZaCEtklqvPOuta5dnBhXg3I73u7srWR+R5c5neXqZ7IV0932oXm+lUV3UP7K4HNr4PZA==
   </data>
  </layer>
- <layer name="Tile Layer 7" width="38" height="40">
+ <layer name="layer1" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJztzkEJAAAIBLDr/zCzJQ4E2RIsAQAAAADgi7kOULMW9wCP
   </data>
  </layer>
- <layer name="Tile Layer 1" width="38" height="40">
+ <layer name="layer2" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJztl79OwzAQxpNWbkpmVpho1ZkRxtLuFS8ADKyoAyN/noAFXgQeoxKUt4BGzMyclZ58XBzHpLFTJA8/RXUd+/Pdd1d3FkXRzDOPwDXw1MLeJp6Bd+DFMOckztk2Xa9rBh612ejKtlRXVbwwz5SdDc9go+ttrWtM9k27+XMSK92U3b6/eFFGXf04cuhB15TEZBQXdX0CC4Yv368M8ZL57YkoSoC+0PuN579qfJM87ifq8wHoGQBDocbo92Xv6c4pRK6pCX8ddSBuMlaiqOnLoCtj663+oAvXyQy6zmCtc+BC6Ofr3vvl2xq69iri/gHcwlp3wD0gSnqHrI8pvNdj3y9r5vE4UXUm98zYOrzfDuNiPLA+pL91Pa+OLs6CnXtc0mtlPnkucX/UvGxQF4+L7szYV3jt6ebQ8cyxLoR7k+7fdB7pb3MaK+/J3PK+T71ZNkc3btNXKRPmC1d3nxthd1+ldYSavhN3umzihf1FPmnPlHcZk64Hx7qoL6mP5V3mykGsZD1dpoqys1NfUh+7yB/yn/+ntYFNPfritGOmbX065kFXIBAIBAJW/ABmYVpm
   </data>
  </layer>
- <layer name="Tile Layer 5" width="38" height="40">
+ <layer name="layer3" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJzt1LsJgDAYReEfkg0c1McexkHUgcweoqW3EYNia1TOB7cJhJwqZgAAAAAAAP82ObPocldcLWpaX9gF4Ltm/Skh4/ulN6u0Wmv8cV74+ztPaPV+0LqkIyTLpVfPoI2nrt0Gct4NHA==
   </data>
  </layer>
- <layer name="Tile Layer 2" width="38" height="40">
+ <layer name="layer4" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJzt0lEKgkAUheHr4JbMjdRCrGWkIO3CgmhB6j7MF684MqOC+DYHPB8cuD31MyhCREREREREZ/c0IrmuMKFLcL1A3+a36rrq7xtAa2aWu+se9mbXVh2JNN4q7fmY6W6jcF2d/vffW217xrsP2JXo21y8dbZnvFOA73+WgPXsyWM3JO/YjY4rQd/rC9qFbAAzBSDO
   </data>
  </layer>
- <layer name="Tile Layer 6" width="38" height="40">
+ <layer name="layer5" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJztzrENACAIADAST+USPifurESH9oJGAAAAAADArjyvB7P69HU14uIA6w==
   </data>
  </layer>
- <layer name="Tile Layer 4" width="38" height="40">
+ <layer name="layer6" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJztzkENgDAQAMEmVAlKKhAldQJGqAyOB7/+ewkzyf63FAAAAADgz466+mDu/TqjK9lfj587Gsm+Pvu2+mCuJf3K7AFCbwWp
   </data>
  </layer>
- <layer name="Tile Layer 3" width="38" height="40">
+ <layer name="layer7" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJztlt0NgjAUhRsrCxjl3RUAX2UGfBYHEV3BAXQFfBZdwWd/BnEADyEmTWNNg9pe4/2SEyAUzpcLIQjBMAzDMAzzP4y6vg2eExL1+iVsnq1pzTffi8ji3rFhjc21bTF12vTbXMu8D9XvVQKvCVE3hvkEq46/7uOL7hLnxoEQaeDOp6aP3gESIlvFT53TFE65Y68I/TGSaDMrleM5nArHXipL6a+7DWv4bog57+BTIXvkQMjtBJczckGuHr0yZfvYv8FnKJvZ+SLTUtPDv0Mqm9lR8FLJ4TQj4KVTwGmB3AFphhrQ
   </data>
  </layer>
- <layer name="Tile Layer 8" width="38" height="40">
+ <layer name="layer8" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJxjYBh4MJeZgeE5CwPDCxYIDeIPFnAS6J5TQHwaiM+wDLRrEAAWXi+B+NUgctcoGAWjYBSMglEwCkbBKKAc+NO4fYfNfH2gmMEgbFf6At3kNwjdNQooB0vZ6G9nPjAtFQBx4SBIU4eR/N8LdE8fEPfT2V2EyprVQPk1QLx2EITXKCAeHAXG1zE8cabDxcCgC8R6XITN0oaqecpEubuEgG4SxuMuL6Bd3kDsQ4K7mEkYP1IEqlUCYmUSx5wygHZlAnEWEe4iB9gD3eMAxI6DaCwMBGKB7okD4vhB5q5qoHtqBpmbQCAF6KblbBA8mEDTIAkrSsMlmRkSxtQG6HEGYxPr3kZm6ocxzE3IbgAAs8wmeA==
   </data>
  </layer>
- <layer name="Tile Layer 9" width="38" height="40">
+ <layer name="layer9" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJztzrENQFAYRtE/eZNgEAyCQRje14lS5RXnJLe/VQAAAAAAj6FVjWlqf5+8zflZ0trZ15afPR2dfZ35uTp74psbVScDWQ==
   </data>
  </layer>
- <layer name="Tile Layer 10" width="38" height="40">
+ <layer name="layer10" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJzt2LkNgDAQRNGV7AqgI6AQoBCgK44+OAqBnHFECV6J/6TJfzxmPszBbNFWbQu5az67Wg7t1C5HXcmtnsdZU1JEszLmrgAAAAAAAAD+qwpmtdY4+w9b9XRa76xrUM+oTc66XuvBC/U=
   </data>
  </layer>
- <layer name="Tile Layer 11" width="38" height="40">
+ <layer name="layer11" width="38" height="40">
   <data encoding="base64" compression="zlib">
    eJzt0bEJgEAQRNGFw0K0EcU+tBEt3g0NjN07eC+a8MNE1DpaxNmKIz5c2XS/uubcS4edazZtHXaN8iswhn2qLgAAAAD43wNQ6ASS
   </data>
