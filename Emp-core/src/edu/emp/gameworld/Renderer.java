@@ -35,6 +35,17 @@ public class Renderer implements Disposable {
 	private Sprite sprite;
 	
 	
+	int mapLeft;
+	int mapRight;
+	int mapBottom;
+	int mapTop;
+	float cameraHalfWidth;
+	float cameraHalfHeight;
+	float cameraLeft;
+	float cameraRight;
+	float cameraBottom;
+	float cameraTop;
+	
 	public Renderer(Controller gameController) {
 		// This is necessary since this allows the Renderer
 		// to access the game objects being managed by the Controller
@@ -58,6 +69,14 @@ public class Renderer implements Disposable {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
+		mapLeft=0;
+		mapRight= 0+ (32*37);
+		mapBottom=0;
+		mapTop=0+ (32*39);
+		cameraHalfWidth=camera.viewportWidth*.5f;
+		cameraHalfHeight=camera.viewportHeight*.5f;
+
+		
 		// Load our tile map into our renderer
 		tileMap = new TmxMapLoader().load("demomap.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
@@ -71,6 +90,8 @@ public class Renderer implements Disposable {
 	}
 	
 	public void renderMaps() {
+
+		moveCamera();
 		// This update is in case we want to have a camera that can scroll with the arrow keys
 		camera.update(); 
 		// Set the viewpoint from camera and render map
@@ -79,7 +100,47 @@ public class Renderer implements Disposable {
 		//tiledMapRenderer.render(new int[] {1, 3, 4});
 		// 0 = Wall , 2 = object
 		tiledMapRenderer.render(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+		
+		gameController.resetCamera();
 	}
+	
+	public void moveCamera() {
+		cameraLeft = camera.position.x - cameraHalfWidth;
+		cameraRight = camera.position.x + cameraHalfWidth;
+		cameraBottom = camera.position.y - cameraHalfHeight;
+		cameraTop = camera.position.y + cameraHalfHeight;
+		
+		if(	gameController.moveCameraDown()) {
+			camera.translate(0,-32);
+			if(cameraBottom <= mapBottom)
+			{
+			    camera.position.y = mapBottom + cameraHalfHeight;
+			}
+		}
+		if(gameController.moveCameraLeft()) {
+			camera.translate(-32,0);
+			if(cameraLeft <= mapLeft)
+			{
+			    camera.position.x = mapLeft + cameraHalfWidth;
+			}
+		}
+		if(gameController.moveCameraRight()) {
+			camera.translate(32,0);
+			if(cameraRight >= mapRight)
+			{
+			    camera.position.x = mapRight - cameraHalfWidth;
+			}
+		}
+		if(gameController.moveCameraUp()) {
+			camera.translate(0,32);
+			if(cameraTop >= mapTop)
+			{
+			    camera.position.y = mapTop - cameraHalfHeight;
+			}
+		}
+	}
+	
+	
 	
 	public void renderGameObjects() {
 		/* It basically just means drawing will be done in 2D space using the position and bounds of the given camera. */

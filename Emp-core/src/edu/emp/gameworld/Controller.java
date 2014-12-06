@@ -61,6 +61,10 @@ public class Controller implements InputProcessor {
 	// UNUSED FOR THE MOMENT
 	// private Sprite[] spriteObjects; 
 	
+	boolean cameraUp=false;
+	boolean cameraDown=false;
+	boolean cameraLeft=false;
+	boolean cameraRight=false;
 
 	//PATH FINDER
 	PathFinder pathFinder;
@@ -613,8 +617,41 @@ public class Controller implements InputProcessor {
 			init();
 			Gdx.app.debug(TAG, "Game world resetted");
 		}
+		
+	    if(keycode == Keys.A) {
+	    	cameraLeft=true;
+	    }
+	    if(keycode == Keys.D) {
+	        cameraRight =true;
+	    }
+	    if(keycode == Keys.W) {
+	        cameraUp = true;
+	    }
+	    if(keycode == Keys.S) {
+	        cameraDown = true;
+	    }
 		return false;
 	}
+	
+	public boolean moveCameraLeft() {
+		return cameraLeft;
+	}
+	public boolean moveCameraRight() {
+		return cameraRight;
+	}
+	public boolean moveCameraUp() {
+		return cameraUp;
+	}
+	public boolean moveCameraDown() {
+		return cameraDown;
+	}
+	public void resetCamera() {
+		cameraLeft=false;
+		cameraRight=false;
+		cameraUp=false;
+		cameraDown=false;
+	}
+	
 
 	@Override
 	public boolean keyTyped(char arg0) {
