@@ -619,7 +619,36 @@ public class Controller implements InputProcessor {
 				moved=true;
 				pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.START);
 				//pathFinder.setNode(32, 0, NodeType.BLOCKED);
-				pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
+				
+				//movement limiter ... only works with 2 because conditions are only made for 2
+				int maxMove = 2;
+					// must implement this better ... becacause the higher maxMove the more conditions that need to be added...
+				if( 	!(movementBoxPosition.x > hero.getHeroPosition().x+(32*maxMove)) && //RIGHT
+						!(movementBoxPosition.x < hero.getHeroPosition().x-(32*maxMove)) && //LEFT
+						!(movementBoxPosition.y > hero.getHeroPosition().y+(32*maxMove)) && //UP
+						!(movementBoxPosition.y < hero.getHeroPosition().y-(32*maxMove)) && //DOWN
+						//LEFT-UP DIAGONAL
+						!(movementBoxPosition.x < hero.getHeroPosition().x-(32*(maxMove-1)) && movementBoxPosition.y > hero.getHeroPosition().y+(32*(maxMove-1))) &&
+						!(movementBoxPosition.x < hero.getHeroPosition().x-(32*(maxMove-2)) && movementBoxPosition.y > hero.getHeroPosition().y+(32*(maxMove-1))) &&
+						!(movementBoxPosition.x < hero.getHeroPosition().x-(32*(maxMove-1)) && movementBoxPosition.y > hero.getHeroPosition().y+(32*(maxMove-2))) &&
+						//LEFT-DOWN DIAGONAL
+						!(movementBoxPosition.x < hero.getHeroPosition().x-(32*(maxMove-1)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-1))) &&
+						!(movementBoxPosition.x < hero.getHeroPosition().x-(32*(maxMove-2)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-1))) &&
+						!(movementBoxPosition.x < hero.getHeroPosition().x-(32*(maxMove-1)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-2))) &&
+						//RIGHT-UP DIAGONAL
+						!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-1)) && movementBoxPosition.y > hero.getHeroPosition().y+(32*(maxMove-1))) &&
+						!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-2)) && movementBoxPosition.y > hero.getHeroPosition().y+(32*(maxMove-1))) &&
+						!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-1)) && movementBoxPosition.y > hero.getHeroPosition().y+(32*(maxMove-2))) &&
+						//RIGHT-DOWN DIAGONAL
+						!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-1)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-1))) &&
+						!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-2)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-1))) &&
+						!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-1)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-2))) 
+						)
+					pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
+				else 
+					System.out.println("not in move range");
+				
+				
 				pathFound = pathFinder.findPath();
 				heroPath = pathFinder.GetPath();
 				if(pathFound) {
