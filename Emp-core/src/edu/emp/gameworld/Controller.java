@@ -27,7 +27,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 
 import edu.emp.game.EMPGame;
-import edu.emp.game.MiniMenu;
 
 public class Controller implements InputProcessor {
 	final EMPGame game;
@@ -82,6 +81,10 @@ public class Controller implements InputProcessor {
 	// TURN states must be switched with "WAIT" option 
 	boolean playerTurn = true;
 	boolean enemyTurn = false;
+	
+	// confirm action from Character Options Menu
+	private boolean confirmAction = false;
+	private CharacterOptions action = CharacterOptions.MOVE;
 	
 	public Controller(final EMPGame game) {
 		this.game = game;
@@ -729,10 +732,12 @@ public class Controller implements InputProcessor {
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		/* TEST TRANSITION TO MiniMenu */
-		if(keycode == Keys.P) {
+		if (keycode == Keys.P) {
 			// create the MiniMenu, send this current screen, pass "this" Controller object
-			game.setScreen(new MiniMenu(game, game.getScreen(), this));
+			game.setScreen(new CharacterOptionsMenu(game, game.getScreen(), this));
 		}
+		
+		
 		return true;
 	}
 	
@@ -797,4 +802,51 @@ public class Controller implements InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	// Confirming action from the Character Options Menu
+	// This method will be called from CharacterOptionsMenu
+	// after the player decides to chooses an action: MOVE or ATTACK or WAIT
+	public void TestConfirmAction(boolean confirmAction, CharacterOptions action) {
+		// this checks that the action has been confirmed
+		this.confirmAction = confirmAction;
+		this.action = action;
+		
+		// TEST METHOD for the setting of action
+		// MUST BE CHANGED or REMOVED
+		if (confirmAction == false && action == CharacterOptions.MOVE) {
+			System.out.println("Default Settings");
+			
+			// Reset the State of Action
+			confirmAction = false;
+		}
+		
+		else if (confirmAction == true) {
+			if (action == CharacterOptions.MOVE) {
+				System.out.println("Inside Controller.java: Moving The Hero...");
+				
+				// call MOVE functions here
+				
+				// Reset the State of Action
+				confirmAction = false;
+			}
+			else if (action == CharacterOptions.ATTACK) {
+				System.out.println("Inside Controller.java: Commencing Attack Mode!");
+				
+				// call ATTACK functions here
+				
+				// Reset the State of Action
+				confirmAction = false;
+			}
+			else if (action == CharacterOptions.WAIT) {				
+				System.out.println("Inside Controller.java: Waiting command chosen");
+
+				// call WAIT functions here
+				// END TURN
+				
+				// Reset the State of Action
+				confirmAction = false;
+			}
+		}
+	}
+
 }

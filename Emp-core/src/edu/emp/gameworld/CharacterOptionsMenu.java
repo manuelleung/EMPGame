@@ -1,4 +1,4 @@
-package edu.emp.game;
+package edu.emp.gameworld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import edu.emp.gameworld.Controller;
-import edu.emp.gameworld.MenuSelection;
+import edu.emp.game.EMPGame;
 
-public class MiniMenu implements Screen, InputProcessor {
+public class CharacterOptionsMenu implements Screen, InputProcessor {
 	final EMPGame game;
 	
 	private SpriteBatch batch;
@@ -43,9 +42,9 @@ public class MiniMenu implements Screen, InputProcessor {
 	private Controller gameController;
 	
 	// holds the currently selected option
-	private MenuSelection selected = MenuSelection.MOVE;
+	private CharacterOptions selected = CharacterOptions.MOVE;
 	
-	public MiniMenu(final EMPGame game, Screen bgGameScreen, Controller gameController) {
+	public CharacterOptionsMenu(final EMPGame game, Screen bgGameScreen, Controller gameController) {
 		super();
 		this.game = game;
 		Gdx.input.setInputProcessor(this);
@@ -65,20 +64,20 @@ public class MiniMenu implements Screen, InputProcessor {
 		// Keyboard Events
 		if (keycode == Keys.DOWN) {
 			// currently on MOVE
-			if (selected == MenuSelection.MOVE) {
-				selected = MenuSelection.ATTACK;
+			if (selected == CharacterOptions.MOVE) {
+				selected = CharacterOptions.ATTACK;
 				background = new Texture("gameplay_options/attack-selected.png");
 				System.out.println("ATTACK command highlighted");
 			}
 			// currently on ATTACK
-			else if (selected == MenuSelection.ATTACK) {
-				selected = MenuSelection.WAIT;
+			else if (selected == CharacterOptions.ATTACK) {
+				selected = CharacterOptions.WAIT;
 				background = new Texture("gameplay_options/wait-selected.png");				
 				System.out.println("WAIT command highlighted");
 			}
 			// currently on WAIT
-			else if (selected == MenuSelection.WAIT) {
-				selected = MenuSelection.MOVE;
+			else if (selected == CharacterOptions.WAIT) {
+				selected = CharacterOptions.MOVE;
 				background = new Texture("gameplay_options/move-selected.png");
 				System.out.println("MOVE command is highlighted");
 			}
@@ -86,20 +85,20 @@ public class MiniMenu implements Screen, InputProcessor {
 		
 		if (keycode == Keys.UP) {
 			// currently on MOVE
-			if (selected == MenuSelection.MOVE) {
-				selected = MenuSelection.WAIT;
+			if (selected == CharacterOptions.MOVE) {
+				selected = CharacterOptions.WAIT;
 				background = new Texture("gameplay_options/wait-selected.png");
 				System.out.println("WAIT command highlighted");
 			}
 			// currently on ATTACK
-			else if (selected == MenuSelection.ATTACK) {
-				selected = MenuSelection.MOVE;
+			else if (selected == CharacterOptions.ATTACK) {
+				selected = CharacterOptions.MOVE;
 				background = new Texture("gameplay_options/move-selected.png");				
 				System.out.println("MOVE command highlighted");
 			}
 			// currently on WAIT
-			else if (selected == MenuSelection.WAIT) {
-				selected = MenuSelection.ATTACK;
+			else if (selected == CharacterOptions.WAIT) {
+				selected = CharacterOptions.ATTACK;
 				background = new Texture("gameplay_options/attack-selected.png");				
 				System.out.println("ATTACK command is highlighted");
 			}
@@ -111,44 +110,37 @@ public class MiniMenu implements Screen, InputProcessor {
 		// confirm action
 		if (keycode == Keys.ENTER) {
 			// MOVE command is the confirmed choice
-			if (selected == MenuSelection.MOVE) {
-				System.out.println("Moving The Hero...");
-				
-				// call MOVE functions here
+			if (selected == CharacterOptions.MOVE) {
 				
 				// remove MiniMenu Screen
 				game.getScreen().dispose();
 				game.setScreen(bgGameScreen);
-				
-				// NEEDS TO BE CHANGED, setInputProcessor to Controller....
-				Gdx.input.setInputProcessor(gameController);
+				gameController.TestConfirmAction(true, selected);
+				Gdx.input.setInputProcessor(gameController);				
+				dispose();
 			}
 			
 			// ATTACK command is the confirmed choice
-			if (selected == MenuSelection.ATTACK) {
+			if (selected == CharacterOptions.ATTACK) {
 				System.out.println("Commencing Attack Mode!");
-				
-				// call ATTACK functions here
-				
+
 				// remove MiniMenu Screen
 				game.getScreen().dispose();
 				game.setScreen(bgGameScreen);
-				// NEEDS TO BE CHANGED, setInputProcessor to Controller....
-				Gdx.input.setInputProcessor(gameController);
+				gameController.TestConfirmAction(true, selected);
+				Gdx.input.setInputProcessor(gameController);				
+				dispose();
 			}	
 			
 			// WAIT command is the confirmed choice
-			if (selected == MenuSelection.WAIT) {
-				System.out.println("Waiting command chosen");
-				
-				// call WAIT functions here
-				// END TURN
+			if (selected == CharacterOptions.WAIT) {
 				
 				// remove MiniMenu Screen
 				game.getScreen().dispose();
 				game.setScreen(bgGameScreen);
-				// NEEDS TO BE CHANGED, setInputProcessor to Controller....
-				Gdx.input.setInputProcessor(gameController);
+				gameController.TestConfirmAction(true, selected);
+				Gdx.input.setInputProcessor(gameController);				
+				dispose();
 			}			
 		}
 		return false;

@@ -1,6 +1,6 @@
 package edu.emp.gameworld;
 
-public enum MenuSelection {
+public enum CharacterOptions {
 	MOVE,
 	ATTACK,
 	WAIT
