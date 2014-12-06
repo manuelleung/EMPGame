@@ -534,46 +534,67 @@ public class Controller implements InputProcessor {
 		// TESTING//////////////////////////////////////////////////////
 		// ALL FORMULAS TO BE CHANGED
 
-		if(keycode == Keys.SPACE && getAction() == CharacterOptions.ATTACK) {
+		if(keycode == Keys.SPACE && action == CharacterOptions.ATTACK) {
 			attackEnemy();
 		}
-		if(keycode == Keys.SPACE && getAction() == CharacterOptions.MOVE) {
+		if(keycode == Keys.SPACE && action == CharacterOptions.MOVE) {
 			heroActionMove();
+		}
+		
+		if(keycode==Keys.ESCAPE && (action==CharacterOptions.ATTACK || action==CharacterOptions.MOVE)) {
+			action=CharacterOptions.NONE;
 		}
 		/////////////////////////////////////////////////////////////
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		// movement of box ---- not the hero sprite
 		// boundaries to be changed with walls?
-		if(keycode == Keys.UP) {
-				movementBoxPosition.y += 32;
-				if(movementBoxSprite.getY() >= (32*39))
-				//if(movementBoxSprite.getY()>=608) 
-					movementBoxPosition.y-=32;
+		if(action==CharacterOptions.ATTACK || action==CharacterOptions.MOVE) {	
+			if(keycode == Keys.UP) {
+					movementBoxPosition.y += 32;
+					if(movementBoxSprite.getY() >= (32*39))
+					//if(movementBoxSprite.getY()>=608) 
+						movementBoxPosition.y-=32;
+			}
+			if(keycode == Keys.DOWN) {
+					movementBoxPosition.y -= 32;
+					if(movementBoxSprite.getY()<=0) 
+						movementBoxPosition.y+=32;
+			}
+			if(keycode == Keys.LEFT) {
+					movementBoxPosition.x -= 32;
+					if(movementBoxSprite.getX()<=0) 
+						movementBoxPosition.x+=32;
+			}
+			if(keycode == Keys.RIGHT) {
+					movementBoxPosition.x += 32;
+					if(movementBoxSprite.getX() >= (32*37))
+					//if(movementBoxSprite.getX()>=608) 
+						movementBoxPosition.x-=32;
+			}
 		}
-		if(keycode == Keys.DOWN) {
-				movementBoxPosition.y -= 32;
-				if(movementBoxSprite.getY()<=0) 
-					movementBoxPosition.y+=32;
-		}
-		if(keycode == Keys.LEFT) {
-				movementBoxPosition.x -= 32;
-				if(movementBoxSprite.getX()<=0) 
-					movementBoxPosition.x+=32;
-		}
-		if(keycode == Keys.RIGHT) {
-				movementBoxPosition.x += 32;
-				if(movementBoxSprite.getX() >= (32*37))
-				//if(movementBoxSprite.getX()>=608) 
-					movementBoxPosition.x-=32;
-		}
+			
 		
+	    if(keycode == Keys.LEFT) {
+	    	cameraLeft=true;
+	    }
+	    if(keycode == Keys.RIGHT) {
+	        cameraRight =true;
+	    }
+	    if(keycode == Keys.UP) {
+	        cameraUp = true;
+	    }
+	    if(keycode == Keys.DOWN) {
+	        cameraDown = true;
+	    }
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		/* TEST TRANSITION TO MiniMenu */
 		if (keycode == Keys.ENTER) {
 			// create the MiniMenu, send this current screen, pass "this" Controller object
 			game.setScreen(new CharacterOptionsMenu(game, game.getScreen(), this));
+			movementBoxPosition.x = hero.getHeroPosition().x;
+			movementBoxPosition.y = hero.getHeroPosition().y;
 		}
 		
 		
@@ -605,19 +626,6 @@ public class Controller implements InputProcessor {
 			init();
 			Gdx.app.debug(TAG, "Game world resetted");
 		}
-		
-	    if(keycode == Keys.A) {
-	    	cameraLeft=true;
-	    }
-	    if(keycode == Keys.D) {
-	        cameraRight =true;
-	    }
-	    if(keycode == Keys.W) {
-	        cameraUp = true;
-	    }
-	    if(keycode == Keys.S) {
-	        cameraDown = true;
-	    }
 		return false;
 	}
 	
