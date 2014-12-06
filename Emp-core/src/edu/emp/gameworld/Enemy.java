@@ -44,7 +44,7 @@ public class Enemy {
 		// details for the Enemy Object
 		// NEED TO CHANGE TEXTURE
 		enemyTexture = new Texture(Gdx.files.internal("Hero.png"));
-		setEnemyPosition(new Vector2(32, 0));
+		setEnemyPosition(new Vector2(x, y));
 		// Initialize the enemy
 		initEnemy();
 	}
@@ -196,11 +196,17 @@ public class Enemy {
 		this.enemyCurrentFrame = enemyCurrentFrame;
 	}
 
-	public void setX(float f) {
+	public void incrementX(float f) {
 		enemyPosition.x += f;
 	}
-	public void setY(float f) {
+	public void incrementY(float f) {
 		enemyPosition.y += f;
+	}
+	public void setX(float f) {
+		enemyPosition.x = f;
+	}
+	public void setY(float f) {
+		enemyPosition.y = f;
 	}
 	public float getX() {
 		return enemyPosition.x;

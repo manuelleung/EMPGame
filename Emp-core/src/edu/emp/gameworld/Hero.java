@@ -35,6 +35,7 @@ public class Hero {
 	private int heroAccuracy;
 	private int heroEvasion;
 	private int heroDefense;
+	private int heroMoveSpeed;
 	
 	// Walking style for the hero
 	private WalkStyle wStyle = WalkStyle.UP; 
@@ -98,6 +99,7 @@ public class Hero {
 		heroAccuracy=100;
 		heroEvasion=20;
 		heroDefense=5;
+		heroMoveSpeed = 5;
 	}
 	
 	// actions for the hero
@@ -189,11 +191,17 @@ public class Hero {
 		this.heroDefense = heroDefense;
 	}
 	
-	public void setX(float f) {
+	public void incrementX(float f) {
 		heroPosition.x += f;
 	}
-	public void setY(float f) {
+	public void incrementY(float f) {
 		heroPosition.y += f;
+	}
+	public void setX(float f) {
+		heroPosition.x = f;
+	}
+	public void setY(float f) {
+		heroPosition.y = f;
 	}
 	public float getX() {
 		return heroPosition.x;
@@ -204,5 +212,13 @@ public class Hero {
 
 	public void takeDamage(int damage) {
 		heroHealth -= damage;
+	}
+
+	public int getHeroMoveSpeed() {
+		return heroMoveSpeed;
+	}
+
+	public void setHeroMoveSpeed(int heroMoveSpeed) {
+		this.heroMoveSpeed = heroMoveSpeed;
 	}
 }
