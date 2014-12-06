@@ -69,13 +69,15 @@ public class Renderer implements Disposable {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
+		camera.position.set(gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y, 0);
+		
 		mapLeft=0;
 		mapRight= 0+ (32*37);
 		mapBottom=0;
 		mapTop=0+ (32*39);
 		cameraHalfWidth=camera.viewportWidth*.5f;
 		cameraHalfHeight=camera.viewportHeight*.5f;
-
+		
 		
 		// Load our tile map into our renderer
 		tileMap = new TmxMapLoader().load("demomap.tmx");
@@ -91,12 +93,12 @@ public class Renderer implements Disposable {
 	
 	public void renderMaps() {
 		
-		if(gameController.playerTurn && gameController.action == CharacterOptions.NONE)
+		if(gameController.playerTurn && gameController.getAction() == CharacterOptions.NONE)
 			moveCamera();
 		
-		if(gameController.enemyTurn && gameController.moveState)
+		if(gameController.enemyTurn && gameController.isMoveState() || gameController.enemyTurn && gameController.isAttackState())
 			camera.position.set(gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y, 0);
-		if(gameController.playerTurn && gameController.action==CharacterOptions.MOVE || gameController.playerTurn && gameController.action==CharacterOptions.ATTACK)
+		if(gameController.playerTurn && gameController.getAction()==CharacterOptions.MOVE || gameController.playerTurn && gameController.getAction()==CharacterOptions.ATTACK)
 			camera.position.set(gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y, 0);
 		
 		// This update is in case we want to have a camera that can scroll with the arrow keys

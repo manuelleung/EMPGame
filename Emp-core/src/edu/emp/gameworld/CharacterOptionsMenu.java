@@ -143,6 +143,15 @@ public class CharacterOptionsMenu implements Screen, InputProcessor {
 				dispose();
 			}			
 		}
+		
+		if(keycode == Keys.ESCAPE) {
+			game.getScreen().dispose();
+			game.setScreen(bgGameScreen);
+			gameController.TestConfirmAction(true, CharacterOptions.NONE);
+			Gdx.input.setInputProcessor(gameController);
+			dispose();
+		}
+		
 		return false;
 	}
 

@@ -55,40 +55,40 @@ public class Controller implements InputProcessor {
 	private Hero hero;
 	
 
-	private int enemyMaxMove = 0;
+	private int enemyMaxMove=0;
 	// The sprites placed in spriteObjects will be drawn
 	// in the Renderer file.
 	// UNUSED FOR THE MOMENT
 	// private Sprite[] spriteObjects; 
 	
-	boolean cameraUp=false;
-	boolean cameraDown=false;
-	boolean cameraLeft=false;
-	boolean cameraRight=false;
+	boolean cameraUp;
+	boolean cameraDown;
+	boolean cameraLeft;
+	boolean cameraRight;
 
 	//PATH FINDER
 	PathFinder pathFinder;
 	boolean pathFound;
-	Array<Node> heroPath = new Array<Node>();
-	Array<Node> enemyPath = new Array<Node>();
+	Array<Node> heroPath;
+	Array<Node> enemyPath;
 	//for moving...
-	int movementIndex = 0;
+	int movementIndex;
 	
 	//game states when action is chosen
-	boolean attackState = false;
-	boolean moveState = false;
+	private boolean attackState;
+	private boolean moveState;
 	
 	//states performed
-	boolean moved = false;
-	boolean attacked =false;
+	boolean moved;
+	boolean attacked;
 	
 	// TURN states must be switched with "WAIT" option 
-	boolean playerTurn = true;
-	boolean enemyTurn = false;
+	boolean playerTurn;
+	boolean enemyTurn;
 	
 	// confirm action from Character Options Menu
-	private boolean confirmAction = false;
-	 CharacterOptions action = CharacterOptions.NONE;
+	private boolean confirmAction;
+	private CharacterOptions action;
 	
 	public Controller(final EMPGame game) {
 		this.game = game;
@@ -106,18 +106,38 @@ public class Controller implements InputProcessor {
 		//init pathfinder
 		pathFinder = new PathFinder((32*38), (32*40), 32);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 32);
 		
-		// details for the Movement Box Sprite
-		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
-		movementBoxSprite = new Sprite(movementBoxTexture);
-		movementBoxPosition = new Vector2(0, 0);
-		
 		//testPathFinder();
 		
 		hero = new Hero((32*27), (32*6));
-		
+		heroPath = new Array<Node>();
 		
 		enemy = new Enemy((32*13), (32*31));
+		enemyPath = new Array<Node>();
+		
+		// details for the Movement Box Sprite
+		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
+		movementBoxSprite = new Sprite(movementBoxTexture);
+		movementBoxPosition = new Vector2(hero.getHeroPosition().x, hero.getHeroPosition().y);
+		
 
+		
+		cameraUp=false;
+		cameraDown=false;
+		cameraLeft=false;
+		cameraRight=false;
+		
+		movementIndex = 0;
+		
+		attackState=false;
+		moveState=false;
+		moved = false;
+		attacked =false;
+		
+		playerTurn = true;
+		enemyTurn = false;
+		
+		confirmAction = false;
+		action=CharacterOptions.NONE;
 	}
 	
 
@@ -126,35 +146,6 @@ public class Controller implements InputProcessor {
 		updateMovementBox();
 		updateHero(deltaTime);
 		updateEnemy(deltaTime);
-	}
-	
-	public void testPathFinder() {
-		
-		//TEST
-		//.................................................................//
-		//TESTING WITH VALUES PATHFINDER
-						//Pixel location of cell (x, y) + type
-		pathFinder.setNode(0, 0, NodeType.START);
-		//pathFinder.setNode(32, 0, NodeType.BLOCKED);
-		//pathFinder.setNode(0, (32*15), NodeType.BLOCKED);
-		//pathFinder.setNode(0, (32*14), NodeType.BLOCKED);
-		//pathFinder.setNode((1*32), (32*14), NodeType.BLOCKED);
-		//pathFinder.setNode((1*32), (32*15), NodeType.BLOCKED);
-		pathFinder.setNode((32*15), (32*15), NodeType.END);
-		pathFound = pathFinder.findPath(); //1 = found --- 2 = no path
-		heroPath = pathFinder.GetPath();
-		if(pathFound) {
-			System.out.println("Start cell "+"x: "+heroPath.get(0).getX()/32+" y: "+heroPath.get(0).getY()/32);
-		for(int i=0; i<heroPath.size; i++) {
-			System.out.println("x: "+heroPath.get(i).getX()/32+" y: "+heroPath.get(i).getY()/32);
-		}
-		System.out.print("End cell ");
-		System.out.println("x: "+heroPath.peek().getX()/32+" y: "+heroPath.peek().getY()/32);
-		System.out.println("steps: "+(heroPath.size-1));
-		}
-		else { System.out.println("NO PATH"); }
-	//.................................................................//
-		
 	}
 	
 	// update the Movement Box
@@ -167,7 +158,7 @@ public class Controller implements InputProcessor {
 		hero.setHeroStateTime(hero.getHeroStateTime() + deltaTime);
 		
 		//System.out.println(hero.getHeroPosition().x + " " + hero.getHeroPosition().y);
-		if(moveState && playerTurn)
+		if(isMoveState() && playerTurn)
 			this.moveHero(Gdx.graphics.getDeltaTime());
 		// standard movement while standing
 		hero.setHeroWalk();
@@ -288,7 +279,7 @@ public class Controller implements InputProcessor {
 	}
 	
 	public void moveHero(float deltaTime) {
-		if(moveState) {
+		if(isMoveState()) {
 			Node currentNode = getCurrentNode(movementIndex, heroPath);
 			Node nextNode = getNextNode(movementIndex+1, heroPath);
 			
@@ -358,7 +349,7 @@ public class Controller implements InputProcessor {
 	}
 	
 	public void moveEnemy(float deltaTime) {
-		if(moveState && enemyTurn) {
+		if(isMoveState() && enemyTurn) {
 			Node currentNode = getCurrentNode(movementIndex, enemyPath);
 			Node nextNode = getNextNode(movementIndex+1, enemyPath);
 			
@@ -512,7 +503,7 @@ public class Controller implements InputProcessor {
 		moveState=false;
 		attackState=false;
 		enemyMaxMove = 0;
-		action = CharacterOptions.NONE;
+		action=CharacterOptions.NONE;
 		if(playerTurn==true) {
 			System.out.println("IT IS THE ENEMIES TURN -- PRES W TO PASS");
 			playerTurn = false;
@@ -543,10 +534,10 @@ public class Controller implements InputProcessor {
 		// TESTING//////////////////////////////////////////////////////
 		// ALL FORMULAS TO BE CHANGED
 
-		if(keycode == Keys.SPACE && action == CharacterOptions.ATTACK) {
+		if(keycode == Keys.SPACE && getAction() == CharacterOptions.ATTACK) {
 			attackEnemy();
 		}
-		if(keycode == Keys.SPACE && action == CharacterOptions.MOVE) {
+		if(keycode == Keys.SPACE && getAction() == CharacterOptions.MOVE) {
 			heroActionMove();
 		}
 		/////////////////////////////////////////////////////////////
@@ -598,10 +589,6 @@ public class Controller implements InputProcessor {
 		this.movementBoxSprite = movementBoxSprite;
 	}
 	
-	// access and getter to render the Hero
-	public Vector2 getHeroPosition() {
-		return hero.getHeroPosition();
-	}
 	
 	public Hero getHero() {
 		return hero;
@@ -806,7 +793,7 @@ public class Controller implements InputProcessor {
 	public void TestConfirmAction(boolean confirmAction, CharacterOptions action) {
 		// this checks that the action has been confirmed
 		this.confirmAction = confirmAction;
-		this.action = action;
+		this.action=action;
 		
 		// TEST METHOD for the setting of action
 		// MUST BE CHANGED or REMOVED
@@ -845,6 +832,18 @@ public class Controller implements InputProcessor {
 				confirmAction = false;
 			}
 		}
+	}
+
+	public CharacterOptions getAction() {
+		return action;
+	}
+
+	public boolean isMoveState() {
+		return moveState;
+	}
+
+	public boolean isAttackState() {
+		return attackState;
 	}
 
 }
