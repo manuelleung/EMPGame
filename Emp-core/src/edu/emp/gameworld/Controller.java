@@ -88,7 +88,7 @@ public class Controller implements InputProcessor {
 	
 	// confirm action from Character Options Menu
 	private boolean confirmAction = false;
-	private CharacterOptions action = CharacterOptions.MOVE;
+	 CharacterOptions action = CharacterOptions.NONE;
 	
 	public Controller(final EMPGame game) {
 		this.game = game;
@@ -104,7 +104,7 @@ public class Controller implements InputProcessor {
 	// Make all the game objects
 	private void initControllableObjects() {
 		//init pathfinder
-		pathFinder = new PathFinder(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 32);
+		pathFinder = new PathFinder((32*38), (32*40), 32);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 32);
 		
 		// details for the Movement Box Sprite
 		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
@@ -512,6 +512,7 @@ public class Controller implements InputProcessor {
 		moveState=false;
 		attackState=false;
 		enemyMaxMove = 0;
+		action = CharacterOptions.NONE;
 		if(playerTurn==true) {
 			System.out.println("IT IS THE ENEMIES TURN -- PRES W TO PASS");
 			playerTurn = false;

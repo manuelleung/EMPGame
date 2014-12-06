@@ -81,7 +81,7 @@ public class Renderer implements Disposable {
 		tileMap = new TmxMapLoader().load("demomap.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
 		getCollisionTiles();
-		System.out.println(Gdx.graphics.getWidth()+ " " + Gdx.graphics.getHeight());
+		//System.out.println(Gdx.graphics.getWidth()+ " " + Gdx.graphics.getHeight());
 	}
 	
 	public void render() {
@@ -90,8 +90,15 @@ public class Renderer implements Disposable {
 	}
 	
 	public void renderMaps() {
-
-		moveCamera();
+		
+		if(gameController.playerTurn && gameController.action == CharacterOptions.NONE)
+			moveCamera();
+		
+		if(gameController.enemyTurn && gameController.moveState)
+			camera.position.set(gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y, 0);
+		if(gameController.playerTurn && gameController.action==CharacterOptions.MOVE || gameController.playerTurn && gameController.action==CharacterOptions.ATTACK)
+			camera.position.set(gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y, 0);
+		
 		// This update is in case we want to have a camera that can scroll with the arrow keys
 		camera.update(); 
 		// Set the viewpoint from camera and render map
