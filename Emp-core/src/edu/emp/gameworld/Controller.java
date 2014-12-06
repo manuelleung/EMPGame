@@ -442,7 +442,7 @@ public class Controller implements InputProcessor {
 					 hero.setX(speed);
 				}
 				if(enemy.getX() >= 608.0f) {
-					enemy.setX(608.0f);
+					enemy.setX(576.0f);
 				}
 			}
 			//MOVE LEFT
@@ -475,7 +475,7 @@ public class Controller implements InputProcessor {
 					enemy.setY(speed);
 				}
 				if(enemy.getY() >= 608.0f) {
-					enemy.setY(608.0f);
+					enemy.setY(576.0f);
 				}
 			}
 			incrementCurrentNode(enemyPath);
@@ -623,7 +623,7 @@ public class Controller implements InputProcessor {
 				pathFinder.setNode((int)hero.getHeroPosition().x, (int)hero.getHeroPosition().y, NodeType.START);
 				//pathFinder.setNode(32, 0, NodeType.BLOCKED);
 				
-				//movement limiter ... only works with 2 because conditions are only made for 2
+				//movement limiter 
 				int maxMove = 2;
 					// must implement this better ... becacause the higher maxMove the more conditions that need to be added...
 				if( 	!(movementBoxPosition.x > hero.getHeroPosition().x+(32*maxMove)) && //RIGHT
@@ -650,7 +650,6 @@ public class Controller implements InputProcessor {
 					pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
 				else 
 					System.out.println("not in move range");
-				
 				
 				pathFound = pathFinder.findPath();
 				heroPath = pathFinder.GetPath();
