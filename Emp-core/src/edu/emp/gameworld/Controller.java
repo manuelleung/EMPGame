@@ -439,7 +439,7 @@ public class Controller implements InputProcessor {
 					 hero.setX(speed);
 				}
 				if(enemy.getX() >= 608.0f) {
-					enemy.setX(608.0f);
+					enemy.setX(576.0f);
 				}
 			}
 			//MOVE LEFT
@@ -472,7 +472,7 @@ public class Controller implements InputProcessor {
 					enemy.setY(speed);
 				}
 				if(enemy.getY() >= 608.0f) {
-					enemy.setY(608.0f);
+					enemy.setY(576.0f);
 				}
 			}
 			incrementCurrentNode(enemyPath);
