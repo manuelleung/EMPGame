@@ -31,7 +31,7 @@ public class GameScreen extends ApplicationAdapter implements Screen {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		// change this to LOG_NONE or LOG_INFO when we are ready to publish the game
 		
-		gameController = new Controller();
+		gameController = new Controller(game);
 		gameRenderer = new Renderer(gameController);	
 	}
 

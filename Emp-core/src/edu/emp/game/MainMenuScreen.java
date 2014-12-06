@@ -57,6 +57,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		batch.end();
 		
 		if (Gdx.input.isTouched()) {
+			// game.setScreen(new MiniMenu(game, game.getScreen()));
 			game.setScreen(new GameScreen(game));
 			dispose();
 		}
@@ -118,15 +119,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int arg2, int arg3) {
-		/* HANDLE INPUT */
-		/*
-		// use System.out.println("x: " + x + " y: " + y);
-		if (x > GAMESTART.X left boundary && x < GAMESTART.x right boundary
-			&& y > GAMESTART.Y left boundary && x < GAMESTART.y right boundary) {
-				game.setScreen(new GameScreen(game));
-			}
-		else if (....)
-		 */
+
 		return false;
 	}
 
