@@ -112,7 +112,7 @@ public class Controller implements InputProcessor {
 		hero = new Hero(0, 0);
 		
 		
-		enemy = new Enemy((32*15), (32*15));
+		enemy = new Enemy((32*7), (32*17));
 
 	}
 	

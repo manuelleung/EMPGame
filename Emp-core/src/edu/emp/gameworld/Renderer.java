@@ -61,6 +61,7 @@ public class Renderer implements Disposable {
 		// Load our tile map into our renderer
 		tileMap = new TmxMapLoader().load("test3.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
+		getCollisionTiles();
 	}
 	
 	public void render() {
@@ -90,7 +91,7 @@ public class Renderer implements Disposable {
 		batch.draw(gameController.getEnemy().getEnemyCurrentFrame(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
 		batch.end();
 		
-		getCollisionTiles();
+		
 	}
 		
 	// use this?
@@ -129,7 +130,8 @@ public class Renderer implements Disposable {
 						Object property = cell.getTile().getProperties().get("Collision");
 						if(property != null) {
 							// add functionality~
-							//System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
+							System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
+							gameController.pathFinder.setNode((32*x), (32*y), NodeType.BLOCKED);
 						}
 				}
 	      }
