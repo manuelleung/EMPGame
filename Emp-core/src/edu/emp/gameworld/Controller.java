@@ -729,7 +729,8 @@ public class Controller implements InputProcessor {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		/* TEST TRANSITION TO MiniMenu */
 		if(keycode == Keys.P) {
-			game.setScreen(new MiniMenu(game, game.getScreen()));
+			// create the MiniMenu, send this current screen, pass "this" Controller object
+			game.setScreen(new MiniMenu(game, game.getScreen(), this));
 		}
 		return true;
 	}

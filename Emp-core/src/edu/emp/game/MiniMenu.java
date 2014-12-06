@@ -40,19 +40,19 @@ public class MiniMenu implements Screen, InputProcessor {
 	// will transition to this Screen and change InputProcessor to this Controller
 	// after MiniMenu is disposed
 	private Screen bgGameScreen;
-	// private Controller gameController;
+	private Controller gameController;
 	
 	// holds the currently selected option
 	private MenuSelection selected = MenuSelection.MOVE;
 	
-	public MiniMenu(final EMPGame game, Screen bgGameScreen) {
+	public MiniMenu(final EMPGame game, Screen bgGameScreen, Controller gameController) {
 		super();
 		this.game = game;
 		Gdx.input.setInputProcessor(this);
 		batch = new SpriteBatch();
 		
 		this.bgGameScreen = bgGameScreen;
-		// this.gameController = gameController;
+		this.gameController = gameController;
 		
 		// Default selected item for the mini menu is the MOVE
 		background = new Texture("gameplay_options/move-selected.png");
@@ -121,7 +121,7 @@ public class MiniMenu implements Screen, InputProcessor {
 				game.setScreen(bgGameScreen);
 				
 				// NEEDS TO BE CHANGED, setInputProcessor to Controller....
-				Gdx.input.setInputProcessor(null);
+				Gdx.input.setInputProcessor(gameController);
 			}
 			
 			// ATTACK command is the confirmed choice
@@ -134,7 +134,7 @@ public class MiniMenu implements Screen, InputProcessor {
 				game.getScreen().dispose();
 				game.setScreen(bgGameScreen);
 				// NEEDS TO BE CHANGED, setInputProcessor to Controller....
-				Gdx.input.setInputProcessor(null);
+				Gdx.input.setInputProcessor(gameController);
 			}	
 			
 			// WAIT command is the confirmed choice
@@ -148,7 +148,7 @@ public class MiniMenu implements Screen, InputProcessor {
 				game.getScreen().dispose();
 				game.setScreen(bgGameScreen);
 				// NEEDS TO BE CHANGED, setInputProcessor to Controller....
-				Gdx.input.setInputProcessor(null);
+				Gdx.input.setInputProcessor(gameController);
 			}			
 		}
 		return false;
