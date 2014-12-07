@@ -208,7 +208,7 @@ public class Renderer implements Disposable {
 						Object property = cell.getTile().getProperties().get("Collision");
 						if(property != null) {
 							// add functionality~
-							System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
+							//System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
 							gameController.pathFinder.setNode((32*x), (32*y), NodeType.BLOCKED);
 						}
 				}

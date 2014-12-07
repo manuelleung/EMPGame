@@ -121,7 +121,7 @@ public class CharacterOptionsMenu implements Screen, InputProcessor {
 			}
 			
 			// ATTACK command is the confirmed choice
-			if (selected == CharacterOptions.ATTACK) {
+			if (selected == CharacterOptions.ATTACK && gameController.attacked==false) {
 				System.out.println("Commencing Attack Mode!");
 
 				// remove MiniMenu Screen

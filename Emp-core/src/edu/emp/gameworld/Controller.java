@@ -542,11 +542,13 @@ public class Controller implements InputProcessor {
 
 		if(keycode == Keys.SPACE && action == CharacterOptions.ATTACK) {
 			attackEnemy();
-			action=CharacterOptions.NONE;
+			if(attacked)
+				action=CharacterOptions.NONE;
 		}
 		if(keycode == Keys.SPACE && action == CharacterOptions.MOVE) {
 			heroActionMove();
-			action=CharacterOptions.NONE;
+			if(moved)
+				action=CharacterOptions.NONE;
 		}
 		
 		if(keycode==Keys.ESCAPE && (action==CharacterOptions.ATTACK || action==CharacterOptions.MOVE)) {
@@ -698,7 +700,11 @@ public class Controller implements InputProcessor {
 			//movement limiter 
 			int maxMove = hero.getHeroMoveSpeed(); // 5
 				// must implement this better ... becacause the higher maxMove the more conditions that need to be added...
-			if( 	!(movementBoxPosition.x > hero.getHeroPosition().x+(32*maxMove)) && //RIGHT
+			if(pathFinder.isNodeBlocked((int)movementBoxPosition.x/32, (int)movementBoxPosition.y/32)) {
+				System.out.println("Cell is blocked");
+				pathFound=false;
+			}
+			else if( 	!(movementBoxPosition.x > hero.getHeroPosition().x+(32*maxMove)) && //RIGHT
 					!(movementBoxPosition.x < hero.getHeroPosition().x-(32*maxMove)) && //LEFT
 					!(movementBoxPosition.y > hero.getHeroPosition().y+(32*maxMove)) && //UP
 					!(movementBoxPosition.y < hero.getHeroPosition().y-(32*maxMove)) && //DOWN
@@ -777,6 +783,8 @@ public class Controller implements InputProcessor {
 			}
 			pathFound = pathFinder.findPath();
 			heroPath = pathFinder.GetPath();
+			
+			
 			/*if(pathFound) {
 				System.out.println("Start cell "+"x: "+heroPath.get(0).getX()/32+" y: "+heroPath.get(0).getY()/32);
 				for(int i=0; i<heroPath.size; i++) {
@@ -795,6 +803,7 @@ public class Controller implements InputProcessor {
 			if(!pathFound) {
 				moved=false;
 				moveState=false;
+				heroPath=null;
 				System.out.println("NO PATH");
 			}
 		//end of if
