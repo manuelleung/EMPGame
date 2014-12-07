@@ -110,7 +110,7 @@ public class CharacterOptionsMenu implements Screen, InputProcessor {
 		// confirm action
 		if (keycode == Keys.ENTER) {
 			// MOVE command is the confirmed choice
-			if (selected == CharacterOptions.MOVE) {
+			if (selected == CharacterOptions.MOVE && gameController.moved==false) {
 				
 				// remove MiniMenu Screen
 				game.getScreen().dispose();
