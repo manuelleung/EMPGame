@@ -156,9 +156,8 @@ public class Renderer implements Disposable {
 	public void renderGameObjects() {
 		/* It basically just means drawing will be done in 2D space using the position and bounds of the given camera. */
 		gameController.getShape().setProjectionMatrix(camera.combined);
-		if(gameController.getAction()==CharacterOptions.MOVE)
+		if(gameController.getAction()==CharacterOptions.MOVE || gameController.getAction()==CharacterOptions.ATTACK)
 			gameController.drawGrid();
-		
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();

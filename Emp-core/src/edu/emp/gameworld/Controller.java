@@ -855,126 +855,157 @@ public class Controller implements InputProcessor {
 	public void drawGrid() {
 		Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
 		shape.begin(ShapeType.Filled);
-		int max = hero.getHeroMoveSpeed();
-		int heroY = (int)(hero.getHeroPosition().y/32);
-		int heroX = (int)(hero.getHeroPosition().x/32);
-		for(int cellYUp=heroY; cellYUp<=(heroY+max); cellYUp++) {
-			for(int cellXRight=heroX; cellXRight<=(heroX+max); cellXRight++) {
-				if(		cellYUp==heroY+max && cellXRight==heroX+max ||
-						cellYUp==heroY+max-1 && cellXRight==heroX+max-1 ||
-						cellYUp==heroY+max-2 && cellXRight==heroX+max-2 ||
-						cellYUp==heroY+max-1 && cellXRight==heroX+max ||
-						cellYUp==heroY+max && cellXRight==heroX+max-1 ||
-						cellYUp==heroY+max-2 && cellXRight==heroX+max ||
-						cellYUp==heroY+max && cellXRight==heroX+max-2 ||
-						cellYUp==heroY+max-2 && cellXRight==heroX+max-1 ||
-						cellYUp==heroY+max-1 && cellXRight==heroX+max-2 ||
-						cellYUp==heroY+max-3 && cellXRight==heroX+max ||
-						cellYUp==heroY+max && cellXRight==heroX+max-3 ||
-						cellYUp==heroY+max-4 && cellXRight==heroX+max ||
-						cellYUp==heroY+max && cellXRight==heroX+max-4 ||
-						cellYUp==heroY+max-3 && cellXRight==heroX+max-1 ||
-						cellYUp==heroY+max-1 && cellXRight==heroX+max-3
-				
-						) {
-					continue;
-					//shape.setColor(new Color(0, 255, 0, 0.4f));
-					//shape.rect((cellXRight*32), (cellYUp*32), 32, 32);
+		if(playerTurn && action==CharacterOptions.MOVE) {
+			int max = hero.getHeroMoveSpeed();
+			int heroY = (int)(hero.getHeroPosition().y/32);
+			int heroX = (int)(hero.getHeroPosition().x/32);
+			for(int cellYUp=heroY; cellYUp<=(heroY+max); cellYUp++) {
+				for(int cellXRight=heroX; cellXRight<=(heroX+max); cellXRight++) {
+					if(		cellYUp==heroY+max && cellXRight==heroX+max ||
+							cellYUp==heroY+max-1 && cellXRight==heroX+max-1 ||
+							cellYUp==heroY+max-2 && cellXRight==heroX+max-2 ||
+							cellYUp==heroY+max-1 && cellXRight==heroX+max ||
+							cellYUp==heroY+max && cellXRight==heroX+max-1 ||
+							cellYUp==heroY+max-2 && cellXRight==heroX+max ||
+							cellYUp==heroY+max && cellXRight==heroX+max-2 ||
+							cellYUp==heroY+max-2 && cellXRight==heroX+max-1 ||
+							cellYUp==heroY+max-1 && cellXRight==heroX+max-2 ||
+							cellYUp==heroY+max-3 && cellXRight==heroX+max ||
+							cellYUp==heroY+max && cellXRight==heroX+max-3 ||
+							cellYUp==heroY+max-4 && cellXRight==heroX+max ||
+							cellYUp==heroY+max && cellXRight==heroX+max-4 ||
+							cellYUp==heroY+max-3 && cellXRight==heroX+max-1 ||
+							cellYUp==heroY+max-1 && cellXRight==heroX+max-3 
+					
+							) {
+						continue;
+						//shape.setColor(new Color(0, 255, 0, 0.4f));
+						//shape.rect((cellXRight*32), (cellYUp*32), 32, 32);
+					}
+					else if( pathFinder.isNodeBlocked(cellXRight, cellYUp) ) {
+						shape.setColor(new Color(255, 0, 0, 0.3f));
+						shape.rect((cellXRight*32), (cellYUp*32), 32, 32);	
+					}
+					else {
+						shape.setColor(new Color(0, 0, 255, 0.3f));
+						shape.rect((cellXRight*32), (cellYUp*32), 32, 32);
+					//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+					}
 				}
-				else {
-					shape.setColor(new Color(0, 0, 255, 0.4f));
-					shape.rect((cellXRight*32), (cellYUp*32), 32, 32);
-				//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+				for(int cellXLeft=heroX; cellXLeft>=(heroX-max); cellXLeft--) {
+					if(		cellYUp==heroY+max && cellXLeft==heroX-max ||
+							cellYUp==heroY+max-1 && cellXLeft==heroX-max+1 ||
+							cellYUp==heroY+max-2 && cellXLeft==heroX-max+2 ||
+							cellYUp==heroY+max-1 && cellXLeft==heroX-max ||
+							cellYUp==heroY+max && cellXLeft==heroX-max+1 ||
+							cellYUp==heroY+max-2 && cellXLeft==heroX-max ||
+							cellYUp==heroY+max && cellXLeft==heroX-max+2 ||
+							cellYUp==heroY+max-2 && cellXLeft==heroX-max+1 ||
+							cellYUp==heroY+max-1 && cellXLeft==heroX-max+2 ||
+							cellYUp==heroY+max-3 && cellXLeft==heroX-max ||
+							cellYUp==heroY+max && cellXLeft==heroX-max+3 ||
+							cellYUp==heroY+max-4 && cellXLeft==heroX-max ||
+							cellYUp==heroY+max && cellXLeft==heroX-max+4 ||
+							cellYUp==heroY+max-3 && cellXLeft==heroX-max+1 ||
+							cellYUp==heroY+max-1 && cellXLeft==heroX-max+3
+					
+							) {
+						continue;
+						//shape.setColor(new Color(0, 255, 0, 0.4f));
+						//shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);
+					}
+					else if( pathFinder.isNodeBlocked(cellXLeft, cellYUp) ) {
+						shape.setColor(new Color(255, 0, 0, 0.3f));
+						shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);	
+					}
+					else {
+						shape.setColor(new Color(0, 0, 255, 0.3f));
+						shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);
+					//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+					}
 				}
 			}
-			for(int cellXLeft=heroX; cellXLeft>=(heroX-max); cellXLeft--) {
-				if(		cellYUp==heroY+max && cellXLeft==heroX-max ||
-						cellYUp==heroY+max-1 && cellXLeft==heroX-max+1 ||
-						cellYUp==heroY+max-2 && cellXLeft==heroX-max+2 ||
-						cellYUp==heroY+max-1 && cellXLeft==heroX-max ||
-						cellYUp==heroY+max && cellXLeft==heroX-max+1 ||
-						cellYUp==heroY+max-2 && cellXLeft==heroX-max ||
-						cellYUp==heroY+max && cellXLeft==heroX-max+2 ||
-						cellYUp==heroY+max-2 && cellXLeft==heroX-max+1 ||
-						cellYUp==heroY+max-1 && cellXLeft==heroX-max+2 ||
-						cellYUp==heroY+max-3 && cellXLeft==heroX-max ||
-						cellYUp==heroY+max && cellXLeft==heroX-max+3 ||
-						cellYUp==heroY+max-4 && cellXLeft==heroX-max ||
-						cellYUp==heroY+max && cellXLeft==heroX-max+4 ||
-						cellYUp==heroY+max-3 && cellXLeft==heroX-max+1 ||
-						cellYUp==heroY+max-1 && cellXLeft==heroX-max+3
-				
-						) {
-					continue;
-					//shape.setColor(new Color(0, 255, 0, 0.4f));
-					//shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);
+			for(int cellYDown=heroY; cellYDown>=(heroY-max); cellYDown--) {
+				for(int cellXRight=heroX; cellXRight<=(heroX+max); cellXRight++) {
+					if(		cellYDown==heroY-max && cellXRight==heroX+max ||
+							cellYDown==heroY-max+1 && cellXRight==heroX+max-1 ||
+							cellYDown==heroY-max+2 && cellXRight==heroX+max-2 ||
+							cellYDown==heroY-max+1 && cellXRight==heroX+max ||
+							cellYDown==heroY-max && cellXRight==heroX+max-1 ||
+							cellYDown==heroY-max+2 && cellXRight==heroX+max ||
+							cellYDown==heroY-max && cellXRight==heroX+max-2 ||
+							cellYDown==heroY-max+2 && cellXRight==heroX+max-1 ||
+							cellYDown==heroY-max+1 && cellXRight==heroX+max-2 ||
+							cellYDown==heroY-max+3 && cellXRight==heroX+max ||
+							cellYDown==heroY-max && cellXRight==heroX+max-3 ||
+							cellYDown==heroY-max+4 && cellXRight==heroX+max ||
+							cellYDown==heroY-max && cellXRight==heroX+max-4 ||
+							cellYDown==heroY-max+3 && cellXRight==heroX+max-1 ||
+							cellYDown==heroY-max+1 && cellXRight==heroX+max-3 
+							
+					
+							) {
+						continue;
+						//shape.setColor(new Color(0, 255, 0, 0.4f));
+						//shape.rect((cellXRight*32), (cellYDown*32), 32, 32);
+					}
+					else if( pathFinder.isNodeBlocked(cellXRight, cellYDown) ) {
+						shape.setColor(new Color(255, 0, 0, 0.3f));
+						shape.rect((cellXRight*32), (cellYDown*32), 32, 32);	
+					}
+					else {
+						shape.setColor(new Color(0, 0, 255, 0.3f));
+						shape.rect((cellXRight*32), (cellYDown*32), 32, 32);
+						//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+					}
 				}
-				else {
-					shape.setColor(new Color(0, 0, 255, 0.4f));
-					shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);
-				//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+				for(int cellXLeft=heroX; cellXLeft>=(heroX-max); cellXLeft--) {
+					if(		cellYDown==heroY-max && cellXLeft==heroX-max ||
+							cellYDown==heroY-max+1 && cellXLeft==heroX-max+1 ||
+							cellYDown==heroY-max+2 && cellXLeft==heroX-max+2 ||
+							cellYDown==heroY-max+1 && cellXLeft==heroX-max ||
+							cellYDown==heroY-max && cellXLeft==heroX-max+1 ||
+							cellYDown==heroY-max+2 && cellXLeft==heroX-max ||
+							cellYDown==heroY-max && cellXLeft==heroX-max+2 ||
+							cellYDown==heroY-max+2 && cellXLeft==heroX-max+1 ||
+							cellYDown==heroY-max+1 && cellXLeft==heroX-max+2 ||
+							cellYDown==heroY-max+3 && cellXLeft==heroX-max ||
+							cellYDown==heroY-max && cellXLeft==heroX-max+3 ||
+							cellYDown==heroY-max+4 && cellXLeft==heroX-max ||
+							cellYDown==heroY-max && cellXLeft==heroX-max+4 ||
+							cellYDown==heroY-max+3 && cellXLeft==heroX-max+1 ||
+							cellYDown==heroY-max+1 && cellXLeft==heroX-max+3
+					
+							) {
+						continue;
+						//shape.setColor(new Color(0, 255, 0, 0.4f));
+						//shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);
+					}
+					else if( pathFinder.isNodeBlocked(cellXLeft, cellYDown) ) {
+						shape.setColor(new Color(255, 0, 0, 0.3f));
+						shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);	
+					}
+					else {
+						shape.setColor(new Color(0, 0, 255, 0.3f));
+						shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);
+						//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+					}
+	
 				}
 			}
 		}
-		for(int cellYDown=heroY; cellYDown>=(heroY-max); cellYDown--) {
-			for(int cellXRight=heroX; cellXRight<=(heroX+max); cellXRight++) {
-				if(		cellYDown==heroY-max && cellXRight==heroX+max ||
-						cellYDown==heroY-max+1 && cellXRight==heroX+max-1 ||
-						cellYDown==heroY-max+2 && cellXRight==heroX+max-2 ||
-						cellYDown==heroY-max+1 && cellXRight==heroX+max ||
-						cellYDown==heroY-max && cellXRight==heroX+max-1 ||
-						cellYDown==heroY-max+2 && cellXRight==heroX+max ||
-						cellYDown==heroY-max && cellXRight==heroX+max-2 ||
-						cellYDown==heroY-max+2 && cellXRight==heroX+max-1 ||
-						cellYDown==heroY-max+1 && cellXRight==heroX+max-2 ||
-						cellYDown==heroY-max+3 && cellXRight==heroX+max ||
-						cellYDown==heroY-max && cellXRight==heroX+max-3 ||
-						cellYDown==heroY-max+4 && cellXRight==heroX+max ||
-						cellYDown==heroY-max && cellXRight==heroX+max-4 ||
-						cellYDown==heroY-max+3 && cellXRight==heroX+max-1 ||
-						cellYDown==heroY-max+1 && cellXRight==heroX+max-3
-				
-						) {
-					continue;
-					//shape.setColor(new Color(0, 255, 0, 0.4f));
-					//shape.rect((cellXRight*32), (cellYDown*32), 32, 32);
-				}
-				else {
-					shape.setColor(new Color(0, 0, 255, 0.4f));
-					shape.rect((cellXRight*32), (cellYDown*32), 32, 32);
-					//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
-				}
-			}
-			for(int cellXLeft=heroX; cellXLeft>=(heroX-max); cellXLeft--) {
-				if(		cellYDown==heroY-max && cellXLeft==heroX-max ||
-						cellYDown==heroY-max+1 && cellXLeft==heroX-max+1 ||
-						cellYDown==heroY-max+2 && cellXLeft==heroX-max+2 ||
-						cellYDown==heroY-max+1 && cellXLeft==heroX-max ||
-						cellYDown==heroY-max && cellXLeft==heroX-max+1 ||
-						cellYDown==heroY-max+2 && cellXLeft==heroX-max ||
-						cellYDown==heroY-max && cellXLeft==heroX-max+2 ||
-						cellYDown==heroY-max+2 && cellXLeft==heroX-max+1 ||
-						cellYDown==heroY-max+1 && cellXLeft==heroX-max+2 ||
-						cellYDown==heroY-max+3 && cellXLeft==heroX-max ||
-						cellYDown==heroY-max && cellXLeft==heroX-max+3 ||
-						cellYDown==heroY-max+4 && cellXLeft==heroX-max ||
-						cellYDown==heroY-max && cellXLeft==heroX-max+4 ||
-						cellYDown==heroY-max+3 && cellXLeft==heroX-max+1 ||
-						cellYDown==heroY-max+1 && cellXLeft==heroX-max+3
-				
-						) {
-					continue;
-					//shape.setColor(new Color(0, 255, 0, 0.4f));
-					//shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);
-				}
-				else {
-					shape.setColor(new Color(0, 0, 255, 0.4f));
-					shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);
-					//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
-				}
-
-			}
+		
+		if(playerTurn && action==CharacterOptions.ATTACK) {
+			int heroY = (int)hero.getHeroPosition().y;
+			int heroX = (int)hero.getHeroPosition().x;
+			shape.setColor(new Color(0, 255, 0, 0.3f));
+			shape.rect(heroX, heroY, 32, 32);
+			shape.rect((heroX+32), heroY, 32, 32);
+			shape.rect(heroX, (heroY+32), 32, 32);
+			shape.rect((heroX-32), heroY, 32, 32);
+			shape.rect(heroX, (heroY-32), 32, 32);
 		}
+		
 		shape.end();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
