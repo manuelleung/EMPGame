@@ -868,8 +868,42 @@ public class Controller implements InputProcessor {
 			int max = hero.getHeroMoveSpeed();
 			int heroY = (int)(hero.getHeroPosition().y/32);
 			int heroX = (int)(hero.getHeroPosition().x/32);
-			for(int cellYUp=heroY; cellYUp<=(heroY+max); cellYUp++) {
-				for(int cellXRight=heroX; cellXRight<=(heroX+max); cellXRight++) {
+			for(int i=0; i<=max; i++) {
+				if( pathFinder.isNodeBlocked((heroX+i), (heroY)) ) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX+i)*32, (heroY)*32, 32, 32);	
+				}
+				else {
+					shape.setColor(new Color(0, 0, 255, 0.3f));
+					shape.rect((heroX-i)*32, (heroY)*32, 32, 32);
+				}
+				if(pathFinder.isNodeBlocked((heroX-i), (heroY))) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX+i*32), (heroY*32), 32, 32);
+				}
+				else {
+					shape.setColor(new Color(0, 0, 255, 0.3f));
+					shape.rect((heroX+i)*32, (heroY)*32, 32, 32);
+				}
+				if(pathFinder.isNodeBlocked((heroX), (heroY+i))) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX)*32, (heroY+i)*32, 32, 32);
+				}
+				else {
+					shape.setColor(new Color(0, 0, 255, 0.3f));
+					shape.rect((heroX)*32, (heroY+i)*32, 32, 32);
+				}
+				if(pathFinder.isNodeBlocked((heroX), (heroY-i))) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX)*32, (heroY-i)*32, 32, 32);
+				}
+				else {
+					shape.setColor(new Color(0, 0, 255, 0.3f));
+					shape.rect((heroX)*32, (heroY-i)*32, 32, 32);
+				}
+			}
+			for(int cellYUp=heroY+1; cellYUp<=(heroY+max); cellYUp++) {
+				for(int cellXRight=heroX+1; cellXRight<=(heroX+max); cellXRight++) {
 					if(		cellYUp==heroY+max && cellXRight==heroX+max ||
 							cellYUp==heroY+max-1 && cellXRight==heroX+max-1 ||
 							cellYUp==heroY+max-2 && cellXRight==heroX+max-2 ||
@@ -901,7 +935,7 @@ public class Controller implements InputProcessor {
 					//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
 					}
 				}
-				for(int cellXLeft=heroX; cellXLeft>=(heroX-max); cellXLeft--) {
+				for(int cellXLeft=heroX-1; cellXLeft>=(heroX-max); cellXLeft--) {
 					if(		cellYUp==heroY+max && cellXLeft==heroX-max ||
 							cellYUp==heroY+max-1 && cellXLeft==heroX-max+1 ||
 							cellYUp==heroY+max-2 && cellXLeft==heroX-max+2 ||
@@ -934,8 +968,8 @@ public class Controller implements InputProcessor {
 					}
 				}
 			}
-			for(int cellYDown=heroY; cellYDown>=(heroY-max); cellYDown--) {
-				for(int cellXRight=heroX; cellXRight<=(heroX+max); cellXRight++) {
+			for(int cellYDown=heroY-1; cellYDown>=(heroY-max); cellYDown--) {
+				for(int cellXRight=heroX+1; cellXRight<=(heroX+max); cellXRight++) {
 					if(		cellYDown==heroY-max && cellXRight==heroX+max ||
 							cellYDown==heroY-max+1 && cellXRight==heroX+max-1 ||
 							cellYDown==heroY-max+2 && cellXRight==heroX+max-2 ||
@@ -968,7 +1002,7 @@ public class Controller implements InputProcessor {
 						//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
 					}
 				}
-				for(int cellXLeft=heroX; cellXLeft>=(heroX-max); cellXLeft--) {
+				for(int cellXLeft=heroX-1; cellXLeft>=(heroX-max); cellXLeft--) {
 					if(		cellYDown==heroY-max && cellXLeft==heroX-max ||
 							cellYDown==heroY-max+1 && cellXLeft==heroX-max+1 ||
 							cellYDown==heroY-max+2 && cellXLeft==heroX-max+2 ||
@@ -1005,14 +1039,44 @@ public class Controller implements InputProcessor {
 		}
 		
 		if(playerTurn && action==CharacterOptions.ATTACK) {
-			int heroY = (int)hero.getHeroPosition().y;
-			int heroX = (int)hero.getHeroPosition().x;
-			shape.setColor(new Color(0, 255, 0, 0.3f));
-			shape.rect(heroX, heroY, 32, 32);
-			shape.rect((heroX+32), heroY, 32, 32);
-			shape.rect(heroX, (heroY+32), 32, 32);
-			shape.rect((heroX-32), heroY, 32, 32);
-			shape.rect(heroX, (heroY-32), 32, 32);
+			int heroY = (int)hero.getHeroPosition().y/32;
+			int heroX = (int)hero.getHeroPosition().x/32;
+			for(int i=0; i<=1; i++) {
+				shape.setColor(new Color(0, 255, 0, 0.3f));
+				shape.rect(heroX, heroY, 32, 32);
+				if( pathFinder.isNodeBlocked(heroX+i, heroY) ) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX+i)*32, (heroY*32), 32, 32);	
+				}
+				else {
+					shape.setColor(new Color(0, 255, 0, 0.3f));
+					shape.rect((heroX+i)*32, heroY*32, 32, 32);
+				}
+				if( pathFinder.isNodeBlocked(heroX-i, heroY) ) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX-i)*32, (heroY*32), 32, 32);	
+				}
+				else {
+					shape.setColor(new Color(0, 255, 0, 0.3f));
+					shape.rect((heroX-i)*32, heroY*32, 32, 32);
+				}
+				if( pathFinder.isNodeBlocked(heroX, heroY+i) ) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX*32), (heroY+i)*32, 32, 32);	
+				}
+				else {
+					shape.setColor(new Color(0, 255, 0, 0.3f));
+					shape.rect(heroX*32, (heroY+i)*32, 32, 32);
+				}
+				if( pathFinder.isNodeBlocked(heroX, heroY-i) ) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX*32), (heroY-i)*32, 32, 32);	
+				}
+				else {
+					shape.setColor(new Color(0, 255, 0, 0.3f));
+					shape.rect(heroX*32, (heroY-i)*32, 32, 32);
+				}
+			}
 		}
 		
 		shape.end();
