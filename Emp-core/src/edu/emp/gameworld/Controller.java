@@ -625,13 +625,13 @@ public class Controller implements InputProcessor {
     /* DELETE THIS METHOD AFTER PROPER IMPLEMENTATION */
     /* Transition to PhaseIndicator */
     if (keycode == Keys.L) {
-    	// If the current turn is Player
-    		// game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.PLAYER));
-    	// if the current turn is Enemy
-    		// game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.ENEMY));
-    	
-    	// TEST
-    	game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.PLAYER));
+      // If the current turn is Player
+        // game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.PLAYER));
+      // if the current turn is Enemy
+        // game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.ENEMY));
+      
+      // TEST
+      game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.PLAYER));
     }
     
     
