@@ -114,14 +114,14 @@ public class Controller implements InputProcessor {
 		
 		//testPathFinder();
 		
-		hero = new Hero((32*27), (32*6));
+		hero = new Hero((32*16), (32*33));
 		heroPath = new Array<Node>();
 		
 		enemy = new Enemy((32*13), (32*31));
 		enemyPath = new Array<Node>();
 		
 		// details for the Movement Box Sprite
-		movementBoxTexture = new Texture(Gdx.files.internal("move-box.png"));
+		movementBoxTexture = new Texture(Gdx.files.internal("selectBox.png"));
 		movementBoxSprite = new Sprite(movementBoxTexture);
 		movementBoxPosition = new Vector2(hero.getHeroPosition().x, hero.getHeroPosition().y);
 		
@@ -870,7 +870,11 @@ public class Controller implements InputProcessor {
 			int heroY = (int)(hero.getHeroPosition().y/32);
 			int heroX = (int)(hero.getHeroPosition().x/32);
 			for(int i=0; i<=max; i++) {
-				if( pathFinder.isNodeBlocked((heroX+i), (heroY)) ||((heroX+i)*32 == enemy.getEnemyPosition().x && heroY*32 == enemy.getEnemyPosition().y) ) {
+				// RIGHT
+				if(heroX+i >37) {
+					//out of bounds
+				}
+				else if( pathFinder.isNodeBlocked((heroX+i), (heroY)) ||((heroX+i)*32 == enemy.getEnemyPosition().x && heroY*32 == enemy.getEnemyPosition().y) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX+i)*32, (heroY)*32, 32, 32);	
 				}
@@ -878,7 +882,11 @@ public class Controller implements InputProcessor {
 					shape.setColor(new Color(0, 0, 255, 0.3f));
 					shape.rect((heroX+i)*32, (heroY)*32, 32, 32);
 				}
-				if(pathFinder.isNodeBlocked((heroX-i), (heroY)) ||((heroX-i)*32 == enemy.getEnemyPosition().x && heroY*32 == enemy.getEnemyPosition().y) ) {
+				//LEFT
+				if (heroX-i <0) {
+					//out of bounds
+				}
+				else if(pathFinder.isNodeBlocked((heroX-i), (heroY)) ||((heroX-i)*32 == enemy.getEnemyPosition().x && heroY*32 == enemy.getEnemyPosition().y) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX-i)*32, (heroY)*32, 32, 32);
 				}
@@ -886,7 +894,11 @@ public class Controller implements InputProcessor {
 					shape.setColor(new Color(0, 0, 255, 0.3f));
 					shape.rect((heroX-i)*32, (heroY)*32, 32, 32);
 				}
-				if(pathFinder.isNodeBlocked((heroX), (heroY+i))   ||((heroX)*32 == enemy.getEnemyPosition().x && (heroY+i)*32 == enemy.getEnemyPosition().y) ) {
+				//UP
+				if(heroY+i > 39) {
+					//out of bounds
+				}
+				else if(pathFinder.isNodeBlocked((heroX), (heroY+i))   ||((heroX)*32 == enemy.getEnemyPosition().x && (heroY+i)*32 == enemy.getEnemyPosition().y) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX)*32, (heroY+i)*32, 32, 32);
 				}
@@ -894,7 +906,11 @@ public class Controller implements InputProcessor {
 					shape.setColor(new Color(0, 0, 255, 0.3f));
 					shape.rect((heroX)*32, (heroY+i)*32, 32, 32);
 				}
-				if(pathFinder.isNodeBlocked((heroX), (heroY-i)) ||((heroX)*32 == enemy.getEnemyPosition().x && (heroY-i)*32 == enemy.getEnemyPosition().y)) {
+				//DOWN
+				if( heroY-i <0) {
+					//out of bounds
+				}
+				else if(pathFinder.isNodeBlocked((heroX), (heroY-i)) ||((heroX)*32 == enemy.getEnemyPosition().x && (heroY-i)*32 == enemy.getEnemyPosition().y)) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX)*32, (heroY-i)*32, 32, 32);
 				}
@@ -925,6 +941,9 @@ public class Controller implements InputProcessor {
 						continue;
 						//shape.setColor(new Color(0, 255, 0, 0.4f));
 						//shape.rect((cellXRight*32), (cellYUp*32), 32, 32);
+					}
+					else if(cellYUp > 39 || cellXRight>37) {
+						//out of bounds
 					}
 					else if( pathFinder.isNodeBlocked(cellXRight, cellYUp) ||((cellXRight)*32 == enemy.getEnemyPosition().x && cellYUp*32 == enemy.getEnemyPosition().y)) {
 						shape.setColor(new Color(255, 0, 0, 0.3f));
@@ -957,6 +976,9 @@ public class Controller implements InputProcessor {
 						continue;
 						//shape.setColor(new Color(0, 255, 0, 0.4f));
 						//shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);
+					}
+					else if(cellYUp > 39 || cellXLeft<0) {
+						//out of bounds
 					}
 					else if( pathFinder.isNodeBlocked(cellXLeft, cellYUp) ||((cellXLeft)*32 == enemy.getEnemyPosition().x && cellYUp*32 == enemy.getEnemyPosition().y)) {
 						shape.setColor(new Color(255, 0, 0, 0.3f));
@@ -993,6 +1015,9 @@ public class Controller implements InputProcessor {
 						//shape.setColor(new Color(0, 255, 0, 0.4f));
 						//shape.rect((cellXRight*32), (cellYDown*32), 32, 32);
 					}
+					else if(cellYDown < 0  || cellXRight>37) {
+						//out of bounds 
+					}
 					else if( pathFinder.isNodeBlocked(cellXRight, cellYDown) ||((cellXRight)*32 == enemy.getEnemyPosition().x && cellYDown*32 == enemy.getEnemyPosition().y)) {
 						shape.setColor(new Color(255, 0, 0, 0.3f));
 						shape.rect((cellXRight*32), (cellYDown*32), 32, 32);	
@@ -1025,6 +1050,9 @@ public class Controller implements InputProcessor {
 						//shape.setColor(new Color(0, 255, 0, 0.4f));
 						//shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);
 					}
+					else if(cellYDown < 0  || cellXLeft <0) {
+						//out of bounds 
+					}
 					else if( pathFinder.isNodeBlocked(cellXLeft, cellYDown) ||((cellXLeft)*32 == enemy.getEnemyPosition().x && cellYDown*32 == enemy.getEnemyPosition().y)) {
 						shape.setColor(new Color(255, 0, 0, 0.3f));
 						shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);	
@@ -1045,7 +1073,11 @@ public class Controller implements InputProcessor {
 			for(int i=0; i<=1; i++) {
 				shape.setColor(new Color(0, 255, 0, 0.3f));
 				shape.rect(heroX, heroY, 32, 32);
-				if( pathFinder.isNodeBlocked(heroX+i, heroY) ) {
+				//RIGHT
+				if(heroX+i >37) {
+					//out of bounds
+				}
+				else if( pathFinder.isNodeBlocked(heroX+i, heroY) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX+i)*32, (heroY*32), 32, 32);	
 				}
@@ -1053,7 +1085,11 @@ public class Controller implements InputProcessor {
 					shape.setColor(new Color(0, 255, 0, 0.3f));
 					shape.rect((heroX+i)*32, heroY*32, 32, 32);
 				}
-				if( pathFinder.isNodeBlocked(heroX-i, heroY) ) {
+				//LEFT
+				if(heroX-i <0) {
+					//out of bounds
+				}
+				else if( pathFinder.isNodeBlocked(heroX-i, heroY) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX-i)*32, (heroY*32), 32, 32);	
 				}
@@ -1061,7 +1097,11 @@ public class Controller implements InputProcessor {
 					shape.setColor(new Color(0, 255, 0, 0.3f));
 					shape.rect((heroX-i)*32, heroY*32, 32, 32);
 				}
-				if( pathFinder.isNodeBlocked(heroX, heroY+i) ) {
+				//UP
+				if(heroY+i > 39) {
+					//out of bounds
+				}
+				else if( pathFinder.isNodeBlocked(heroX, heroY+i) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX*32), (heroY+i)*32, 32, 32);	
 				}
@@ -1069,7 +1109,11 @@ public class Controller implements InputProcessor {
 					shape.setColor(new Color(0, 255, 0, 0.3f));
 					shape.rect(heroX*32, (heroY+i)*32, 32, 32);
 				}
-				if( pathFinder.isNodeBlocked(heroX, heroY-i) ) {
+				//DOWN
+				if(heroY-i <0) {
+					//out of bounds
+				}
+				else if( pathFinder.isNodeBlocked(heroX, heroY-i) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX*32), (heroY-i)*32, 32, 32);	
 				}

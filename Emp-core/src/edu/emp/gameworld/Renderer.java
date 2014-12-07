@@ -47,6 +47,8 @@ public class Renderer implements Disposable {
 	float cameraRight;
 	float cameraBottom;
 	float cameraTop;
+
+
 	
 	public Renderer(Controller gameController) {
 		// This is necessary since this allows the Renderer
@@ -72,7 +74,8 @@ public class Renderer implements Disposable {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		camera.position.set(gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y, 0);
-		
+
+
 		mapLeft=0;
 		mapRight= 0+ (32*37);
 		mapBottom=0;
@@ -86,6 +89,9 @@ public class Renderer implements Disposable {
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tileMap);
 		getCollisionTiles();
 		//System.out.println(Gdx.graphics.getWidth()+ " " + Gdx.graphics.getHeight());
+		
+		
+
 	}
 	
 	public void render() {
@@ -100,8 +106,9 @@ public class Renderer implements Disposable {
 		
 		if(gameController.enemyTurn && gameController.isMoveState() || gameController.enemyTurn && gameController.isAttackState())
 			camera.position.set(gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y, 0);
-		if(gameController.playerTurn && gameController.getAction()==CharacterOptions.MOVE || gameController.playerTurn && gameController.getAction()==CharacterOptions.ATTACK)
+		if(gameController.playerTurn && gameController.getAction()==CharacterOptions.MOVE || gameController.playerTurn && gameController.getAction()==CharacterOptions.ATTACK) {
 			camera.position.set(gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y, 0);
+		}
 		
 		// This update is in case we want to have a camera that can scroll with the arrow keys
 		camera.update(); 
