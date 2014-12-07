@@ -1,15 +1,29 @@
 This file contains the list of plans for the project
 ==================================================================
 
-IN-PROGRESS (from most to least important)
+Manuel
+==================================================================
+1. Pathfinding -
+	Character chosen will move to a selected destination
 
-Enemy -
-	One type of enemy
-	Get Sprite sheet for enemy
-	Create enemies and spawn on random locations (preferably not close to the player)
-In-Game Player Menu -
-	List of actions the player can perform (Move, Attack, Wait, Items)
-Gameplay -
+2. Camera -
+	Implement the camera that will start from the player's position
+	Camera must be free
+	Move camera by using keyboard input
+
+3. [DONE] Selection-box
+
+
+4. Game World -
+	Make a new Tile Map to replace placeholder
+	Larger than the one used for testing
+	Must have Collision layer and Grid layer
+
+5. Hero Max Movement and Enemy Movement -
+	Color in all tiles that a player can move to
+	Max movement must be like a rombus with the player in the middle
+
+6. Gameplay -
 	Give hero and enemies attributes or base stats (such as health, attack damage, movement limit, etc)
 	Add Turns (Player turn = 1, Enemy turn = 2)
 	When turn = 1:
@@ -22,50 +36,55 @@ Gameplay -
 		Move must always follow the player
 		Attack always if the player is next to enemy
 		(No need to add more AI for now)
-Animation -
-	Animate each corresponding action for player and enemy
-Player Max Movement -
-	Color in all tiles that a player can move to
-	Max movement must be like a rombus with the player in the middle	
-Pause -
-	Pause the game when a keyboard key has been pressed
-	Do not allow any actions to be done on the game	
-Hero -
-	Find a new spritesheet for hero to replace placeholder
-	Make sure animation works correctly
 
-Manuel
-==================================================================
-1. Pathfinding -
-	Character chosen will move to a selected destination
+7. Enemy -
+	One type of enemy
+	Get Sprite sheet for enemy
+	Create enemies and spawn on random locations (preferably not close to the player)
 
-Emily
-==================================================================
-1. Main Menu -
-	Menu when opening the application with 3 buttons
-	Start, Intructions, Exit
-2. Camera -
-	Implement the camera that will start from the player's position
-	Camera must be free
-	Move camera by using keyboard input
-3. Game World -
-	Make a new Tile Map to replace placeholder
-	Larger than the one used for testing
-	Must have Collision layer and Grid layer
-
-[NOTE: Please check the Screens section in the progress-report file]
 
 Paul
 ==================================================================
-1. [DONE] Segregate the game objects into their own classes
+1. Segregate the game objects into their own classes
 
 
-2. [DONE] Move-box
-   - double check the move-box
+2. [DONE] Selection-box
 
-   
-3. Fix 2D animation
+
+3. 	Animation -
+	Animate each corresponding action for player and enemy
+	Fix 2D animation
    - must trigger specific animation during walk
    - always how an animation even while the character is standing
+	animate enemy sprite (maybe animate attacks too xD)
+
+4. Screen Display -
+	add "Player phase" "Enemy phase" "End turn" , etc text after switching turn
+	should be in the middle of the screen, big letters (white color?)
+	add some letters like "HIT"  , "MISS" under a character after being attacked
+	Display stats like "Health" of a player and enemy
+	Main menu ---- Start game , Instructions, Options, Credit ?
+	Menu when opening the application with 3 buttons
+	Start, Intructions, Exit
+	In-Game Player Menu -
+	List of actions the player can perform (Move, Attack, Wait, Items)
+	Pause -
+	Pause the game when a keyboard key has been pressed
+	Do not allow any actions to be done on the game
+
+5. Enemy -
+	One type of enemy
+	Get Sprite sheet for enemy
+	Create enemies and spawn on random locations (preferably not close to the player)
+
+6. Hero -
+	Find a new spritesheet for hero to replace placeholder
+	Make sure animation works correctly
+
+7. Music and sounds
+	- use: https://soundcloud.com/aaron-anderson-11/sets/rpg-maker-music-loops
 
 
+
+Emily
+==================================================================
