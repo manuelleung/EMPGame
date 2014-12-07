@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="640"
+   height="640"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="phase.svg"
+   inkscape:export-filename="/home/kirbym/workspace/emp-project/images/assets/player_phase.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="318.04317"
+     inkscape:cy="365.50227"
+     inkscape:document-units="px"
+     inkscape:current-layer="g3865"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1026"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="-43.571429,400"
+       id="guide3801" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="450.02296,422.74884"
+       id="guide3807" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="86.785714,299.64286"
+       id="guide3871" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="225,417.85714"
+       id="guide3790" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="175.53571,349.82143"
+       id="guide3804" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="117.85714,449.64285"
+       id="guide3030" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="225,490.71428"
+       id="guide3032" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="524.64285,408.21428"
+       id="guide3034" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="250.01275,436.3859"
+       id="guide3028" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="425.27422,386.13081"
+       id="guide3728" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="205.06097,364.03372"
+       id="guide3009" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="261.25,374.82143"
+       id="guide3011" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="player_phase_bg"
+     inkscape:groupmode="layer"
+     id="g3025"
+     transform="translate(0,-412.36218)"
+     style="display:inline">
+    <rect
+       style="fill:#248287;fill-opacity:1;stroke:#000000;stroke-width:2.99350214;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3027"
+       width="221.0065"
+       height="61.006496"
+       x="225.12337"
+       y="641.41089"
+       inkscape:export-filename="/home/kirbym/workspace/emp-project/images/assets/player_phase.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3029"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+       transform="translate(0,412.36218)"><flowRegion
+         id="flowRegion3031"><rect
+           id="rect3033"
+           width="147.48227"
+           height="37.375645"
+           x="395.9798"
+           y="385.44156" /></flowRegion><flowPara
+         id="flowPara3035" /></flowRoot>  </g>
+  <g
+     style="display:inline"
+     inkscape:label="player_phase_text"
+     id="g3865"
+     inkscape:groupmode="layer">
+    <text
+       sodipodi:linespacing="125%"
+       id="text3867"
+       y="265.17856"
+       x="250.01276"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+       xml:space="preserve"
+       inkscape:export-filename="/home/kirbym/workspace/emp-project/images/assets/player_phase.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Liberation Serif;-inkscape-font-specification:Liberation Serif"
+         y="265.17856"
+         x="250.01276"
+         id="tspan3869"
+         sodipodi:role="line">PLAYER PHASE</tspan></text>
+  </g>
+  <g
+     style="display:none"
+     transform="translate(0,-412.36218)"
+     id="g3043"
+     inkscape:groupmode="layer"
+     inkscape:label="enemy_phase_bg"
+     sodipodi:insensitive="true">
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/kirbym/workspace/emp-project/images/assets/enemy_phase.png"
+       y="641.41089"
+       x="225.12337"
+       height="61.006496"
+       width="221.0065"
+       id="rect3045"
+       style="fill:#c4161c;fill-opacity:1;stroke:#000000;stroke-width:2.99350214;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <flowRoot
+       transform="translate(0,412.36218)"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+       id="flowRoot3047"
+       xml:space="preserve"><flowRegion
+         id="flowRegion3049"><rect
+           y="385.44156"
+           x="395.9798"
+           height="37.375645"
+           width="147.48227"
+           id="rect3051" /></flowRegion><flowPara
+         id="flowPara3053" /></flowRoot>  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="g3037"
+     inkscape:label="enemy_phase_text"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/kirbym/workspace/emp-project/images/assets/enemy_phase.png"
+       xml:space="preserve"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+       x="250.01276"
+       y="265.17856"
+       id="text3039"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3041"
+         x="250.01276"
+         y="265.17856"
+         style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Liberation Serif;-inkscape-font-specification:Liberation Serif">ENEMY PHASE</tspan></text>
+  </g>
+</svg>
