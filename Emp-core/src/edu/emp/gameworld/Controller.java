@@ -700,7 +700,8 @@ public class Controller implements InputProcessor {
 			//movement limiter 
 			int maxMove = hero.getHeroMoveSpeed(); // 5
 				// must implement this better ... becacause the higher maxMove the more conditions that need to be added...
-			if(pathFinder.isNodeBlocked((int)movementBoxPosition.x/32, (int)movementBoxPosition.y/32)) {
+			if(pathFinder.isNodeBlocked((int)movementBoxPosition.x/32, (int)movementBoxPosition.y/32) || 
+					(movementBoxPosition.x == enemy.getEnemyPosition().x && movementBoxPosition.y == enemy.getEnemyPosition().y) ) {
 				System.out.println("Cell is blocked");
 				pathFound=false;
 			}
@@ -869,23 +870,23 @@ public class Controller implements InputProcessor {
 			int heroY = (int)(hero.getHeroPosition().y/32);
 			int heroX = (int)(hero.getHeroPosition().x/32);
 			for(int i=0; i<=max; i++) {
-				if( pathFinder.isNodeBlocked((heroX+i), (heroY)) ) {
+				if( pathFinder.isNodeBlocked((heroX+i), (heroY)) ||((heroX+i)*32 == enemy.getEnemyPosition().x && heroY*32 == enemy.getEnemyPosition().y) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX+i)*32, (heroY)*32, 32, 32);	
 				}
 				else {
 					shape.setColor(new Color(0, 0, 255, 0.3f));
-					shape.rect((heroX-i)*32, (heroY)*32, 32, 32);
-				}
-				if(pathFinder.isNodeBlocked((heroX-i), (heroY))) {
-					shape.setColor(new Color(255, 0, 0, 0.3f));
-					shape.rect((heroX+i*32), (heroY*32), 32, 32);
-				}
-				else {
-					shape.setColor(new Color(0, 0, 255, 0.3f));
 					shape.rect((heroX+i)*32, (heroY)*32, 32, 32);
 				}
-				if(pathFinder.isNodeBlocked((heroX), (heroY+i))) {
+				if(pathFinder.isNodeBlocked((heroX-i), (heroY)) ||((heroX-i)*32 == enemy.getEnemyPosition().x && heroY*32 == enemy.getEnemyPosition().y) ) {
+					shape.setColor(new Color(255, 0, 0, 0.3f));
+					shape.rect((heroX-i)*32, (heroY)*32, 32, 32);
+				}
+				else {
+					shape.setColor(new Color(0, 0, 255, 0.3f));
+					shape.rect((heroX-i)*32, (heroY)*32, 32, 32);
+				}
+				if(pathFinder.isNodeBlocked((heroX), (heroY+i))   ||((heroX)*32 == enemy.getEnemyPosition().x && (heroY+i)*32 == enemy.getEnemyPosition().y) ) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX)*32, (heroY+i)*32, 32, 32);
 				}
@@ -893,7 +894,7 @@ public class Controller implements InputProcessor {
 					shape.setColor(new Color(0, 0, 255, 0.3f));
 					shape.rect((heroX)*32, (heroY+i)*32, 32, 32);
 				}
-				if(pathFinder.isNodeBlocked((heroX), (heroY-i))) {
+				if(pathFinder.isNodeBlocked((heroX), (heroY-i)) ||((heroX)*32 == enemy.getEnemyPosition().x && (heroY-i)*32 == enemy.getEnemyPosition().y)) {
 					shape.setColor(new Color(255, 0, 0, 0.3f));
 					shape.rect((heroX)*32, (heroY-i)*32, 32, 32);
 				}
@@ -925,7 +926,7 @@ public class Controller implements InputProcessor {
 						//shape.setColor(new Color(0, 255, 0, 0.4f));
 						//shape.rect((cellXRight*32), (cellYUp*32), 32, 32);
 					}
-					else if( pathFinder.isNodeBlocked(cellXRight, cellYUp) ) {
+					else if( pathFinder.isNodeBlocked(cellXRight, cellYUp) ||((cellXRight)*32 == enemy.getEnemyPosition().x && cellYUp*32 == enemy.getEnemyPosition().y)) {
 						shape.setColor(new Color(255, 0, 0, 0.3f));
 						shape.rect((cellXRight*32), (cellYUp*32), 32, 32);	
 					}
@@ -957,7 +958,7 @@ public class Controller implements InputProcessor {
 						//shape.setColor(new Color(0, 255, 0, 0.4f));
 						//shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);
 					}
-					else if( pathFinder.isNodeBlocked(cellXLeft, cellYUp) ) {
+					else if( pathFinder.isNodeBlocked(cellXLeft, cellYUp) ||((cellXLeft)*32 == enemy.getEnemyPosition().x && cellYUp*32 == enemy.getEnemyPosition().y)) {
 						shape.setColor(new Color(255, 0, 0, 0.3f));
 						shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);	
 					}
@@ -992,7 +993,7 @@ public class Controller implements InputProcessor {
 						//shape.setColor(new Color(0, 255, 0, 0.4f));
 						//shape.rect((cellXRight*32), (cellYDown*32), 32, 32);
 					}
-					else if( pathFinder.isNodeBlocked(cellXRight, cellYDown) ) {
+					else if( pathFinder.isNodeBlocked(cellXRight, cellYDown) ||((cellXRight)*32 == enemy.getEnemyPosition().x && cellYDown*32 == enemy.getEnemyPosition().y)) {
 						shape.setColor(new Color(255, 0, 0, 0.3f));
 						shape.rect((cellXRight*32), (cellYDown*32), 32, 32);	
 					}
@@ -1024,7 +1025,7 @@ public class Controller implements InputProcessor {
 						//shape.setColor(new Color(0, 255, 0, 0.4f));
 						//shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);
 					}
-					else if( pathFinder.isNodeBlocked(cellXLeft, cellYDown) ) {
+					else if( pathFinder.isNodeBlocked(cellXLeft, cellYDown) ||((cellXLeft)*32 == enemy.getEnemyPosition().x && cellYDown*32 == enemy.getEnemyPosition().y)) {
 						shape.setColor(new Color(255, 0, 0, 0.3f));
 						shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);	
 					}
