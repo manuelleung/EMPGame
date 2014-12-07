@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -89,6 +92,9 @@ public class Controller implements InputProcessor {
 	// confirm action from Character Options Menu
 	private boolean confirmAction;
 	private CharacterOptions action;
+	
+	
+	ShapeRenderer shape = new ShapeRenderer();
 	
 	public Controller(final EMPGame game) {
 		this.game = game;
@@ -536,9 +542,13 @@ public class Controller implements InputProcessor {
 
 		if(keycode == Keys.SPACE && action == CharacterOptions.ATTACK) {
 			attackEnemy();
+			if(attacked)
+				action=CharacterOptions.NONE;
 		}
 		if(keycode == Keys.SPACE && action == CharacterOptions.MOVE) {
 			heroActionMove();
+			if(moved)
+				action=CharacterOptions.NONE;
 		}
 		
 		if(keycode==Keys.ESCAPE && (action==CharacterOptions.ATTACK || action==CharacterOptions.MOVE)) {
@@ -690,7 +700,11 @@ public class Controller implements InputProcessor {
 			//movement limiter 
 			int maxMove = hero.getHeroMoveSpeed(); // 5
 				// must implement this better ... becacause the higher maxMove the more conditions that need to be added...
-			if( 	!(movementBoxPosition.x > hero.getHeroPosition().x+(32*maxMove)) && //RIGHT
+			if(pathFinder.isNodeBlocked((int)movementBoxPosition.x/32, (int)movementBoxPosition.y/32)) {
+				System.out.println("Cell is blocked");
+				pathFound=false;
+			}
+			else if( 	!(movementBoxPosition.x > hero.getHeroPosition().x+(32*maxMove)) && //RIGHT
 					!(movementBoxPosition.x < hero.getHeroPosition().x-(32*maxMove)) && //LEFT
 					!(movementBoxPosition.y > hero.getHeroPosition().y+(32*maxMove)) && //UP
 					!(movementBoxPosition.y < hero.getHeroPosition().y-(32*maxMove)) && //DOWN
@@ -760,13 +774,17 @@ public class Controller implements InputProcessor {
 					!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-4)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-2))) &&
 					!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-2)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-4))) &&
 					!(movementBoxPosition.x > hero.getHeroPosition().x+(32*(maxMove-3)) && movementBoxPosition.y < hero.getHeroPosition().y-(32*(maxMove-3))) 
-					)
+					) {
+
 				pathFinder.setNode((int)movementBoxPosition.x, (int)movementBoxPosition.y, NodeType.END);
-			else 
+			}
+			else { 
 				System.out.println("not in move range");
-			
+			}
 			pathFound = pathFinder.findPath();
 			heroPath = pathFinder.GetPath();
+			
+			
 			/*if(pathFound) {
 				System.out.println("Start cell "+"x: "+heroPath.get(0).getX()/32+" y: "+heroPath.get(0).getY()/32);
 				for(int i=0; i<heroPath.size; i++) {
@@ -785,6 +803,7 @@ public class Controller implements InputProcessor {
 			if(!pathFound) {
 				moved=false;
 				moveState=false;
+				heroPath=null;
 				System.out.println("NO PATH");
 			}
 		//end of if
@@ -817,7 +836,7 @@ public class Controller implements InputProcessor {
 				System.out.println("Inside Controller.java: Moving The Hero...");
 				
 				// call MOVE functions here
-
+				
 				// Reset the State of Action
 				confirmAction = false;
 			}
@@ -840,6 +859,167 @@ public class Controller implements InputProcessor {
 				confirmAction = false;
 			}
 		}
+	}
+	
+	public void drawGrid() {
+		Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+		shape.begin(ShapeType.Filled);
+		if(playerTurn && action==CharacterOptions.MOVE) {
+			int max = hero.getHeroMoveSpeed();
+			int heroY = (int)(hero.getHeroPosition().y/32);
+			int heroX = (int)(hero.getHeroPosition().x/32);
+			for(int cellYUp=heroY; cellYUp<=(heroY+max); cellYUp++) {
+				for(int cellXRight=heroX; cellXRight<=(heroX+max); cellXRight++) {
+					if(		cellYUp==heroY+max && cellXRight==heroX+max ||
+							cellYUp==heroY+max-1 && cellXRight==heroX+max-1 ||
+							cellYUp==heroY+max-2 && cellXRight==heroX+max-2 ||
+							cellYUp==heroY+max-1 && cellXRight==heroX+max ||
+							cellYUp==heroY+max && cellXRight==heroX+max-1 ||
+							cellYUp==heroY+max-2 && cellXRight==heroX+max ||
+							cellYUp==heroY+max && cellXRight==heroX+max-2 ||
+							cellYUp==heroY+max-2 && cellXRight==heroX+max-1 ||
+							cellYUp==heroY+max-1 && cellXRight==heroX+max-2 ||
+							cellYUp==heroY+max-3 && cellXRight==heroX+max ||
+							cellYUp==heroY+max && cellXRight==heroX+max-3 ||
+							cellYUp==heroY+max-4 && cellXRight==heroX+max ||
+							cellYUp==heroY+max && cellXRight==heroX+max-4 ||
+							cellYUp==heroY+max-3 && cellXRight==heroX+max-1 ||
+							cellYUp==heroY+max-1 && cellXRight==heroX+max-3 
+					
+							) {
+						continue;
+						//shape.setColor(new Color(0, 255, 0, 0.4f));
+						//shape.rect((cellXRight*32), (cellYUp*32), 32, 32);
+					}
+					else if( pathFinder.isNodeBlocked(cellXRight, cellYUp) ) {
+						shape.setColor(new Color(255, 0, 0, 0.3f));
+						shape.rect((cellXRight*32), (cellYUp*32), 32, 32);	
+					}
+					else {
+						shape.setColor(new Color(0, 0, 255, 0.3f));
+						shape.rect((cellXRight*32), (cellYUp*32), 32, 32);
+					//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+					}
+				}
+				for(int cellXLeft=heroX; cellXLeft>=(heroX-max); cellXLeft--) {
+					if(		cellYUp==heroY+max && cellXLeft==heroX-max ||
+							cellYUp==heroY+max-1 && cellXLeft==heroX-max+1 ||
+							cellYUp==heroY+max-2 && cellXLeft==heroX-max+2 ||
+							cellYUp==heroY+max-1 && cellXLeft==heroX-max ||
+							cellYUp==heroY+max && cellXLeft==heroX-max+1 ||
+							cellYUp==heroY+max-2 && cellXLeft==heroX-max ||
+							cellYUp==heroY+max && cellXLeft==heroX-max+2 ||
+							cellYUp==heroY+max-2 && cellXLeft==heroX-max+1 ||
+							cellYUp==heroY+max-1 && cellXLeft==heroX-max+2 ||
+							cellYUp==heroY+max-3 && cellXLeft==heroX-max ||
+							cellYUp==heroY+max && cellXLeft==heroX-max+3 ||
+							cellYUp==heroY+max-4 && cellXLeft==heroX-max ||
+							cellYUp==heroY+max && cellXLeft==heroX-max+4 ||
+							cellYUp==heroY+max-3 && cellXLeft==heroX-max+1 ||
+							cellYUp==heroY+max-1 && cellXLeft==heroX-max+3
+					
+							) {
+						continue;
+						//shape.setColor(new Color(0, 255, 0, 0.4f));
+						//shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);
+					}
+					else if( pathFinder.isNodeBlocked(cellXLeft, cellYUp) ) {
+						shape.setColor(new Color(255, 0, 0, 0.3f));
+						shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);	
+					}
+					else {
+						shape.setColor(new Color(0, 0, 255, 0.3f));
+						shape.rect((cellXLeft*32), (cellYUp*32), 32, 32);
+					//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+					}
+				}
+			}
+			for(int cellYDown=heroY; cellYDown>=(heroY-max); cellYDown--) {
+				for(int cellXRight=heroX; cellXRight<=(heroX+max); cellXRight++) {
+					if(		cellYDown==heroY-max && cellXRight==heroX+max ||
+							cellYDown==heroY-max+1 && cellXRight==heroX+max-1 ||
+							cellYDown==heroY-max+2 && cellXRight==heroX+max-2 ||
+							cellYDown==heroY-max+1 && cellXRight==heroX+max ||
+							cellYDown==heroY-max && cellXRight==heroX+max-1 ||
+							cellYDown==heroY-max+2 && cellXRight==heroX+max ||
+							cellYDown==heroY-max && cellXRight==heroX+max-2 ||
+							cellYDown==heroY-max+2 && cellXRight==heroX+max-1 ||
+							cellYDown==heroY-max+1 && cellXRight==heroX+max-2 ||
+							cellYDown==heroY-max+3 && cellXRight==heroX+max ||
+							cellYDown==heroY-max && cellXRight==heroX+max-3 ||
+							cellYDown==heroY-max+4 && cellXRight==heroX+max ||
+							cellYDown==heroY-max && cellXRight==heroX+max-4 ||
+							cellYDown==heroY-max+3 && cellXRight==heroX+max-1 ||
+							cellYDown==heroY-max+1 && cellXRight==heroX+max-3 
+							
+					
+							) {
+						continue;
+						//shape.setColor(new Color(0, 255, 0, 0.4f));
+						//shape.rect((cellXRight*32), (cellYDown*32), 32, 32);
+					}
+					else if( pathFinder.isNodeBlocked(cellXRight, cellYDown) ) {
+						shape.setColor(new Color(255, 0, 0, 0.3f));
+						shape.rect((cellXRight*32), (cellYDown*32), 32, 32);	
+					}
+					else {
+						shape.setColor(new Color(0, 0, 255, 0.3f));
+						shape.rect((cellXRight*32), (cellYDown*32), 32, 32);
+						//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+					}
+				}
+				for(int cellXLeft=heroX; cellXLeft>=(heroX-max); cellXLeft--) {
+					if(		cellYDown==heroY-max && cellXLeft==heroX-max ||
+							cellYDown==heroY-max+1 && cellXLeft==heroX-max+1 ||
+							cellYDown==heroY-max+2 && cellXLeft==heroX-max+2 ||
+							cellYDown==heroY-max+1 && cellXLeft==heroX-max ||
+							cellYDown==heroY-max && cellXLeft==heroX-max+1 ||
+							cellYDown==heroY-max+2 && cellXLeft==heroX-max ||
+							cellYDown==heroY-max && cellXLeft==heroX-max+2 ||
+							cellYDown==heroY-max+2 && cellXLeft==heroX-max+1 ||
+							cellYDown==heroY-max+1 && cellXLeft==heroX-max+2 ||
+							cellYDown==heroY-max+3 && cellXLeft==heroX-max ||
+							cellYDown==heroY-max && cellXLeft==heroX-max+3 ||
+							cellYDown==heroY-max+4 && cellXLeft==heroX-max ||
+							cellYDown==heroY-max && cellXLeft==heroX-max+4 ||
+							cellYDown==heroY-max+3 && cellXLeft==heroX-max+1 ||
+							cellYDown==heroY-max+1 && cellXLeft==heroX-max+3
+					
+							) {
+						continue;
+						//shape.setColor(new Color(0, 255, 0, 0.4f));
+						//shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);
+					}
+					else if( pathFinder.isNodeBlocked(cellXLeft, cellYDown) ) {
+						shape.setColor(new Color(255, 0, 0, 0.3f));
+						shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);	
+					}
+					else {
+						shape.setColor(new Color(0, 0, 255, 0.3f));
+						shape.rect((cellXLeft*32), (cellYDown*32), 32, 32);
+						//System.out.println("Cell-x "+cellX+ " "+"Cell-y"+cellY);
+					}
+	
+				}
+			}
+		}
+		
+		if(playerTurn && action==CharacterOptions.ATTACK) {
+			int heroY = (int)hero.getHeroPosition().y;
+			int heroX = (int)hero.getHeroPosition().x;
+			shape.setColor(new Color(0, 255, 0, 0.3f));
+			shape.rect(heroX, heroY, 32, 32);
+			shape.rect((heroX+32), heroY, 32, 32);
+			shape.rect(heroX, (heroY+32), 32, 32);
+			shape.rect((heroX-32), heroY, 32, 32);
+			shape.rect(heroX, (heroY-32), 32, 32);
+		}
+		
+		shape.end();
+		Gdx.gl.glDisable(GL20.GL_BLEND);
+	}
+	public ShapeRenderer getShape() {
+		return shape;
 	}
 
 	public CharacterOptions getAction() {

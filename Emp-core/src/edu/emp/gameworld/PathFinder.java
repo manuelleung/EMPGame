@@ -215,6 +215,14 @@ public class PathFinder {
 		}
 	}
 	
+	public boolean isNodeBlocked(int screenX, int screenY) {
+		if(grid.get(screenY).get(screenX).getType() == NodeType.BLOCKED) {
+			return true;
+		}
+		else	
+			return false;
+	}
+	
 	public Array<Node> GetPath() {
 		return finalPath;
 	}

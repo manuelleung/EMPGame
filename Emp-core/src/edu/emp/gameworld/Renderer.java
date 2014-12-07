@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -34,6 +35,7 @@ public class Renderer implements Disposable {
 	// ?
 	private Sprite sprite;
 	
+
 	
 	int mapLeft;
 	int mapRight;
@@ -153,6 +155,10 @@ public class Renderer implements Disposable {
 	
 	public void renderGameObjects() {
 		/* It basically just means drawing will be done in 2D space using the position and bounds of the given camera. */
+		gameController.getShape().setProjectionMatrix(camera.combined);
+		if(gameController.getAction()==CharacterOptions.MOVE || gameController.getAction()==CharacterOptions.ATTACK)
+			gameController.drawGrid();
+		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		// draw the movement box
@@ -202,7 +208,7 @@ public class Renderer implements Disposable {
 						Object property = cell.getTile().getProperties().get("Collision");
 						if(property != null) {
 							// add functionality~
-							System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
+							//System.out.println(cell.getTile().getId() + " x:" + x + " y:" + y);
 							gameController.pathFinder.setNode((32*x), (32*y), NodeType.BLOCKED);
 						}
 				}
