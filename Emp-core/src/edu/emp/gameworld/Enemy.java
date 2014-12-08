@@ -28,7 +28,10 @@ public class Enemy {
 	// for the Walking Frames
 	private TextureRegion [] walkEnemyFrames;
 	// for the Attacking Frames
-	private TextureRegion [] attackEnemyFrames;
+	private TextureRegion [] attackEnemyFramesLeft;
+	private TextureRegion [] attackEnemyFramesRight;
+	private TextureRegion [] attackEnemyFramesUp;
+	private TextureRegion [] attackEnemyFramesDown;
 	
 	// contains the specific movement of the characters
 	private TextureRegion [][] enemyWalkingFramesSet;
@@ -47,7 +50,10 @@ public class Enemy {
 	private TextureRegion enemyCurrentFrame;
 	
 	private Texture enemyWalkTexture;
-	private Texture enemyAttackTexture;
+	private Texture enemyAttackLeftTexture;
+	private Texture enemyAttackRightTexture;
+	private Texture enemyAttackUpTexture;
+	private Texture enemyAttackDownTexture;
 	private Texture enemyDeathTexture;
 	
 	private float enemyStateTime;
@@ -68,9 +74,7 @@ public class Enemy {
 	public Enemy(float x, float y) {
 		// details for the Enemy Object
 		// Using a Goblin an enemy
-		// enemyTexture = new Texture(Gdx.files.internal("Hero.png"));
 		enemyWalkTexture = new Texture(Gdx.files.internal("enemy/goblinsword_03.png"));
-		enemyAttackTexture = new Texture(Gdx.files.internal("enemy/goblinsword_03.png"));
 		setEnemyPosition(new Vector2(x, y));
 		// Initialize the enemy
 		initEnemy();
@@ -86,17 +90,13 @@ public class Enemy {
 		int walkFrame_rows = 4;
 		
 		// for Attack Animation
-		int attackFrame_cols = 3;	
-		int attackFrame_rows = 4;		
+		// int attackFrame_cols = 3;	
+		// int attackFrame_rows = 1;		
 		
 		// for Walk Animation
 		TextureRegion [][] walkTemp = TextureRegion.split(enemyWalkTexture, enemyWalkTexture.getWidth()/walkFrame_cols, enemyWalkTexture.getHeight()/walkFrame_rows);
 		walkEnemyFrames = new TextureRegion[walkFrame_cols * walkFrame_rows]; // 32
-		
-		// for Attack Animation
-		TextureRegion [][] attackTemp = TextureRegion.split(enemyWalkTexture, enemyWalkTexture.getWidth()/walkFrame_cols, enemyWalkTexture.getHeight()/walkFrame_rows);
-		attackEnemyFrames = new TextureRegion[attackFrame_cols * attackFrame_rows]; // 12
-		
+
 		// Store all action of enemy walking frames
 		int index = 0;
 		for (int i = 0; i < walkFrame_rows; i++) {
@@ -104,19 +104,9 @@ public class Enemy {
 				walkEnemyFrames[index++] = walkTemp[i][j];
 			}
 		}
-		
-		// Store all action of enemy attacking frames
-		index = 0;
-		for (int i = 0; i < attackFrame_cols; i++) {
-			for (int j = 0; j < attackFrame_rows; j++) {
-				attackEnemyFrames[index++] = attackTemp[i][j];
-			}
-		}
-		
+
 		// initialize the two-dimensional arrays for Walking
 		enemyWalkingFramesSet = new TextureRegion[uniqueActionsWalk][frameCountWalk];
-		// initialize the two-dimensional arrays for Attacking
-		enemyAttackingFramesSet = new TextureRegion[uniqueActionsAttack][frameCountAttack];
 		
 		index = 0;
 		// for every enemyFrame Walk action
@@ -127,30 +117,12 @@ public class Enemy {
 			}
 		}
 		
-		index = 0;
-		// for every enemyFrame Attack action
-		for (int i = 0; i < uniqueActionsAttack; i++ ) {
-			// for each set of sprite movement
-			for (int j = 0; j < frameCountAttack; j++) {
-				enemyAttackingFramesSet[i][j] = attackEnemyFrames[index++];
-			}
-		}
-		
 		// Set the Walking Animations for the selected sprite
 		enemyWalkDownAnim = new Animation(0.20f, enemyWalkingFramesSet[0]);
 		enemyWalkRightAnim = new Animation(0.20f, enemyWalkingFramesSet[1]);
 		enemyWalkUpAnim = new Animation(0.20f, enemyWalkingFramesSet[2]);
 		enemyWalkLeftAnim = new Animation(0.20f, enemyWalkingFramesSet[3]);
-		
-		// Set the Attacking Animations for the selected sprite
-		enemyAttackDownAnim = new Animation(0.20f, enemyAttackingFramesSet[0]);
-		enemyAttackLeftAnim = new Animation(0.20f, enemyAttackingFramesSet[1]);
-		enemyAttackUpAnim = new Animation(0.20f, enemyAttackingFramesSet[2]);
-		enemyAttackRightAnim = new Animation(0.20f, enemyAttackingFramesSet[3]);
-		
-		// Test:
-		enemyWalkDownAnim = new Animation(0.20f, enemyWalkingFramesSet[1]);
-		
+
 		enemyStateTime = 0f;
 		
 		//STATS
@@ -180,17 +152,17 @@ public class Enemy {
 	// attack actions for the hero
 	public void setEnemyAttack() {
 		// the character is moving up, set its animation moving up
-		if (wStyle == WalkStyle.UP)
-			enemyCurrentFrame = enemyWalkUpAnim.getKeyFrame(enemyStateTime, true);
+		if (aStyle == AttackStyle.UP)
+			enemyCurrentFrame = enemyAttackUpAnim.getKeyFrame(enemyStateTime, true);
 		// the character is moving left, set its animation moving left
-		if (wStyle == WalkStyle.LEFT)
-			enemyCurrentFrame = enemyWalkLeftAnim.getKeyFrame(enemyStateTime, true);
+		if (aStyle == AttackStyle.LEFT)
+			enemyCurrentFrame = enemyAttackLeftAnim.getKeyFrame(enemyStateTime, true);
 		// the character is moving down, set its animation moving down
-		if (wStyle == WalkStyle.DOWN)
-			enemyCurrentFrame = enemyWalkDownAnim.getKeyFrame(enemyStateTime, true);
+		if (aStyle == AttackStyle.DOWN)
+			enemyCurrentFrame = enemyAttackDownAnim.getKeyFrame(enemyStateTime, true);
 		// the character is moving right, set its animation moving right
-		if (wStyle == WalkStyle.RIGHT)
-			enemyCurrentFrame = enemyWalkRightAnim.getKeyFrame(enemyStateTime, true);
+		if (aStyle == AttackStyle.RIGHT)
+			enemyCurrentFrame = enemyAttackRightAnim.getKeyFrame(enemyStateTime, true);
 	}
 
 	// access and getter for the Walking Style for the Hero
