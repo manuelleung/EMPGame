@@ -160,7 +160,7 @@ public class Enemy {
 			// TO TEST THE DEATH ANIMATION, comment the above line and call the below line
 			// enemyCurrentFrame = enemyDeathAnim.getKeyFrame(enemyStateTime, true);
 			// this setting is also made in the triggerEnemyDeath() function below
-			// so just call the method below to trigger the animation
+			// so just call the method below to trigger the animation	
 		// the character is moving right, set its animation moving right
 		if (wStyle == WalkStyle.RIGHT)
 			enemyCurrentFrame = enemyWalkRightAnim.getKeyFrame(enemyStateTime, true);
