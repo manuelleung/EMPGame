@@ -28,10 +28,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="318.04317"
-     inkscape:cy="365.50227"
+     inkscape:cx="306.97854"
+     inkscape:cy="383.67107"
      inkscape:document-units="px"
-     inkscape:current-layer="g3865"
+     inkscape:current-layer="g3037"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -106,9 +106,10 @@
      inkscape:groupmode="layer"
      id="g3025"
      transform="translate(0,-412.36218)"
-     style="display:inline">
+     style="display:none"
+     sodipodi:insensitive="true">
     <rect
-       style="fill:#248287;fill-opacity:1;stroke:#000000;stroke-width:2.99350214;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#248287;fill-opacity:0.78431373;stroke:#000000;stroke-width:2.99350214;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect3027"
        width="221.0065"
        height="61.006496"
@@ -130,10 +131,11 @@
            y="385.44156" /></flowRegion><flowPara
          id="flowPara3035" /></flowRoot>  </g>
   <g
-     style="display:inline"
+     style="display:none"
      inkscape:label="player_phase_text"
      id="g3865"
-     inkscape:groupmode="layer">
+     inkscape:groupmode="layer"
+     sodipodi:insensitive="true">
     <text
        sodipodi:linespacing="125%"
        id="text3867"
@@ -151,12 +153,11 @@
          sodipodi:role="line">PLAYER PHASE</tspan></text>
   </g>
   <g
-     style="display:none"
+     style="display:inline"
      transform="translate(0,-412.36218)"
      id="g3043"
      inkscape:groupmode="layer"
-     inkscape:label="enemy_phase_bg"
-     sodipodi:insensitive="true">
+     inkscape:label="enemy_phase_bg">
     <rect
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
@@ -166,7 +167,7 @@
        height="61.006496"
        width="221.0065"
        id="rect3045"
-       style="fill:#c4161c;fill-opacity:1;stroke:#000000;stroke-width:2.99350214;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+       style="fill:#c4161c;fill-opacity:0.78431374;stroke:#000000;stroke-width:2.99350213999999992;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <flowRoot
        transform="translate(0,412.36218)"
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
@@ -183,8 +184,7 @@
      inkscape:groupmode="layer"
      id="g3037"
      inkscape:label="enemy_phase_text"
-     style="display:none"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <text
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"

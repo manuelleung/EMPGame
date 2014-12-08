@@ -10,48 +10,46 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Enemy {
 	
-	// Animation for the enemy
+	// Walk Animation
 	private Animation enemyWalkDownAnim;
-	private Animation enemyAttackDownAnim;
 	private Animation enemyWalkRightAnim;
-	private Animation enemyAttackRightAnim;
 	private Animation enemyWalkUpAnim;
-	private Animation enemyAttackUpAnim;
 	private Animation enemyWalkLeftAnim;
+	
+	// Attack Animation
+	private Animation enemyAttackDownAnim;
+	private Animation enemyAttackRightAnim;
+	private Animation enemyAttackUpAnim;
 	private Animation enemyAttackLeftAnim;
+	
+	// Death Animation
 	private Animation enemyDeathAnim;
-	private TextureRegion [] enemyFrames;
+	
+	// for the Walking Frames
+	private TextureRegion [] walkEnemyFrames;
+	// for the Attacking Frames
+	private TextureRegion [] attackEnemyFrames;
 	
 	// contains the specific movement of the characters
-	private TextureRegion [][] enemyFramesSeparated_LeftSet;
-	private TextureRegion [][] enemyFramesSeparated_RightSet;
+	private TextureRegion [][] enemyWalkingFramesSet;
+	// contains the specific movement of the characters
+	private TextureRegion [][] enemyAttackingFramesSet;
 	
 	// number of unique character actions
-	private int uniqueActions = 9;
-	
-	/*
-	 * These are:
-	 * 
-	 * walk down
-	 * attack down
-	 * walk right
-	 * attack right
-	 * walk up
-	 * attack up
-	 * walk left
-	 * attack left
-	 * death 
-	 */
+	private int uniqueActionsWalk = 4;
+	private int uniqueActionsAttack = 4;
 	
 	// frame count for before the beginning of a new animation sprite
 	// or the frame count of each uniqueAction set
-	private int frameCount_LeftSet = 5;
-	private int frameCount_RightSet = 6;
-	// control which set to use:
-	private boolean setSwitch;
+	private int frameCountWalk = 8;
+	private int frameCountAttack = 3;
 	
 	private TextureRegion enemyCurrentFrame;
-	private Texture enemyTexture;
+	
+	private Texture enemyWalkTexture;
+	private Texture enemyAttackTexture;
+	private Texture enemyDeathTexture;
+	
 	private float enemyStateTime;
 	private Vector2 enemyPosition;
 
@@ -62,13 +60,17 @@ public class Enemy {
 	private int enemyDefense;
 	
 	// Walking style for the enemy
-	private WalkStyle wStyle = WalkStyle.DOWN; 
+	private WalkStyle wStyle = WalkStyle.DOWN;
+	// Attacking style for the enemy
+	private AttackStyle aStyle = AttackStyle.NONE; 
+
 	
 	public Enemy(float x, float y) {
 		// details for the Enemy Object
 		// Using a Goblin an enemy
 		// enemyTexture = new Texture(Gdx.files.internal("Hero.png"));
-		enemyTexture = new Texture(Gdx.files.internal("goblinsword_01.png"));		
+		enemyWalkTexture = new Texture(Gdx.files.internal("enemy/goblinsword_03.png"));
+		enemyAttackTexture = new Texture(Gdx.files.internal("enemy/goblinsword_03.png"));
 		setEnemyPosition(new Vector2(x, y));
 		// Initialize the enemy
 		initEnemy();
@@ -78,69 +80,77 @@ public class Enemy {
 	private void initEnemy() {
 		
 		// frame_col and frame_row is based on a specific sprite
-		// in this case: goblinsword_01.png
-		int frame_cols = 11;	
-		int frame_rows = 5;
 		
-		TextureRegion [][] temp = TextureRegion.split(enemyTexture, enemyTexture.getWidth()/frame_cols, enemyTexture.getHeight()/frame_rows);
-		enemyFrames = new TextureRegion[frame_cols * frame_rows]; // 55
+		// for Walk Animation
+		int walkFrame_cols = 8;	
+		int walkFrame_rows = 4;
 		
-		// Store all action enemy frames
+		// for Attack Animation
+		int attackFrame_cols = 3;	
+		int attackFrame_rows = 4;		
+		
+		// for Walk Animation
+		TextureRegion [][] walkTemp = TextureRegion.split(enemyWalkTexture, enemyWalkTexture.getWidth()/walkFrame_cols, enemyWalkTexture.getHeight()/walkFrame_rows);
+		walkEnemyFrames = new TextureRegion[walkFrame_cols * walkFrame_rows]; // 32
+		
+		// for Attack Animation
+		TextureRegion [][] attackTemp = TextureRegion.split(enemyWalkTexture, enemyWalkTexture.getWidth()/walkFrame_cols, enemyWalkTexture.getHeight()/walkFrame_rows);
+		attackEnemyFrames = new TextureRegion[attackFrame_cols * attackFrame_rows]; // 12
+		
+		// Store all action of enemy walking frames
 		int index = 0;
-		for (int i = 0; i < frame_rows; i++) {
-			for (int j = 0; j < frame_cols; j++) {
-				enemyFrames[index++] = temp[i][j];
+		for (int i = 0; i < walkFrame_rows; i++) {
+			for (int j = 0; j < walkFrame_cols; j++) {
+				walkEnemyFrames[index++] = walkTemp[i][j];
 			}
 		}
 		
-		// initialize the two-dimensional arrays
-		enemyFramesSeparated_LeftSet = new TextureRegion[uniqueActions][frameCount_LeftSet];
-		enemyFramesSeparated_RightSet = new TextureRegion[uniqueActions][frameCount_RightSet];
+		// Store all action of enemy attacking frames
+		index = 0;
+		for (int i = 0; i < attackFrame_cols; i++) {
+			for (int j = 0; j < attackFrame_rows; j++) {
+				attackEnemyFrames[index++] = attackTemp[i][j];
+			}
+		}
 		
-		// we treat the value of true to refer to the "left set" of the spritesheet
-		// before a uniqueAction occurs
-		setSwitch = true;
+		// initialize the two-dimensional arrays for Walking
+		enemyWalkingFramesSet = new TextureRegion[uniqueActionsWalk][frameCountWalk];
+		// initialize the two-dimensional arrays for Attacking
+		enemyAttackingFramesSet = new TextureRegion[uniqueActionsAttack][frameCountAttack];
 		
 		index = 0;
-		// for every heroFrame action (there are 4 unique actions based on the sprite sheet)
-		for (int i = 0; i < uniqueActions; i++ ) {
+		// for every enemyFrame Walk action
+		for (int i = 0; i < uniqueActionsWalk; i++ ) {
 			// for each set of sprite movement
-			if (setSwitch) {
-				for (int j = 0; j < frameCount_LeftSet; j++) {
-					enemyFramesSeparated_LeftSet[i][j] = enemyFrames[index++];
-				}
+			for (int j = 0; j < frameCountWalk; j++) {
+				enemyWalkingFramesSet[i][j] = walkEnemyFrames[index++];
 			}
-			else {
-				for (int j = 0; j < frameCount_RightSet; j++) {
-					enemyFramesSeparated_RightSet[i][j] = enemyFrames[index++];
-				}				
-			}
-			
-			// flip the switch!
-			setSwitch = !setSwitch;
 		}
 		
-		// Set the Animations for the selected sprite: goblinsword_01.png
+		index = 0;
+		// for every enemyFrame Attack action
+		for (int i = 0; i < uniqueActionsAttack; i++ ) {
+			// for each set of sprite movement
+			for (int j = 0; j < frameCountAttack; j++) {
+				enemyAttackingFramesSet[i][j] = attackEnemyFrames[index++];
+			}
+		}
 		
-		// NEEDS SERIOUS CHANGES
-		enemyWalkDownAnim = new Animation(0.20f, enemyFramesSeparated_RightSet[3]);
-		enemyWalkLeftAnim = new Animation(0.20f, enemyFramesSeparated_LeftSet[2]);
-		enemyWalkUpAnim = new Animation(0.20f, enemyFramesSeparated_LeftSet[4]);
+		// Set the Walking Animations for the selected sprite
+		enemyWalkDownAnim = new Animation(0.20f, enemyWalkingFramesSet[0]);
+		enemyWalkRightAnim = new Animation(0.20f, enemyWalkingFramesSet[1]);
+		enemyWalkUpAnim = new Animation(0.20f, enemyWalkingFramesSet[2]);
+		enemyWalkLeftAnim = new Animation(0.20f, enemyWalkingFramesSet[3]);
 		
-		enemyAttackDownAnim = new Animation(0.20f, enemyFramesSeparated_RightSet[1]);
+		// Set the Attacking Animations for the selected sprite
+		enemyAttackDownAnim = new Animation(0.20f, enemyAttackingFramesSet[0]);
+		enemyAttackLeftAnim = new Animation(0.20f, enemyAttackingFramesSet[1]);
+		enemyAttackUpAnim = new Animation(0.20f, enemyAttackingFramesSet[2]);
+		enemyAttackRightAnim = new Animation(0.20f, enemyAttackingFramesSet[3]);
 		
-		/*
-		enemyWalkDownAnim = new Animation(0.20f, enemyFramesSeparated_LeftSet[0]);
-		enemyWalkRightAnim = new Animation(0.20f, enemyFramesSeparated_LeftSet[1]);
-		enemyWalkUpAnim = new Animation(0.20f, enemyFramesSeparated_LeftSet[2]);
-		enemyWalkLeftAnim = new Animation(0.20f, enemyFramesSeparated_LeftSet[3]);
-		enemyDeathAnim = new Animation(0.20f, enemyFramesSeparated_LeftSet[4]);
+		// Test:
+		enemyWalkDownAnim = new Animation(0.20f, enemyWalkingFramesSet[1]);
 		
-		enemyAttackDownAnim = new Animation(0.20f, enemyFramesSeparated_RightSet[0]);
-		enemyAttackRightAnim = new Animation(0.20f, enemyFramesSeparated_RightSet[1]);
-		enemyAttackUpAnim = new Animation(0.20f, enemyFramesSeparated_RightSet[2]);
-		enemyAttackLeftAnim = new Animation(0.20f, enemyFramesSeparated_RightSet[3]);
-		*/
 		enemyStateTime = 0f;
 		
 		//STATS
@@ -151,8 +161,24 @@ public class Enemy {
 		enemyDefense=5;
 	}
 	
-	// actions for the hero
+	// walk actions for the hero
 	public void setEnemyWalk() {
+		// the character is moving up, set its animation moving up
+		if (wStyle == WalkStyle.UP)
+			enemyCurrentFrame = enemyWalkUpAnim.getKeyFrame(enemyStateTime, true);
+		// the character is moving left, set its animation moving left
+		if (wStyle == WalkStyle.LEFT)
+			enemyCurrentFrame = enemyWalkLeftAnim.getKeyFrame(enemyStateTime, true);
+		// the character is moving down, set its animation moving down
+		if (wStyle == WalkStyle.DOWN)
+			enemyCurrentFrame = enemyWalkDownAnim.getKeyFrame(enemyStateTime, true);
+		// the character is moving right, set its animation moving right
+		if (wStyle == WalkStyle.RIGHT)
+			enemyCurrentFrame = enemyWalkRightAnim.getKeyFrame(enemyStateTime, true);
+	}
+	
+	// attack actions for the hero
+	public void setEnemyAttack() {
 		// the character is moving up, set its animation moving up
 		if (wStyle == WalkStyle.UP)
 			enemyCurrentFrame = enemyWalkUpAnim.getKeyFrame(enemyStateTime, true);
@@ -176,6 +202,14 @@ public class Enemy {
 		this.wStyle = wStyle;
 	}
 	
+	// access and getter for the Attacking Style for the Hero
+	public AttackStyle getAttackingStyle() {
+		return this.aStyle;		
+	}
+	
+	public void setAttackingStyle(AttackStyle aStyle) {
+		this.aStyle = aStyle;
+	}
 	public void setEnemyStateTime(float enemyStateTime) {
 		this.enemyStateTime = enemyStateTime;
 	}
