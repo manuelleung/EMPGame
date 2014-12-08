@@ -156,7 +156,11 @@ public class Enemy {
 			enemyCurrentFrame = enemyWalkLeftAnim.getKeyFrame(enemyStateTime, true);
 		// the character is moving down, set its animation moving down
 		if (wStyle == WalkStyle.DOWN)
-			enemyCurrentFrame = enemyWalkDownAnim.getKeyFrame(enemyStateTime, true);
+			// enemyCurrentFrame = enemyWalkDownAnim.getKeyFrame(enemyStateTime, true);
+			// TO TEST THE DEATH ANIMATION, comment the above line and call the below line
+			// enemyCurrentFrame = enemyDeathAnim.getKeyFrame(enemyStateTime, true);
+			// this setting is also made in the triggerEnemyDeath() function below
+			// so just call the method below to trigger the animation
 		// the character is moving right, set its animation moving right
 		if (wStyle == WalkStyle.RIGHT)
 			enemyCurrentFrame = enemyWalkRightAnim.getKeyFrame(enemyStateTime, true);
