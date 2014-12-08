@@ -22,8 +22,8 @@ public class PhaseDisplay implements Screen, InputProcessor {
 	
 	// pixel locations for the mini menu
 	// These numbers needs to be changed. Taken from doing a "trick"
-	private final int PHASE_BOX_X = 192;
-	private final int PHASE_BOX_Y = 320;
+	private final int PHASE_BOX_X = 64;
+	private final int PHASE_BOX_Y = 416;
 
 	private Screen bgGameScreen;
 	private Controller gameController;

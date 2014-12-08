@@ -8,6 +8,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -48,9 +50,6 @@ public class Controller implements InputProcessor {
 	// Moving the sprites by this amount of pixel
 	// should this datatype be int or float??
 	private static final float MOVE_PIXEL_BY_32 = 32;
-
-	// indicate selected sprite?
-	public int selectedSprite;
 	
 	// For multiple enemies or heroes make into an array
 	private Enemy enemy;
@@ -94,9 +93,16 @@ public class Controller implements InputProcessor {
 	private boolean confirmAction;
 	private CharacterOptions action;
 	
-	TurnIndicator currentTurn;
+	TurnIndicator currentTurn = TurnIndicator.PLAYER;
 	
 	ShapeRenderer shape = new ShapeRenderer();
+	
+	// Music and Sound
+	private Sound hitSound;
+	private Sound missedSound;
+	private Music bgMusic;
+	private Sound orcGetsHit;
+	private Sound heroGetsHit;
 	
 	public Controller(final EMPGame game) {
 		this.game = game;
@@ -107,6 +113,7 @@ public class Controller implements InputProcessor {
 		// this tells LibGDX to send its received input events here, on this class: Controller
 		Gdx.input.setInputProcessor(this);
 		initControllableObjects();
+		initMusicAndSounds();
 	}
 	
 	// Make all the game objects
@@ -146,6 +153,23 @@ public class Controller implements InputProcessor {
 		
 		confirmAction = false;
 		action=CharacterOptions.NONE;
+	}
+	
+	private void initMusicAndSounds() {
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/289-HeatedBattle.ogg"));
+		bgMusic.setLooping(true);
+		bgMusic.play();
+		bgMusic.setVolume(0.6f);
+		
+		hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit_sound.mp3"));
+		// setVolume for Sound: void setVolume(long soundId, float volume)
+		// what is soundId???
+		hitSound.setVolume(1, 0.6f);
+		missedSound = Gdx.audio.newSound(Gdx.files.internal("sounds/miss_sound.mp3"));
+		
+		// grunts
+		orcGetsHit = Gdx.audio.newSound(Gdx.files.internal("sounds/orc_pain.mp3"));
+		// heroGetsHit = Gdx.audio.newSound(Gdx.files.internal(""));
 	}
 	
 
@@ -443,9 +467,12 @@ public class Controller implements InputProcessor {
 						if( random.nextInt((100-1)+1)+1 < hitRate) {
 							//hit
 							enemy.takeDamage(damage);
+							hitSound.play();
+							orcGetsHit.play();
 							System.out.println("HIT! Enemy health: " +enemy.getEnemyHealth());
 						} else {
 							//miss
+							missedSound.play();
 							System.out.println("MISSED! Enemy health: "+enemy.getEnemyHealth());
 						}
 						attacked=true;
@@ -466,6 +493,12 @@ public class Controller implements InputProcessor {
 			// ENEMIES turn dont let player attack
 			//dont need this since Enemy is controlled by AI
 		}
+		
+		// enemy dies
+		if (enemy.getEnemyHealth() <= 0) {
+			enemy.triggerEnemyDeath();
+			// dispose the enemy object; sprite disappears from screen
+		}
 	}
 	
 	public void attackHero() {
@@ -483,9 +516,11 @@ public class Controller implements InputProcessor {
 							if( random.nextInt((100-1)+1)+1 < hitRate) {
 								//hit
 								hero.takeDamage(damage);
+								hitSound.play();
 								System.out.println("HIT! Hero health: " +hero.getHeroHealth());
 							} else {
 								//miss
+								missedSound.play();
 								System.out.println("MISSED! Hero health: "+hero.getHeroHealth());
 							}
 							attacked=true;
@@ -502,6 +537,10 @@ public class Controller implements InputProcessor {
 			// dont let it attack
 			//dont need this since Enemy is controlled by AI
 		}
+		
+		if (hero.getHeroHealth() <= 0) {
+			// death animation
+		}
 	}
 	
 	public void switchTurn() {
@@ -516,6 +555,7 @@ public class Controller implements InputProcessor {
 			System.out.println("IT IS THE ENEMIES TURN -- PRES W TO PASS");
 			playerTurn = false;
 			enemyTurn = true;
+			currentTurn = TurnIndicator.ENEMY;
 		}
 		else { 	// in the case of more enemies we can use an index to identify whether all enemies have made
 				// their actions before switching to player turn
@@ -523,7 +563,16 @@ public class Controller implements InputProcessor {
 			System.out.println("IT IS THE PLAYERS TURN -- PRES W TO PASS");
 			playerTurn = true;
 			enemyTurn=false;
+			currentTurn = TurnIndicator.PLAYER;
 		}
+		
+		if (currentTurn == TurnIndicator.PLAYER) {
+			game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.PLAYER));
+		}
+		else if (currentTurn == TurnIndicator.ENEMY) {
+			game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.ENEMY));
+		}
+		
 	}
 	
 	@Override
@@ -1155,5 +1204,17 @@ public class Controller implements InputProcessor {
 
 	public boolean isAttackState() {
 		return attackState;
+	}
+	
+	public void dispose() {
+		if (bgMusic != null) {
+			bgMusic.dispose();
+		}
+		if (hitSound != null) {
+			hitSound.dispose();
+		}
+		if (missedSound != null) {
+			missedSound.dispose();
+		}
 	}
 }

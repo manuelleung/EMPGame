@@ -5,8 +5,6 @@
 package edu.emp.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class EMPGame extends Game {
 	

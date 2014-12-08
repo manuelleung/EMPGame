@@ -27,11 +27,8 @@ public class Enemy {
 	
 	// for the Walking Frames
 	private TextureRegion [] walkEnemyFrames;
-	// for the Attacking Frames
-	private TextureRegion [] attackEnemyFramesLeft;
-	private TextureRegion [] attackEnemyFramesRight;
-	private TextureRegion [] attackEnemyFramesUp;
-	private TextureRegion [] attackEnemyFramesDown;
+	// for the Death Frames
+	private TextureRegion [] deathEnemyFrames;
 	
 	// contains the specific movement of the characters
 	private TextureRegion [][] enemyWalkingFramesSet;
@@ -75,6 +72,7 @@ public class Enemy {
 		// details for the Enemy Object
 		// Using a Goblin an enemy
 		enemyWalkTexture = new Texture(Gdx.files.internal("enemy/goblinsword_03.png"));
+		enemyDeathTexture = new Texture(Gdx.files.internal("enemy/goblinsword_05.png"));
 		setEnemyPosition(new Vector2(x, y));
 		// Initialize the enemy
 		initEnemy();
@@ -89,14 +87,18 @@ public class Enemy {
 		int walkFrame_cols = 8;	
 		int walkFrame_rows = 4;
 		
-		// for Attack Animation
-		// int attackFrame_cols = 3;	
-		// int attackFrame_rows = 1;		
+		// for death animation
+		int deathFrame_cols = 5;
+		int deathFrame_rows = 1;		
 		
 		// for Walk Animation
 		TextureRegion [][] walkTemp = TextureRegion.split(enemyWalkTexture, enemyWalkTexture.getWidth()/walkFrame_cols, enemyWalkTexture.getHeight()/walkFrame_rows);
 		walkEnemyFrames = new TextureRegion[walkFrame_cols * walkFrame_rows]; // 32
 
+		// for Death Animation
+		TextureRegion [][] deathTemp = TextureRegion.split(enemyDeathTexture, enemyDeathTexture.getWidth()/deathFrame_cols, enemyDeathTexture.getHeight()/deathFrame_rows);
+		deathEnemyFrames = new TextureRegion[deathFrame_cols * deathFrame_rows]; // 5
+		
 		// Store all action of enemy walking frames
 		int index = 0;
 		for (int i = 0; i < walkFrame_rows; i++) {
@@ -104,7 +106,15 @@ public class Enemy {
 				walkEnemyFrames[index++] = walkTemp[i][j];
 			}
 		}
-
+		
+		// Store all action of enemy death frames
+		index = 0;
+		for (int i = 0; i < deathFrame_rows; i++) {
+			for (int j = 0; j < deathFrame_cols; j++) {
+				deathEnemyFrames[index++] = deathTemp[i][j];
+			}
+		}
+		
 		// initialize the two-dimensional arrays for Walking
 		enemyWalkingFramesSet = new TextureRegion[uniqueActionsWalk][frameCountWalk];
 		
@@ -123,6 +133,9 @@ public class Enemy {
 		enemyWalkUpAnim = new Animation(0.20f, enemyWalkingFramesSet[2]);
 		enemyWalkLeftAnim = new Animation(0.20f, enemyWalkingFramesSet[3]);
 
+		// Set the Death Animations for the selected sprite
+		enemyDeathAnim = new Animation(0.20f, deathEnemyFrames);
+		
 		enemyStateTime = 0f;
 		
 		//STATS
@@ -133,7 +146,7 @@ public class Enemy {
 		enemyDefense=5;
 	}
 	
-	// walk actions for the hero
+	// walk actions for the enemy
 	public void setEnemyWalk() {
 		// the character is moving up, set its animation moving up
 		if (wStyle == WalkStyle.UP)
@@ -149,7 +162,7 @@ public class Enemy {
 			enemyCurrentFrame = enemyWalkRightAnim.getKeyFrame(enemyStateTime, true);
 	}
 	
-	// attack actions for the hero
+	// attack actions for the enemy
 	public void setEnemyAttack() {
 		// the character is moving up, set its animation moving up
 		if (aStyle == AttackStyle.UP)
@@ -163,6 +176,11 @@ public class Enemy {
 		// the character is moving right, set its animation moving right
 		if (aStyle == AttackStyle.RIGHT)
 			enemyCurrentFrame = enemyAttackRightAnim.getKeyFrame(enemyStateTime, true);
+	}
+	
+	// death action for the enemy
+	public void triggerEnemyDeath() {
+		enemyCurrentFrame = enemyDeathAnim.getKeyFrame(enemyStateTime, true);
 	}
 
 	// access and getter for the Walking Style for the Hero

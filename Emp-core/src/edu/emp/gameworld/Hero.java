@@ -95,7 +95,7 @@ public class Hero {
 		
 		// STATS
 		heroHealth=100;
-		heroAttackDamage=20;
+		heroAttackDamage=35;
 		heroAccuracy=100;
 		heroEvasion=20;
 		heroDefense=5;

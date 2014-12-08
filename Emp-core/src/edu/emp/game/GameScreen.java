@@ -58,9 +58,6 @@ public class GameScreen extends ApplicationAdapter implements Screen {
 
 	@Override
     public void show() {
-        // start the playback of the background music
-        // when the screen is shown
-        /* INSERT BACKGROUND MUSIC */
     }
 	
 	@Override
