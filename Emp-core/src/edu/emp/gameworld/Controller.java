@@ -104,6 +104,8 @@ public class Controller implements InputProcessor {
 	private Sound orcGetsHit;
 	private Sound heroGetsHit;
 	
+	float timer=0;
+	
 	public Controller(final EMPGame game) {
 		this.game = game;
 		init();
@@ -178,6 +180,7 @@ public class Controller implements InputProcessor {
 		updateMovementBox();
 		updateHero(deltaTime);
 		updateEnemy(deltaTime);
+
 	}
 	
 	// update the Movement Box
@@ -198,7 +201,8 @@ public class Controller implements InputProcessor {
 	
 	public void updateEnemy(float deltaTime) {
 		enemy.setEnemyStateTime(enemy.getEnemyStateTime() + deltaTime);
-
+		
+		
 		if(enemyTurn == true) {
 			if(attacked == false) {
 				attackHero();
@@ -590,8 +594,8 @@ public class Controller implements InputProcessor {
 		else if (currentTurn == TurnIndicator.ENEMY) {
 			game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.ENEMY));
 		}
-		
 	}
+	
 	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -615,9 +619,10 @@ public class Controller implements InputProcessor {
 	        // game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.ENEMY));
 	      
 	      // TEST
-	      game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.PLAYER));
+	    	
 	    }
 		
+	    
 		// TESTING//////////////////////////////////////////////////////
 		// ALL FORMULAS TO BE CHANGED
 

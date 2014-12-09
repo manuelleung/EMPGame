@@ -29,10 +29,10 @@ public class PhaseDisplay implements Screen, InputProcessor {
 	private Controller gameController;
 	
 	// timer to show the phase in seconds
-	private float timer = 0;
+	private float timer;
 	// how long the screen is rendered before disposed
 	// here it says for 0.5 seconds
-	private float timeLasts = 0.5f;
+	private float timeLasts;
 	
 	
 	public PhaseDisplay(final EMPGame game, Screen bgGameScreen, Controller gameController, TurnIndicator turn_of) {
@@ -43,6 +43,9 @@ public class PhaseDisplay implements Screen, InputProcessor {
 		
 		this.bgGameScreen = bgGameScreen;
 		this.gameController = gameController;
+		
+		timer = 0;
+		timeLasts = 1.0f;
 		
 		if (turn_of == TurnIndicator.PLAYER)
 			background = new Texture("phases/player_phase.png");
