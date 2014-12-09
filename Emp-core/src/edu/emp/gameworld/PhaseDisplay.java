@@ -124,7 +124,7 @@ public class PhaseDisplay implements Screen, InputProcessor {
 
 	@Override
 	public void render(float arg0) {
-		// Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		timer += Gdx.graphics.getDeltaTime();
 		
 		batch.begin();
@@ -139,6 +139,8 @@ public class PhaseDisplay implements Screen, InputProcessor {
 			Gdx.input.setInputProcessor(gameController);
 			dispose();
 		}
+		
+		
 	}
 
 	@Override

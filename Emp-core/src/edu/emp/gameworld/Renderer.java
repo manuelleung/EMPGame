@@ -49,6 +49,7 @@ public class Renderer implements Disposable {
 	float cameraBottom;
 	float cameraTop;
 
+	BitmapFont font;
 
 	
 	public Renderer(Controller gameController) {
@@ -92,7 +93,8 @@ public class Renderer implements Disposable {
 		//System.out.println(Gdx.graphics.getWidth()+ " " + Gdx.graphics.getHeight());
 		
 		
-
+		font = new BitmapFont();
+		font.setColor(Color.RED);
 	}
 	
 	public void render() {
@@ -175,6 +177,16 @@ public class Renderer implements Disposable {
 		batch.draw(gameController.getHero().getHeroCurrentFrame(), gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y);
 		// draw enemy
 		batch.draw(gameController.getEnemy().getEnemyCurrentFrame(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
+		
+		
+		
+		//only prints for hero right now
+		if(gameController.wasHit())
+			font.draw(batch, "HIT -"+gameController.heroGetDamage(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
+		else if(gameController.wasMiss()) 
+			font.draw(batch, "MISS", gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
+		else
+			font.draw(batch, ""+gameController.getEnemy().getEnemyHealth(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
 		batch.end();
 		
 		

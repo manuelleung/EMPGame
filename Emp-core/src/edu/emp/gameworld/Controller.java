@@ -105,6 +105,10 @@ public class Controller implements InputProcessor {
 	private Sound heroGetsHit;
 	
 	float timer=0;
+
+	private boolean hitFlag;
+
+	private boolean missFlag;
 	
 	public Controller(final EMPGame game) {
 		this.game = game;
@@ -155,6 +159,9 @@ public class Controller implements InputProcessor {
 		
 		confirmAction = false;
 		action=CharacterOptions.NONE;
+		
+		missFlag =false;
+		hitFlag=false;
 	}
 	
 	private void initMusicAndSounds() {
@@ -453,7 +460,15 @@ public class Controller implements InputProcessor {
 			}
 		}
 	}
-	
+	public boolean wasHit() {
+		return hitFlag;
+	}
+	public boolean wasMiss() {
+		return missFlag;
+	}
+	public int heroGetDamage() {
+		return hero.getHeroAttackDamage()-enemy.getEnemyDefense();
+	}
 	public void attackEnemy() {
 		if(playerTurn==true && attacked==false) {
 			int hitRate = hero.getHeroAccuracy() - enemy.getEnemyEvasion(); // 80%
@@ -482,9 +497,11 @@ public class Controller implements InputProcessor {
 							enemy.takeDamage(damage);
 							hitSound.play();
 							orcGetsHit.play();
+							hitFlag=true;
 							System.out.println("HIT! Enemy health: " +enemy.getEnemyHealth());
 						} else {
 							//miss
+							missFlag=true;
 							missedSound.play();
 							System.out.println("MISSED! Enemy health: "+enemy.getEnemyHealth());
 						}
@@ -566,6 +583,8 @@ public class Controller implements InputProcessor {
 	}
 	
 	public void switchTurn() {
+		missFlag=false; //for printing font
+		hitFlag=false;
 		movementIndex = 0;
 		attacked = false;
 		moved = false;
