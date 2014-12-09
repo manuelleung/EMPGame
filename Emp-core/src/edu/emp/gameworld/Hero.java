@@ -23,7 +23,7 @@ public class Hero {
 	private int uniqueActions = 4;
 	// frame count for before the beginning of a new animation sprite
 	// or the frame count of each uniqueAction set
-	private int frameCount = 4;
+	private int frameCount = 3;
 	
 	private TextureRegion heroCurrentFrame;
 	private Texture heroTexture;
@@ -38,11 +38,11 @@ public class Hero {
 	private int heroMoveSpeed;
 	
 	// Walking style for the hero
-	private WalkStyle wStyle = WalkStyle.UP; 
+	private WalkStyle wStyle = WalkStyle.DOWN; 
 	
 	public Hero(float x, float y) {
 		// details for the Hero Object		
-		heroTexture = new Texture(Gdx.files.internal("Hero.png"));
+		heroTexture = new Texture(Gdx.files.internal("hero/ranger_m.png"));
 		setHeroPosition(new Vector2(x, y));
 		// Initialize the Hero!
 		initHero();
@@ -52,8 +52,8 @@ public class Hero {
 	private void initHero() {
 		
 		// frame_col and frame_row is based on a specific sprite, in this case: Hero.png
-		int frame_cols = 8;	
-		int frame_rows = 3;
+		int frame_cols = 3;	
+		int frame_rows = 4;
 		
 		TextureRegion [][] temp = TextureRegion.split(heroTexture, heroTexture.getWidth()/frame_cols, heroTexture.getHeight()/frame_rows);
 		heroFrames = new TextureRegion[frame_cols * frame_rows]; // 24
@@ -87,9 +87,9 @@ public class Hero {
 		 */
 		
 		heroWalkUpAnim = new Animation(0.20f, heroFramesSeparated[0]);
-		heroWalkDownAnim = new Animation(0.20f, heroFramesSeparated[1]);
-		heroWalkLeftAnim = new Animation(0.20f, heroFramesSeparated[2]);
-		heroWalkRightAnim = new Animation(0.20f, heroFramesSeparated[3]);
+		heroWalkRightAnim = new Animation(0.20f, heroFramesSeparated[1]);
+		heroWalkDownAnim = new Animation(0.20f, heroFramesSeparated[2]);
+		heroWalkLeftAnim = new Animation(0.20f, heroFramesSeparated[3]);
 		
 		heroStateTime = 0f;
 		

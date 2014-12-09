@@ -41,8 +41,10 @@ public class Enemy {
 	
 	// frame count for before the beginning of a new animation sprite
 	// or the frame count of each uniqueAction set
-	private int frameCountWalk = 8;
+	//private int frameCountWalk = 8;  //testing the other sprite
 	private int frameCountAttack = 3;
+	
+	private int frameCountWalk = 3;
 	
 	private TextureRegion enemyCurrentFrame;
 	
@@ -71,8 +73,12 @@ public class Enemy {
 	public Enemy(float x, float y) {
 		// details for the Enemy Object
 		// Using a Goblin an enemy
-		enemyWalkTexture = new Texture(Gdx.files.internal("enemy/goblinsword_03.png"));
+		
+		enemyWalkTexture=new Texture(Gdx.files.internal("enemy/skeleton.png"));
+		//enemyWalkTexture = new Texture(Gdx.files.internal("enemy/goblinsword_03.png"));
 		enemyDeathTexture = new Texture(Gdx.files.internal("enemy/goblinsword_05.png"));
+		
+		
 		setEnemyPosition(new Vector2(x, y));
 		// Initialize the enemy
 		initEnemy();
@@ -84,8 +90,11 @@ public class Enemy {
 		// frame_col and frame_row is based on a specific sprite
 		
 		// for Walk Animation
-		int walkFrame_cols = 8;	
-		int walkFrame_rows = 4;
+		//int walkFrame_cols = 8;	
+		//int walkFrame_rows = 4;
+		
+		int walkFrame_cols=3;
+		int walkFrame_rows=4;
 		
 		// for death animation
 		int deathFrame_cols = 5;
@@ -128,11 +137,16 @@ public class Enemy {
 		}
 		
 		// Set the Walking Animations for the selected sprite
-		enemyWalkDownAnim = new Animation(0.20f, enemyWalkingFramesSet[0]);
-		enemyWalkRightAnim = new Animation(0.20f, enemyWalkingFramesSet[1]);
-		enemyWalkUpAnim = new Animation(0.20f, enemyWalkingFramesSet[2]);
-		enemyWalkLeftAnim = new Animation(0.20f, enemyWalkingFramesSet[3]);
+		//enemyWalkDownAnim = new Animation(0.20f, enemyWalkingFramesSet[0]);
+		//enemyWalkRightAnim = new Animation(0.20f, enemyWalkingFramesSet[1]);
+		//enemyWalkUpAnim = new Animation(0.20f, enemyWalkingFramesSet[2]);
+		//enemyWalkLeftAnim = new Animation(0.20f, enemyWalkingFramesSet[3]);
 
+		enemyWalkDownAnim = new Animation(0.20f, enemyWalkingFramesSet[0]);
+		enemyWalkLeftAnim = new Animation(0.20f, enemyWalkingFramesSet[1]);
+		enemyWalkRightAnim = new Animation(0.20f, enemyWalkingFramesSet[2]);
+		enemyWalkUpAnim = new Animation(0.20f, enemyWalkingFramesSet[3]);
+		
 		// Set the Death Animations for the selected sprite
 		enemyDeathAnim = new Animation(0.20f, deathEnemyFrames);
 		
@@ -156,7 +170,7 @@ public class Enemy {
 			enemyCurrentFrame = enemyWalkLeftAnim.getKeyFrame(enemyStateTime, true);
 		// the character is moving down, set its animation moving down
 		if (wStyle == WalkStyle.DOWN)
-			// enemyCurrentFrame = enemyWalkDownAnim.getKeyFrame(enemyStateTime, true);
+			 enemyCurrentFrame = enemyWalkDownAnim.getKeyFrame(enemyStateTime, true);
 			// TO TEST THE DEATH ANIMATION, comment the above line and call the below line
 			// enemyCurrentFrame = enemyDeathAnim.getKeyFrame(enemyStateTime, true);
 			// this setting is also made in the triggerEnemyDeath() function below

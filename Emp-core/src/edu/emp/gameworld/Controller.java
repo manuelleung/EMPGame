@@ -391,7 +391,7 @@ public class Controller implements InputProcessor {
 				enemy.setWalkingStyle(WalkStyle.RIGHT);
 				enemy.incrementX(speed);
 				if(enemy.getX() > (enemy.getX()+speed)) {
-					 hero.incrementX(speed);
+					 enemy.incrementX(speed);
 				}
 				if(enemy.getX() >= (32*37)) {
 				//if(enemy.getX() >= 608.0f) {
@@ -406,7 +406,7 @@ public class Controller implements InputProcessor {
 					enemy.incrementX(-speed);
 				}
 				if(hero.getX() <= 0f) {
-					hero.incrementX(0f);
+					enemy.incrementX(0f);
 				}
 			}
 			// MOVE UP
