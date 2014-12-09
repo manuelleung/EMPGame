@@ -50,7 +50,7 @@ public class Renderer implements Disposable {
 	float cameraTop;
 
 	BitmapFont font;
-
+	BitmapFont hp;
 	
 	public Renderer(Controller gameController) {
 		// This is necessary since this allows the Renderer
@@ -95,9 +95,12 @@ public class Renderer implements Disposable {
 		
 		font = new BitmapFont();
 		font.setColor(Color.RED);
+		hp = new BitmapFont();
+		hp.setColor(Color.GREEN);
 	}
 	
 	public void render() {
+			   
 		renderMaps();
 		renderGameObjects();
 	}
@@ -109,10 +112,8 @@ public class Renderer implements Disposable {
 		
 		if(gameController.enemyTurn && gameController.isMoveState() || gameController.enemyTurn && gameController.isAttackState())
 			camera.position.set(gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y, 0);
-		if(gameController.playerTurn && gameController.getAction()==CharacterOptions.MOVE || gameController.playerTurn && gameController.getAction()==CharacterOptions.ATTACK) {
+		if(gameController.playerTurn && gameController.getAction()==CharacterOptions.MOVE || gameController.playerTurn && gameController.getAction()==CharacterOptions.ATTACK)
 			camera.position.set(gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y, 0);
-		}
-		
 		// This update is in case we want to have a camera that can scroll with the arrow keys
 		camera.update(); 
 		// Set the viewpoint from camera and render map
@@ -175,17 +176,26 @@ public class Renderer implements Disposable {
 		gameController.getMovementBoxSprite().draw(batch);
 		// draw the hero
 		batch.draw(gameController.getHero().getHeroCurrentFrame(), gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y);
+		
 		// draw enemy
 		batch.draw(gameController.getEnemy().getEnemyCurrentFrame(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
 		
 		
+
 		
-		//only prints for hero right now
-		if(gameController.wasHit())
-			font.draw(batch, "HIT -"+gameController.heroGetDamage(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
-		else if(gameController.wasMiss()) 
-			font.draw(batch, "MISS", gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
-		else
+		//display hit/miss---only prints for enemy right now
+		if(gameController.wasHit() && gameController.playerTurn)
+			font.draw(batch, "HIT -"+gameController.heroGetDamage(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y+48);
+		else if(gameController.wasMiss() && gameController.playerTurn) 
+			font.draw(batch, "MISS", gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y+48);
+		//display health
+		if(gameController.getHero().getHeroHealth() >=50)
+			hp.draw(batch, ""+gameController.getHero().getHeroHealth(), gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y);
+		else //red
+			font.draw(batch, ""+gameController.getHero().getHeroHealth(), gameController.getHero().getHeroPosition().x, gameController.getHero().getHeroPosition().y);
+		if(gameController.getEnemy().getEnemyHealth()>=50)
+			hp.draw(batch, ""+gameController.getEnemy().getEnemyHealth(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
+		else //red
 			font.draw(batch, ""+gameController.getEnemy().getEnemyHealth(), gameController.getEnemy().getEnemyPosition().x, gameController.getEnemy().getEnemyPosition().y);
 		batch.end();
 		

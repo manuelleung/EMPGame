@@ -14,6 +14,8 @@ public class DesktopLauncher {
 		// We will change this later depending on our chose size for screen resolution
 		config.width = (32*25);
 		config.height = (32*20); 
+		//config.useCPUSynch = false;
+		//config.vSyncEnabled = true;
 		//config.width = (32*38); //1216
 		//config.height = (32*40); //1280
 		new LwjglApplication(new EMPGame(), config);

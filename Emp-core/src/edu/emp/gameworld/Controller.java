@@ -526,7 +526,7 @@ public class Controller implements InputProcessor {
 		
 		// enemy dies
 		if (enemy.getEnemyHealth() <= 0) {
-			enemy.triggerEnemyDeath();
+			//enemy.triggerEnemyDeath();
 			// dispose the enemy object; sprite disappears from screen
 		}
 	}
