@@ -464,6 +464,15 @@ public class Controller implements InputProcessor {
 						(hero.getHeroPosition().y+32==enemy.getEnemyPosition().y&&hero.getHeroPosition().x==enemy.getEnemyPosition().x) ||
 						(hero.getHeroPosition().y-32==enemy.getEnemyPosition().y&&hero.getHeroPosition().x==enemy.getEnemyPosition().x) ) {
 						//enemy in range
+						if(hero.getHeroPosition().x+32==enemy.getEnemyPosition().x)
+							hero.setWalkingStyle(WalkStyle.RIGHT);
+						else if(hero.getHeroPosition().x-32==enemy.getEnemyPosition().x)
+							hero.setWalkingStyle(WalkStyle.LEFT);
+						else if(hero.getHeroPosition().y+32==enemy.getEnemyPosition().y)
+							hero.setWalkingStyle(WalkStyle.UP);
+						else
+							hero.setWalkingStyle(WalkStyle.DOWN);
+						
 						if( random.nextInt((100-1)+1)+1 < hitRate) {
 							//hit
 							enemy.takeDamage(damage);
@@ -513,6 +522,15 @@ public class Controller implements InputProcessor {
 						(enemy.getEnemyPosition().y+32==hero.getHeroPosition().y&&enemy.getEnemyPosition().x==hero.getHeroPosition().x) ||
 						(enemy.getEnemyPosition().y-32==hero.getHeroPosition().y&&enemy.getEnemyPosition().x==hero.getHeroPosition().x) ) {
 						//enemy in range
+							if(hero.getHeroPosition().x==enemy.getEnemyPosition().x+32)
+								enemy.setWalkingStyle(WalkStyle.RIGHT);
+							else if(hero.getHeroPosition().x==enemy.getEnemyPosition().x-32)
+								enemy.setWalkingStyle(WalkStyle.LEFT);
+							else if(hero.getHeroPosition().y==enemy.getEnemyPosition().y+32)
+								enemy.setWalkingStyle(WalkStyle.UP);
+							else
+								enemy.setWalkingStyle(WalkStyle.DOWN);
+							
 							if( random.nextInt((100-1)+1)+1 < hitRate) {
 								//hit
 								hero.takeDamage(damage);
