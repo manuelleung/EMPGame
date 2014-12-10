@@ -20,6 +20,9 @@
  <tileset firstgid="2703" name="box" tilewidth="32" tileheight="32">
   <image source="box.png" trans="ff00ff" width="32" height="32"/>
  </tileset>
+ <tileset firstgid="2704" name="pisilohepunane3" tilewidth="32" tileheight="32">
+  <image source="pisilohepunane3.png" trans="ff00ff" width="100" height="100"/>
+ </tileset>
  <layer name="block" width="38" height="40" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt1EsOwCAIBFDXvXvv3G1DUD4ZdLQl6aqCj4i2Nj/uy/5WxA4uy7ra1bMxuDQbi8vzX65B9ZHdd+RhcVUE0oU0Vp5jJG9U73fNcck1o5xezYxLc0qXt5dKl2b0uNDnaLkiM/d1V1Vk5x7Vi2c+o6Z3jpaPnI/eGs1k7cnqOjFYe0ffLeZaCEtklqvPOuta5dnBhXg3I73u7srWR+R5c5neXqZ7IV0932oXm+lUV3UP7K4HNr4PZA==
@@ -77,7 +80,7 @@
  </layer>
  <layer name="layer11" width="38" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt0bEJgEAQRNGFw0K0EcU+tBEt3g0NjN07eC+a8MNE1DpaxNmKIz5c2XS/uubcS4edazZtHXaN8iswhn2qLgAAAAD43wNQ6ASS
+   eJzt0csJgFAMRNGAuHldaCOKfWgjWoR/LddZKrhPHtwDA1leiJmvvjAbCueIH6OapldXpbsO2NmoqQ3YlctfAeShK70L8jIns0Vbk3fJ16aeXTuCdZ3qubQ7WBcAAAAAAA8ssQog
   </data>
  </layer>
  <layer name="grid" width="38" height="40">

@@ -106,7 +106,7 @@ public class Renderer implements Disposable {
 		renderMaps();
 		renderGameObjects();
 		
-		renderDispose();
+		//renderDispose();
 	}
 	
 	public void renderMaps() {
