@@ -167,10 +167,10 @@ public class Controller implements InputProcessor {
 	}
 	
 	private void initMusicAndSounds() {
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/295 Insidia.ogg"));
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/RPG Battle Music_soundcloud_59733263.mp3"));
 		bgMusic.setLooping(true);
 		bgMusic.play();
-		bgMusic.setVolume(0.9f);
+		bgMusic.setVolume(0.5f);
 		
 		hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit_sound.mp3"));
 		// setVolume for Sound: void setVolume(long soundId, float volume)
