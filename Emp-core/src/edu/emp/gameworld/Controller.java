@@ -110,6 +110,8 @@ public class Controller implements InputProcessor {
 
 	private boolean missFlag;
 	
+	private boolean enemyDispose;
+	
 	public Controller(final EMPGame game) {
 		this.game = game;
 		init();
@@ -165,15 +167,15 @@ public class Controller implements InputProcessor {
 	}
 	
 	private void initMusicAndSounds() {
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/289-HeatedBattle.ogg"));
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/295 Insidia.ogg"));
 		bgMusic.setLooping(true);
 		bgMusic.play();
-		bgMusic.setVolume(0.6f);
+		bgMusic.setVolume(0.9f);
 		
 		hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit_sound.mp3"));
 		// setVolume for Sound: void setVolume(long soundId, float volume)
 		// what is soundId???
-		hitSound.setVolume(1, 0.6f);
+		hitSound.setVolume(1, 0.9f);
 		missedSound = Gdx.audio.newSound(Gdx.files.internal("sounds/miss_sound.mp3"));
 		
 		// grunts
@@ -526,6 +528,7 @@ public class Controller implements InputProcessor {
 		
 		// enemy dies
 		if (enemy.getEnemyHealth() <= 0) {
+			enemyDispose = true;
 			//enemy.triggerEnemyDeath();
 			// dispose the enemy object; sprite disappears from screen
 		}
@@ -710,6 +713,11 @@ public class Controller implements InputProcessor {
 			game.setScreen(new CharacterOptionsMenu(game, game.getScreen(), this));
 			movementBoxPosition.x = hero.getHeroPosition().x;
 			movementBoxPosition.y = hero.getHeroPosition().y;
+		}
+		
+		/* TEST SWITCH SCREEN */
+		if (keycode == Keys.T) {
+			game.setScreen(new PhaseDisplay(game, game.getScreen(), this, TurnIndicator.PLAYER));
 		}
 		
 		
@@ -1238,6 +1246,10 @@ public class Controller implements InputProcessor {
 
 	public CharacterOptions getAction() {
 		return action;
+	}
+	
+	public boolean canDisposeEnemy() {
+		return enemyDispose;
 	}
 
 	public boolean isMoveState() {

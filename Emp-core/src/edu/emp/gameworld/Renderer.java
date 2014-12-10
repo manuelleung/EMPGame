@@ -3,6 +3,7 @@ package edu.emp.gameworld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -100,9 +101,12 @@ public class Renderer implements Disposable {
 	}
 	
 	public void render() {
-			   
+		cleanDisplay();
+		
 		renderMaps();
 		renderGameObjects();
+		
+		renderDispose();
 	}
 	
 	public void renderMaps() {
@@ -201,6 +205,12 @@ public class Renderer implements Disposable {
 		
 		
 	}
+	
+	public void renderDispose() {
+		if (gameController.canDisposeEnemy()) {
+			gameController.getEnemy().disposeEnemy();
+		}
+	}
 		
 	// use this?
 	// or use a blocked tile method ?
@@ -247,6 +257,11 @@ public class Renderer implements Disposable {
 	
 	public void resize (int width, int height) {
 		// something to do with the camera
+	}
+	
+	public void cleanDisplay() {
+		Gdx.gl.glClearColor(0, 0, 0, 0);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 	
 	@Override

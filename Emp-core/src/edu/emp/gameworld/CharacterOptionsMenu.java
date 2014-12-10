@@ -17,8 +17,8 @@ public class CharacterOptionsMenu implements Screen, InputProcessor {
 	private Texture background;
 	
 	// pixel locations for the mini menu
-	private final int MINIMENU_X = 375;
-	private final int MINIMENU_Y = 375;
+	private final int MINIMENU_X = 560;
+	private final int MINIMENU_Y = 387;
 	
 	// Using the mouse listener requires the pixel locations listed below
 	// not needed when using the keyboard input

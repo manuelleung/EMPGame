@@ -22,7 +22,7 @@ public class PhaseDisplay implements Screen, InputProcessor {
 	
 	// pixel locations for the mini menu
 	// These numbers needs to be changed. Taken from doing a "trick"
-	private final int PHASE_BOX_X = 64;
+	private final int PHASE_BOX_X = 48;
 	private final int PHASE_BOX_Y = 416;
 
 	private Screen bgGameScreen;
@@ -131,6 +131,7 @@ public class PhaseDisplay implements Screen, InputProcessor {
 		batch.draw(background, PHASE_BOX_X, PHASE_BOX_Y);
 		batch.end();
 		
+		
 		// the screens lasts for x seconds
 		if (timer >= timeLasts) {
 			// remove MiniMenu Screen
@@ -138,9 +139,7 @@ public class PhaseDisplay implements Screen, InputProcessor {
 			game.setScreen(bgGameScreen);
 			Gdx.input.setInputProcessor(gameController);
 			dispose();
-		}
-		
-		
+		}		
 	}
 
 	@Override

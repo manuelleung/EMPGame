@@ -313,5 +313,9 @@ public class Enemy {
 		return enemyPosition.y;
 	}
 	
+	public void disposeEnemy() {
+		enemyWalkTexture.dispose();
+	}
+	
 	
 }
