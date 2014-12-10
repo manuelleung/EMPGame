@@ -131,10 +131,10 @@ public class Controller implements InputProcessor {
 		
 		//testPathFinder();
 		
-		hero = new Hero((32*16), (32*33));
+		hero = new Hero((32*25), (32*7));
 		heroPath = new Array<Node>();
 		
-		enemy = new Enemy((32*13), (32*31));
+		enemy = new Enemy((32*10), (32*31));
 		enemyPath = new Array<Node>();
 		
 		// details for the Movement Box Sprite
@@ -625,7 +625,7 @@ public class Controller implements InputProcessor {
 		//Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
 		//Vector3 position = camera.unproject(clickCoordinates);
 		//sprite.setPosition(position.x, position.y);
-		
+		System.out.println("X: "+screenX+" Y: "+screenY);
 		return false;
 	}
 	
@@ -746,6 +746,7 @@ public class Controller implements InputProcessor {
 	public boolean keyUp (int keycode) {
 		// Reset game world
 		if (keycode == Keys.R) {
+			bgMusic.stop();
 			init();
 			Gdx.app.debug(TAG, "Game world resetted");
 		}

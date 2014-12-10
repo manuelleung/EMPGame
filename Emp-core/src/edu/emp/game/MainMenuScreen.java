@@ -38,6 +38,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		batch = new SpriteBatch();
 		// background = new Texture("");
 		
+		background = new Texture("mainmenu.jpg");
+		
 		// REMOVE THIS?
 		font = new BitmapFont();
 	}
@@ -51,16 +53,16 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		camera.update();
 		
 		batch.begin();
-		font.draw(batch, "Welcome to EMPGame", 320, 320);
-		font.draw(batch, "Click anywhere to begin", 150, 150);
-		// batch.draw(background, 0, 0);
+		//font.draw(batch, "Welcome to EMPGame", 320, 320);
+		//font.draw(batch, "Click anywhere to begin", 150, 150);
+		batch.draw(background, 0, 0);
 		batch.end();
 		
-		if (Gdx.input.isTouched()) {
+		//if (Gdx.input.isTouched()) {
 			// game.setScreen(new MiniMenu(game, game.getScreen()));
-			game.setScreen(new GameScreen(game));
-			dispose();
-		}
+			//game.setScreen(new GameScreen(game));
+			//dispose();
+		//}
 	}
 	
 	@Override
@@ -119,7 +121,17 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int arg2, int arg3) {
-
+		// TODO: Magic numbers! :(
+		if(x > 76 && x < 271 && y > 303 && y < 348){
+			 game.setScreen(new GameScreen(game));
+			 dispose();
+		}
+		//else if(x > 324 && x < 512 && y > 292 && y < 332){
+			//game.setScreen(new OptionsScreen(game));
+			//dispose();
+		//}
+		
+		//System.out.println("X: "+x+" Y: "+y);
 		return false;
 	}
 
