@@ -33,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 
 import edu.emp.game.EMPGame;
+import edu.emp.game.GameOverScreen;
 
 public class Controller implements InputProcessor {
 	final EMPGame game;
@@ -528,7 +529,9 @@ public class Controller implements InputProcessor {
 		
 		// enemy dies
 		if (enemy.getEnemyHealth() <= 0) {
-			enemyDispose = true;
+			game.setScreen(new GameOverScreen(game));
+			dispose();
+			// enemyDispose = true;
 			//enemy.triggerEnemyDeath();
 			// dispose the enemy object; sprite disappears from screen
 		}

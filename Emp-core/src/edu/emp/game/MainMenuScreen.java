@@ -9,10 +9,10 @@ package edu.emp.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainMenuScreen implements Screen, InputProcessor {
@@ -23,8 +23,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private SpriteBatch batch;
 	private Texture background;
 	
-	// REMOVE THIS?
-	private BitmapFont font;
+	private Music bgMusic;
 	
 	public MainMenuScreen (final EMPGame game) {
 		super();
@@ -38,10 +37,9 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		batch = new SpriteBatch();
 		// background = new Texture("");
 		
-		background = new Texture("mainmenu.jpg");
-		
-		// REMOVE THIS?
-		font = new BitmapFont();
+		background = new Texture("mainmenu.png");
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/296-TheTeaGarden.ogg"));
+		bgMusic.setLooping(true);			
 	}
 	
 	@Override
@@ -53,16 +51,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		camera.update();
 		
 		batch.begin();
-		//font.draw(batch, "Welcome to EMPGame", 320, 320);
-		//font.draw(batch, "Click anywhere to begin", 150, 150);
 		batch.draw(background, 0, 0);
 		batch.end();
-		
-		//if (Gdx.input.isTouched()) {
-			// game.setScreen(new MiniMenu(game, game.getScreen()));
-			//game.setScreen(new GameScreen(game));
-			//dispose();
-		//}
 	}
 	
 	@Override
@@ -71,6 +61,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		bgMusic.play();	
 	}
 
 	@Override
@@ -121,17 +112,22 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int arg2, int arg3) {
-		// TODO: Magic numbers! :(
-		if(x > 76 && x < 271 && y > 303 && y < 348){
-			 game.setScreen(new GameScreen(game));
-			 dispose();
+		if (x > 103 && x < 233 && y > 245 && y < 293) {
+			game.setScreen(new GameScreen(game));
+			bgMusic.dispose();
+			dispose();
 		}
-		//else if(x > 324 && x < 512 && y > 292 && y < 332){
-			//game.setScreen(new OptionsScreen(game));
-			//dispose();
-		//}
 		
-		//System.out.println("X: "+x+" Y: "+y);
+		if (x > 101 && x < 285 && y > 344 && y < 388) {
+			// set game screen to tutorial screen
+			background = new Texture("tutorial.png");
+		}
+		
+		if (x > 304 && x < 499 && y > 264 && y < 317) {
+			background = new Texture("mainmenu.png");
+		}
+		
+		// System.out.println("X: "+x+" Y: "+y);
 		return false;
 	}
 
